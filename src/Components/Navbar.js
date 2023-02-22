@@ -15,7 +15,7 @@ function CollapsibleExample() {
               <NavDropdown.Item href="#store">In store purchase</NavDropdown.Item>
               <NavDropdown.Item href="#special">Special Order</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#refund">Refund</Nav.Link>
+            <Nav.Link href="/refund">Refund</Nav.Link>
             <Nav.Link href="#repair">Repair</Nav.Link>
             <Nav.Link href="#track">Track</Nav.Link>
             <NavDropdown title="Inventory" id="collasible-nav-dropdown">
