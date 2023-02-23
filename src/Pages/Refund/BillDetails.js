@@ -70,7 +70,7 @@ const BillDetails = () => {
             setSelectedRows(selectedRows);
           }}
         />
-       <CustomButton label="Proceed To Payment" onclickFunction={getRefundProducts}></CustomButton>
+       <CustomButton label="Proceed To Payment" type="submit" onclickFunction={getRefundProducts}></CustomButton>
     </div>
   )
 }
