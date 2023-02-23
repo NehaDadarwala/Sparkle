@@ -52,7 +52,7 @@ const BillValidation = () => {
             />
           </Grid>
           <Grid item>
-            <Button style={{ margin: "20px", backgroundColor: '#384241' }} variant="contained" color="primary" type="submit">
+            <Button style={{ margin: "20px", backgroundColor: '#5c6869' }} variant="contained" color="primary" type="submit">
               Submit
             </Button>
           </Grid>

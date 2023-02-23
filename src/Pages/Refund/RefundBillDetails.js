@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
-import { Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useCallback, useEffect, useState } from "react";
+import CustomButton from '../../Components/CustomButton';
 
 
 const columns = [
@@ -57,10 +57,7 @@ const RefundBillDetails = () => {
                     },
                 }}
             />
-            <Button sx={{ margin: '3%', float: 'right', backgroundColor: '#384241', borderColor: 'green' }}
-                variant="contained">
-                Proceed To Payment
-            </Button>
+            <CustomButton label="Proceed To Payment"></CustomButton>
         </div>
 
     )

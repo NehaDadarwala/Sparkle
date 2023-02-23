@@ -1,7 +1,8 @@
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
+import CustomButton from '../../Components/CustomButton';
 
 const columns = [
   {
@@ -69,11 +70,7 @@ const BillDetails = () => {
             setSelectedRows(selectedRows);
           }}
         />
-        <Button sx={{ margin: '3%', float: 'right', backgroundColor: '#384241', borderColor: 'green' }} 
-          variant="contained" 
-          onClick={getRefundProducts}>
-            Proceed To Payment
-        </Button>
+       <CustomButton label="Proceed To Payment" onclickFunction={getRefundProducts}></CustomButton>
     </div>
   )
 }
