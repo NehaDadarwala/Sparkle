@@ -1,11 +1,13 @@
 import { Button, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import { useState } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const columns = [
   {
     field: 'Product',
     headerName: 'Product',
-    width: '570'
+    width: '570',
   },
   {
     field: 'Price',
@@ -20,29 +22,58 @@ const rows = [
   { id: 2, Product: '10KT white Yellow Gold Hoops', Price: 30.00 },
 ];
 
-
 const BillDetails = () => {
+  const location = useLocation();
+  const billnumber = location.state;
+
+
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const navigate = useNavigate();
+  const getRefundProducts = () => {
+    navigate('/refundBillDetails', { state: selectedRows });
+  };
+  
+
   return (
-    <div container style={{ height: 400, width: '60%', margin: 'auto', marginTop: '3%' }}>
-      <TextField 
+    <div style={{ height: 400, width: '60%', margin: 'auto', marginTop: '3%' }}>
+      <TextField
         variant="standard"
-        value={"Bill Number: " + 123148956}
+        value={"Bill Number: " + billnumber}
         disabled
         type="text"
-        sx={{ margin: '3%'}}
+        sx={{ margin: '3%' }}
         InputProps={{
           disableUnderline: true,
-        }} 
-        />
-      <DataGrid
-        rows={rows} // from the database call
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
+        }}
       />
-      <Button sx={{ margin: '3%', float: 'right', backgroundColor: '#384241', borderColor: 'green' }}
-        variant="contained">Proceed To Payment</Button>
+        <DataGrid
+          rows={rows} // from the database call
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+          sx={{
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: '#5c6869',
+              color: 'white',
+              fontSize: 20,
+              fontWeight: 'bold',
+            },
+          }}
+          onSelectionModelChange={(ids) => {
+            const selectedIDs = new Set(ids);
+            const selectedRows = rows.filter((row) =>
+              selectedIDs.has(row.id),
+            );
+            setSelectedRows(selectedRows);
+          }}
+        />
+        <Button sx={{ margin: '3%', float: 'right', backgroundColor: '#384241', borderColor: 'green' }} 
+          variant="contained" 
+          onClick={getRefundProducts}>
+            Proceed To Payment
+        </Button>
     </div>
   )
 }

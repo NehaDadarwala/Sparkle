@@ -5,7 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function CollapsibleExample() {
   return (
-    <Navbar collapseOnSelect expand="lg" style={{ backgroundColor:'#5c6869' }} variant="dark">
+    <Navbar collapseOnSelect expand="lg" style={{ backgroundColor:'#384241' }} variant="dark">
       <Container >
         <Navbar.Brand href="#home">Sparkle</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

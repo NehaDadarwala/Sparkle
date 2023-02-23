@@ -31,7 +31,7 @@ const BillValidation = () => {
   return (
     <div style={{ marginTop: '20%' }}>
       <form onSubmit={handleSubmit(validateBill)}>
-        <Grid container alignItems="center" justify="center" direction="column">
+        <Grid container alignItems="center"  direction="column">
           <Grid item>
             <TextField
               label="Bill Number"
