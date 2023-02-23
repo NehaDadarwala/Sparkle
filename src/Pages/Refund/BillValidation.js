@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import CustomButton from "../../Components/CustomButton";
 
 const defaultValues = {
   billnumber: '',
@@ -31,7 +31,7 @@ const BillValidation = () => {
   return (
     <div style={{ marginTop: '20%' }}>
       <form onSubmit={handleSubmit(validateBill)}>
-        <Grid container alignItems="center" direction="column">
+        <Grid container alignItems="center"  direction="column">
           <Grid item>
             <TextField
               label="Bill Number"
@@ -52,7 +52,9 @@ const BillValidation = () => {
             />
           </Grid>
           <Grid item>
-            <CustomButton label="Submit"></CustomButton>
+            <Button style={{ margin: "20px", backgroundColor: '#5c6869' }} variant="contained"  type="submit">
+              Submit
+            </Button>
           </Grid>
         </Grid>
       </form>
