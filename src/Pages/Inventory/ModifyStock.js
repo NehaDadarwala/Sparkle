@@ -76,16 +76,24 @@ function modifyStock() {
                                 minRows={3}
                                 fullWidth
                             />
-
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                                style={{ backgroundColor:'#384241'}}
-                            >
-                                Modify
-                            </Button>
+                            <div>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    style={{ backgroundColor: '#384241' }}
+                                >
+                                    Add
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    style={{ backgroundColor: '#384241' }}
+                                >
+                                    Modify
+                                </Button>
+                            </div>
                         </Box>
                     </Box>
                 </Container>
