@@ -7,15 +7,17 @@ function ViewStock() {
   //everything must be from database
   const stock = [{
     productID:"ABC899900", 
-    productName:"Product Name - 1", 
+    productName:"Product - 1", 
     qty: 10,
-    price: "$1990"
+    price: "$1990",
+    image: "imgUrl"
     },
     {
       productID:"ABC899901", 
-      productName:"Product Name-2", 
+      productName:"Product - 2", 
       qty: 35,
-      price: "$1890"
+      price: "$1890",
+      image: "imgUrl"
       }
   ];
   

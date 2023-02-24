@@ -6,6 +6,7 @@ import BillValidation from './Pages/Refund/BillValidation';
 import BillDetails from './Pages/Refund/BillDetails';
 import ViewStock from './Pages/Inventory/ViewStock';
 import RefundBillDetails from './Pages/Refund/RefundBillDetails';
+import ModifyStock from './Pages/Inventory/ModifyStock';
 
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
           <Route path="/refund" element={<BillValidation/>} />
           <Route path="/billdetails" element={<BillDetails/>} />
           <Route path="/refundBillDetails" element={<RefundBillDetails/>} />
-          <Route path="/viewstock" element={<ViewStock/>} />
+          <Route path="/viewStock" element={<ViewStock/>} />
+          <Route path="/modifyStock" element={<ModifyStock/>} />
         </Routes>
       </Router>
     </div>

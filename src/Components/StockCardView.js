@@ -19,7 +19,7 @@ const StockCardView = (props) => {
                 />
                 <CardContent  align='left'>
                     <Typography gutterBottom variant="h5" component="div">  
-                        Ring
+                        {stock.productName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" >
                        Qty : {stock.qty}
