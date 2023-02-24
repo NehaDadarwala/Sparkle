@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ring from '../ring.png'
 import { useNavigate } from "react-router-dom";
-import { Grid } from '@mui/material';
+// import { Grid } from '@mui/material';
 
 const StockCardView = (props) => {
     let navigate = useNavigate();
@@ -19,6 +19,8 @@ const StockCardView = (props) => {
     const stock = props.stock.map((stock) => {
         return (
             <div className='App'>
+                {/* <Grid container >
+                <Grid item> */}
                 <Card sx={{ maxWidth: 345, margin: 10 }}>
                     <CardMedia
                         image={ring}
@@ -40,10 +42,12 @@ const StockCardView = (props) => {
                         <Button size="small" onClick={navigateToNewPage}>Modify</Button>
                     </CardActions>
                 </Card>
+                {/* </Grid>
+                </Grid> */}
             </div>
         )
     });
-    return <Grid > <Grid item md={4} > {stock} </Grid></Grid>;
+    return <div>{stock}</div> ;
 };
 
 export default StockCardView
