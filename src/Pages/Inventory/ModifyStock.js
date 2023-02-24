@@ -1,9 +1,10 @@
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Textarea from '@mui/material/TextareaAutosize';
 import Container from '@mui/material/Container';
+import { Autocomplete } from '@mui/material';
+import CustomButton from '../../Components/CustomButton';
 
 function modifyStock() {
 
@@ -35,6 +36,15 @@ function modifyStock() {
                         </Typography> */}
                         {/* onSubmit={handleSubmit} */}
                         <Box component="form" noValidate sx={{ mt: 1 }}>
+                            <Autocomplete
+                                disablePortal
+                                id="combo-box-demo"
+                                autoFocus
+                                // options={top100Films}
+                                // sx={{ width: 300 }}
+                                fullWidth
+                                renderInput={(params) => <TextField {...params} label="Search Product" />}
+                            />
                             <TextField
                                 margin="normal"
                                 required
@@ -42,7 +52,6 @@ function modifyStock() {
                                 id="productName"
                                 label="Product Name"
                                 name="productName"
-                                autoFocus
                             />
                             <TextField
                                 margin="normal"
@@ -73,26 +82,22 @@ function modifyStock() {
                                 name="productDescription"
                                 placeholder="Decription"
                                 id="productDescription"
+                                style={{ width: 500, marginTop: "3%" }}
                                 minRows={3}
-                                fullWidth
                             />
                             <div>
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                    style={{ backgroundColor: '#384241' }}
-                                >
-                                    Add
-                                </Button>
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                    style={{ backgroundColor: '#384241' }}
-                                >
-                                    Modify
-                                </Button>
+                                <div>
+                                    <CustomButton
+                                        label="Modify"
+                                        type="submit"
+                                    />
+                                </div>
+                                <div>
+                                    <CustomButton
+                                        label="Add"
+                                        type="submit"
+                                    />
+                                </div>
                             </div>
                         </Box>
                     </Box>
