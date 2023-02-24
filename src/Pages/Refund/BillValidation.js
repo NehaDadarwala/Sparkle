@@ -38,6 +38,7 @@ const BillValidation = () => {
               type="text"
               value={formValues.billnumber}
               autoFocus
+              style = {{width: 250}}
               InputLabelProps={{ style: { color: '#5c6869' } }}
               {...register("billnumber", {
                 onChange: (e) => { handleInputChange(e) },

@@ -15,6 +15,8 @@ const columns = [
     headerName: 'Price',
     type: 'number',
     width: 300,
+    align: 'left',
+    headerAlign: "left",
   },
 ];
 
@@ -70,7 +72,7 @@ const BillDetails = () => {
             setSelectedRows(selectedRows);
           }}
         />
-       <CustomButton label="Proceed To Payment" type="submit" onclickFunction={getRefundProducts}></CustomButton>
+       <CustomButton label="Proceed" type="submit" onclickFunction={getRefundProducts}></CustomButton>
     </div>
   )
 }
