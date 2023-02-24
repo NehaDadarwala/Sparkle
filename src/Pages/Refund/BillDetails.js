@@ -3,6 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useState } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import CustomButton from '../../Components/CustomButton';
+import Navbar from '../../Components/Navbar';
 
 const columns = [
   {
@@ -39,6 +40,8 @@ const BillDetails = () => {
   
 
   return (
+    <div>
+      <Navbar/>
     <div style={{ height: 400, width: '60%', margin: 'auto', marginTop: '3%' }}>
       <TextField
         variant="standard"
@@ -73,6 +76,7 @@ const BillDetails = () => {
           }}
         />
        <CustomButton label="Proceed" type="submit" onclickFunction={getRefundProducts}></CustomButton>
+    </div>
     </div>
   )
 }

@@ -5,7 +5,7 @@ import CustomButton from '../../Components/CustomButton';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { FormControl, InputLabel } from '@mui/material';
-
+import Navbar from '../../Components/Navbar';
 
 const columns = [
     {
@@ -54,6 +54,9 @@ const RefundBillDetails = () => {
 
 
     return (
+        <div>
+            <Navbar/>
+        
         <div style={{ height: 400, width: '60%', margin: 'auto', marginTop: '5%' }}>
             <h1 style={{ textAlign: 'center' }}>Bill Summary</h1>
             <DataGrid
@@ -119,6 +122,7 @@ const RefundBillDetails = () => {
                 <CustomButton label="Proceed"></CustomButton>
             </div>
 
+        </div>
         </div>
 
     )
