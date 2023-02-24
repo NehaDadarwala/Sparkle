@@ -7,10 +7,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ring from '../ring.png'
 
-const StockCardView = () => {
+const StockCardView = (props) => {
+    const stock = props.stock.map((stock) => {
     return (
         <div className='App'>
-            <Card sx={{ maxWidth: 345 }}>
+            <Card sx={{ maxWidth: 345 , margin:10}}>
                 <CardMedia
                     image={ring}
                     sx={{ height: 300 }}
@@ -21,10 +22,10 @@ const StockCardView = () => {
                         Ring
                     </Typography>
                     <Typography variant="body2" color="text.secondary" >
-                       Qty : 10
+                       Qty : {stock.qty}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                       Price : 10
+                       Price : {stock.price}
                     </Typography>
                 </CardContent>
                 <CardActions>
@@ -33,6 +34,8 @@ const StockCardView = () => {
             </Card>
         </div>
     )
-}
+});
+return <div>{stock}</div>;
+};
 
 export default StockCardView
