@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import Register from './Register';
-import Navbar from '../../Components/Navbar';
+
+import {useNavigate} from "react-router-dom";
+
 
 
 
@@ -9,27 +10,32 @@ function RemEmpList() {
 // var people=[
 //         { name: 'John', role: "sales associate" } ];
 
+const navigate=useNavigate();
+
 const [remvalue,SetRemValue]=useState('')
  var people=[]   
 
 
 
-if(localStorage.getItem("people")!=null){
+
+
+
+const remove = (event)=>{
+
+  if(localStorage.getItem("people")!=null){
     people=JSON.parse(localStorage.getItem("people"));
     people=people.filter(item => item.name !== remvalue); 
     localStorage.setItem("people",JSON.stringify(people))
     
  }
 
-
-const remove = (event)=>{
+ navigate("/Profile")
 
 }
 
 
   return (
-    <div>
-      <Navbar />
+    
     <div className='containerind'>
     
     <form onSubmit={remove}>
@@ -42,7 +48,7 @@ const remove = (event)=>{
      
       
     </div>
-    </div>
+   
   );
 }
 

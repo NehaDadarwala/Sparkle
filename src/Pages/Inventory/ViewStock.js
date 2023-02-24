@@ -1,6 +1,6 @@
 import React from 'react'
 import StockCardView from '../../Components/StockCardView'
-import Navbar from '../../Components/Navbar';
+
 
 
 function ViewStock() {
@@ -23,13 +23,12 @@ function ViewStock() {
   ];
   
   return (
-    <div>
-      <Navbar/>
+   
     
    <div>
     <StockCardView stock = {stock}/>
    </div>
-   </div>
+  
   )
 }
 

@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import Navbar from '../../Components/Navbar';
+
 
 const defaultValues = {
   billnumber: '',
@@ -30,8 +30,7 @@ const BillValidation = () => {
 
 
   return (
-    <div>
-      <Navbar/>
+  
    
     <div style={{ marginTop: '20%' }}>
       <form onSubmit={handleSubmit(validateBill)}>
@@ -64,7 +63,7 @@ const BillValidation = () => {
         </Grid>
       </form>
     </div>
-    </div>
+   
   )
 }
 

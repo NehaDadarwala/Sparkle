@@ -5,7 +5,7 @@ import Textarea from '@mui/material/TextareaAutosize';
 import Container from '@mui/material/Container';
 import { Autocomplete } from '@mui/material';
 import CustomButton from '../../Components/CustomButton';
-import Navbar from '../../Components/Navbar';
+
 
 function modifyStock() {
 
@@ -20,8 +20,7 @@ function modifyStock() {
 
 
     return (
-        <div>
-            <Navbar/>
+       
        
         <div>
             <div>
@@ -108,7 +107,7 @@ function modifyStock() {
                 </Container>
             </div>
         </div>
-        </div>
+       
     )
 }
 

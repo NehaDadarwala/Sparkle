@@ -3,8 +3,12 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
+
 function CollapsibleExample() {
+  // const navigate = useNavigate();
+
   return (
+   
     <Navbar collapseOnSelect expand="lg" style={{ backgroundColor:'#384241' }} variant="dark">
       <Container >
         <Navbar.Brand href="#home">Sparkle</Navbar.Brand>
@@ -26,12 +30,15 @@ function CollapsibleExample() {
               <NavDropdown.Item href="/Register">Add Employee</NavDropdown.Item>
               <NavDropdown.Item href="/emplist">View Employee List</NavDropdown.Item>
               <NavDropdown.Item href="/rememplist">Remove Employee</NavDropdown.Item>
+              <NavDropdown.Item href="/logout">logout</NavDropdown.Item>
+              
               {/* <NavDropdown.Divider /> */}
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
+  
   );
 }
 

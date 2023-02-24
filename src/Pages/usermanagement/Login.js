@@ -1,11 +1,14 @@
 import React, {useState} from "react";
 
-
+import Navbar from '../../Components/Navbar'
 
 import {useNavigate} from "react-router-dom";
 function Login(){
 
 
+const [isToggled, setIsToggled] = useState(false);
+localStorage.setItem("isToggled",isToggled);
+// setIsToggled(false);
 const [Email,setEmail]=useState("");
 const [password,setPassword]=useState("");
 const navigate=useNavigate();
@@ -20,11 +23,14 @@ localStorage.setItem("Email",Email);
 
 // }
 
+
 const log_in = (event) =>{
-    event.preventDefault()
+   
 if(Email=="Hargun.Chhabra@dal.ca" && password=="Test@123"){
     // alert("loggedin")
     navigate("/Profile");
+    setIsToggled(!isToggled)
+    localStorage.setItem("isToggled",isToggled);
 }
 else{
     alert("invalid credentials")
@@ -40,7 +46,7 @@ else{
     return(
   
         <div>
-         
+    
             <div className="containerind">
                 
                 <div>
@@ -59,4 +65,5 @@ else{
 
 // return("hello");
 };
+
 export default Login;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Register from './Register';
-import Navbar from '../../Components/Navbar';
+
 
 
 
@@ -22,8 +22,7 @@ if(localStorage.getItem("people")!=null){
 
 
   return (
-    <div>
-      <Navbar/>
+
    
     <div className='containerind'>
         <div>
@@ -40,7 +39,7 @@ if(localStorage.getItem("people")!=null){
      
       
     </div>
-    </div>
+   
   );
 }
 

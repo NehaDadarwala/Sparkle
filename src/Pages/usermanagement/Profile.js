@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Navbar from '../../Components/Navbar';
+
 
 function Profile(){
 const FirstName=localStorage.getItem("FirstName")
@@ -12,8 +12,7 @@ const role =localStorage.getItem("Role")
 
 
     return(
-        <div>
-        <Navbar />
+        
         <div>
         <div><h4>Profile</h4></div>
 
@@ -24,7 +23,7 @@ const role =localStorage.getItem("Role")
     </table>   
     </div>                  
     </div>
-    </div>
+  
     );
 
     };
