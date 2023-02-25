@@ -13,6 +13,7 @@ import BillDetails from './Pages/Refund/BillDetails';
 import ViewStock from './Pages/Inventory/ViewStock';
 import RefundBillDetails from './Pages/Refund/RefundBillDetails';
 import ModifyStock from './Pages/Inventory/ModifyStock';
+import Invoice from './Pages/Refund/Invoice';
 
 function App() {
   const location = useLocation(); // get the current location of the page
@@ -26,6 +27,7 @@ function App() {
         <Route path="/refund" element={<BillValidation/>} />
         <Route path="/billdetails" element={<BillDetails/>} />
         <Route path="/refundBillDetails" element={<RefundBillDetails/>} />
+        <Route path="/invoice" element={<Invoice />} />
         <Route path="/viewStock" element={<ViewStock/>} />
         <Route path="/modifyStock" element={<ModifyStock/>} />
         <Route path="/Profile" element={<Profile />} />

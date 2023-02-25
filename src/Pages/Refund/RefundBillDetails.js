@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import { useCallback, useEffect, useState } from "react";
 import CustomButton from '../../Components/CustomButton';
@@ -16,7 +16,7 @@ const columns = [
         field: 'Price',
         headerName: 'Price',
         type: 'number',
-        width: 350,
+        width: 340,
         align: 'left',
         headerAlign: "left",
     },
@@ -27,7 +27,7 @@ const RefundBillDetails = () => {
     const selectedRows = location.state;
 
     const [rows, setRows] = useState([]);
-    const [paymentMode, setPaymentMode] = useState('');
+    const [paymentMode, setPaymentMode] = useState('Credit Card');
 
 
     const calculateTotal = useCallback(async () => {
@@ -36,8 +36,9 @@ const RefundBillDetails = () => {
         selectedRows.forEach((row) => {
             totalRefundAmount = totalRefundAmount + row.Price;
         });
-        //calculate tax on refund amount
-        setRows([...selectedRows, { id: 10110, Product: 'Total', Price: totalRefundAmount }]);
+        let tax = totalRefundAmount * 0.05;
+        totalRefundAmount = totalRefundAmount + tax;
+        setRows([...selectedRows, { id: 10220, Product: 'GST (5%) ', Price: tax }, { id: 10110, Product: 'Total', Price: totalRefundAmount } ]);
     }, [selectedRows]);
 
     useEffect(() => {
@@ -51,10 +52,17 @@ const RefundBillDetails = () => {
         setPaymentMode(event.target.value);
     };
 
+    const navigate = useNavigate();
+    const generateInvoice = () => {
+        navigate('/invoice', { state: {
+            payment: paymentMode,
+            row: rows,
+          }
+        });
+    }
+
 
     return (
-        
-        
         <div style={{ height: 400, width: '60%', margin: 'auto', marginTop: '5%' }}>
             <h1 style={{ textAlign: 'center' }}>Bill Summary</h1>
             <DataGrid
@@ -75,10 +83,8 @@ const RefundBillDetails = () => {
                     borderRadius: '20px',
                     "& .MuiDataGrid-row": {
                         "&:last-child": {
-                            backgroundColor: "#dae7e8",
                             fontWeight: 'bold',
                             fontSize: 16,
-                            // marginBottom: 0,
                         }
                     },
                   }}
@@ -93,7 +99,7 @@ const RefundBillDetails = () => {
                         value={paymentMode}
                         label="Payment Mode"
                         disableUnderline
-                        labelWidth={150}
+                        labelwidth={150}
                         onChange={handleChange}
                         style={{ backgroundColor: '#444454', borderRadius:20, height: 50, width: 150}}
                         required
@@ -111,15 +117,13 @@ const RefundBillDetails = () => {
                                 }
                             }
                         }}
-                    
-                          
                     >
                         <MenuItem value='Credit Card'>Credit Card</MenuItem>
                         <MenuItem value='Debit Card'>Debit Card</MenuItem>
                         <MenuItem value='Cash'>Cash</MenuItem>
                     </Select>
                 </FormControl>
-                <CustomButton label="Proceed"></CustomButton>
+                <CustomButton label="Proceed" onclickFunction={generateInvoice}></CustomButton>
             </div>
 
         </div>
