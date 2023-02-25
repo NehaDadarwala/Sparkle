@@ -4,10 +4,19 @@ import { Button } from '@mui/material';
 const CustomButton = ({ label, onclickFunction }) => {
     return (
         <>
-            <Button sx={{ margin: '3%', float: 'right', backgroundColor: '#5c6869', borderColor: 'green', height: 50, width: 150 }}
-                variant="contained" 
+            <Button sx={{
+                margin: '3%', float: 'right', backgroundColor: '#444454',
+                color: '#bab79d', borderColor: '#b28faa', height: 50, width: 150,
+                borderRadius:4,
+                ':hover': {
+                    bgcolor: '#c4ccb9', 
+                    color: '#4c4c4a',
+                    fontWeight: 'bold'
+                },
+            }}
+                variant="contained"
                 onClick={onclickFunction}>
-                { label }
+                {label}
             </Button>
         </>
     )

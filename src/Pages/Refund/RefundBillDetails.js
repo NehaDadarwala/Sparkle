@@ -6,7 +6,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { FormControl, InputLabel } from '@mui/material';
 
-
 const columns = [
     {
         field: 'Product',
@@ -66,11 +65,14 @@ const RefundBillDetails = () => {
                 hideFooterSelectedRowCount
                 sx={{
                     "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: '#5c6869',
-                        color: 'white',
-                        fontSize: 20,
-                        fontWeight: 'bold',
+                      borderRadius: '20px 20px 0px 0px',
+                      
+                      backgroundColor: '#bab79d',
+                      color: '#444454',
+                      fontSize: 20,
+                      fontWeight: 'bold',
                     },
+                    borderRadius: '20px',
                     "& .MuiDataGrid-row": {
                         "&:last-child": {
                             backgroundColor: "#dae7e8",
@@ -78,34 +80,33 @@ const RefundBillDetails = () => {
                             fontSize: 16,
                             // marginBottom: 0,
                         }
-                    }
-
-
-                }}
+                    },
+                  }}
             />
             <div>
                 <FormControl variant="filled" style={{ width: 300, marginTop: '3%' }}>
                     <InputLabel id="demo-simple-select-label"
-                        style={{ color: 'white', verticalAlign: 'middle', marginTop: 0 }}>Payment Mode</InputLabel>
+                        style={{ color: '#bab79d', verticalAlign: 'middle', marginTop: 0}}>Payment Mode</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={paymentMode}
                         label="Payment Mode"
+                        disableUnderline
                         labelWidth={150}
                         onChange={handleChange}
-                        style={{ backgroundColor: '#5c6869', borderRadius:6, height: 50}}
+                        style={{ backgroundColor: '#444454', borderRadius:20, height: 50, width: 150}}
                         required
                         inputProps={{
                             sx: {
-                                color: 'white',
-
+                                color: '#bab79d',
                             },
                             MenuProps: {
                                 MenuListProps: {
                                     sx: {
-                                        backgroundColor: '#5c6869',
-                                        color: 'white'
+                                        backgroundColor: '#444454',
+                                        color: '#bab79d',
+                                        borderColor: '#b28faa',
                                     }
                                 }
                             }

@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 
-
 const defaultValues = {
   billnumber: '',
 };
@@ -56,7 +55,9 @@ const BillValidation = () => {
             />
           </Grid>
           <Grid item>
-            <Button style={{ margin: "20px", backgroundColor: '#5c6869' }} variant="contained"  type="submit">
+            <Button style={{ margin: "20px", backgroundColor: '#444454',
+                color: '#bab79d', borderColor: '#b28faa', height: 50, width: 150,
+                borderRadius:7}} variant="contained"  type="submit">
               Submit
             </Button>
           </Grid>
