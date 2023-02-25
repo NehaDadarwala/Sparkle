@@ -25,6 +25,8 @@ const columns = [
 const RefundBillDetails = () => {
     const location = useLocation();
     const selectedRows = location.state;
+    const Swal = require('sweetalert2')
+
 
     const [rows, setRows] = useState([]);
     const [paymentMode, setPaymentMode] = useState('Credit Card');
@@ -38,7 +40,7 @@ const RefundBillDetails = () => {
         });
         let tax = totalRefundAmount * 0.05;
         totalRefundAmount = totalRefundAmount + tax;
-        setRows([...selectedRows, { id: 10220, Product: 'GST (5%) ', Price: tax }, { id: 10110, Product: 'Total', Price: totalRefundAmount } ]);
+        setRows([...selectedRows, { id: 10220, Product: 'GST (5%) ', Price: tax }, { id: 10110, Product: 'Total', Price: totalRefundAmount }]);
     }, [selectedRows]);
 
     useEffect(() => {
@@ -53,12 +55,37 @@ const RefundBillDetails = () => {
     };
 
     const navigate = useNavigate();
-    const generateInvoice = () => {
-        navigate('/invoice', { state: {
-            payment: paymentMode,
-            row: rows,
-          }
-        });
+    const generateInvoice = async () => {
+        if (paymentMode === 'Credit Card' || paymentMode === 'Debit Card') {
+
+            const { value: formValues } = await Swal.fire({
+                title: 'Enter Card Details',
+                html:
+                    '<input required id="swal-input1" placeholder="Card Holder Name" class="swal2-input">' +
+                    '<input required type="number" id="swal-input2" placeholder="Card Number"class="swal2-input">',
+                focusConfirm: false,
+                preConfirm: () => {
+                    if (document.getElementById('swal-input1').value != '' || document.getElementById('swal-input1').value != '') {
+                        return [
+                            document.getElementById('swal-input1').value,
+                            document.getElementById('swal-input2').value
+                        ]
+                    } else {
+                        Swal.showValidationMessage('Input Fields Missing')
+                    }
+                }
+            })
+
+            if (formValues) {
+                navigate('/invoice', {
+                    state: {
+                        payment: paymentMode,
+                        row: rows,
+                        cardDetails: formValues,
+                    }
+                });
+            }
+        }
     }
 
 
@@ -73,12 +100,12 @@ const RefundBillDetails = () => {
                 hideFooterSelectedRowCount
                 sx={{
                     "& .MuiDataGrid-columnHeaders": {
-                      borderRadius: '20px 20px 0px 0px',
-                      
-                      backgroundColor: '#bab79d',
-                      color: '#444454',
-                      fontSize: 20,
-                      fontWeight: 'bold',
+                        borderRadius: '20px 20px 0px 0px',
+
+                        backgroundColor: '#bab79d',
+                        color: '#444454',
+                        fontSize: 20,
+                        fontWeight: 'bold',
                     },
                     borderRadius: '20px',
                     "& .MuiDataGrid-row": {
@@ -87,12 +114,12 @@ const RefundBillDetails = () => {
                             fontSize: 16,
                         }
                     },
-                  }}
+                }}
             />
             <div>
                 <FormControl variant="filled" style={{ width: 300, marginTop: '3%' }}>
                     <InputLabel id="demo-simple-select-label"
-                        style={{ color: '#bab79d', verticalAlign: 'middle', marginTop: 0}}>Payment Mode</InputLabel>
+                        style={{ color: '#bab79d', verticalAlign: 'middle', marginTop: 0 }}>Payment Mode</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
@@ -101,7 +128,7 @@ const RefundBillDetails = () => {
                         disableUnderline
                         labelwidth={150}
                         onChange={handleChange}
-                        style={{ backgroundColor: '#444454', borderRadius:20, height: 50, width: 150}}
+                        style={{ backgroundColor: '#444454', borderRadius: 20, height: 50, width: 150 }}
                         required
                         inputProps={{
                             sx: {
@@ -127,7 +154,7 @@ const RefundBillDetails = () => {
             </div>
 
         </div>
-   
+
 
     )
 }

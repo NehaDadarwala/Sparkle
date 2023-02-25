@@ -103,7 +103,7 @@ const Invoice = () => {
                                             <td>Payment Details</td>
                                         </tr>
                                         <tr className="content">
-                                            <td> Payment Mode : {paymentMode} <br /> Account Holder : Jassa Pepper</td>
+                                            <td> Payment Mode : {paymentMode} <br /> Account Holder : {location.state.cardDetails[0]} <br /> Account Number : {location.state.cardDetails[1]}</td>
                                         </tr>
                                     </tbody>
                                 </table>

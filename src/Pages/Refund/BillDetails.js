@@ -3,7 +3,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useState } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import CustomButton from '../../Components/CustomButton';
-import Swal from 'sweetalert2'
 
 const columns = [
   {
