@@ -19,7 +19,14 @@ function ViewStock() {
       qty: 35,
       price: "$1890",
       image: "imgUrl"
-      }
+      },
+      {
+        productID:"ABC899902", 
+        productName:"Product - 3", 
+        qty: 25,
+        price: "$180",
+        image: "imgUrl"
+        }
   ];
   
   return (
