@@ -14,6 +14,8 @@ import ViewStock from './Pages/Inventory/ViewStock';
 import RefundBillDetails from './Pages/Refund/RefundBillDetails';
 import ModifyStock from './Pages/Inventory/ModifyStock';
 import Invoice from './Pages/Refund/Invoice';
+import RepairForm from './Pages/Repair/RepairForm';
+import RepairList from './Pages/Repair/RepairList';
 
 function App() {
   const location = useLocation(); // get the current location of the page
@@ -35,6 +37,8 @@ function App() {
         <Route path="/emplist" element={<EmpList />} />
         <Route path="/rememplist" element={<RemEmpList />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/create" element={<RepairForm/>} />
+        <Route path="/view" element={<RepairList/>}/>  
       </Routes>
     </div>
   );
