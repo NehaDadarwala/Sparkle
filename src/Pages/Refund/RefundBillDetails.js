@@ -78,6 +78,33 @@ const RefundBillDetails = () => {
 
             if (formValues) {
                 navigate('/invoice', {
+                    replace: true,
+                    state: {
+                        payment: paymentMode,
+                        row: rows,
+                        cardDetails: formValues,
+                    }
+                });
+            }
+        } else {
+            const { value: formValues } = await Swal.fire({
+                title: 'Enter Customer Name',
+                html:
+                    '<input required id="swal-input1" placeholder="Customer Name" class="swal1-input">',
+                preConfirm: () => {
+                    if (document.getElementById('swal-input1').value != '') {
+                        return [
+                            document.getElementById('swal-input1').value,
+                            "XXX"
+                        ]
+                    } else {
+                        Swal.showValidationMessage('Input Field Missing')
+                    }
+                }
+            })
+            if (formValues) {
+                navigate('/invoice', {
+                    replace: true, 
                     state: {
                         payment: paymentMode,
                         row: rows,
