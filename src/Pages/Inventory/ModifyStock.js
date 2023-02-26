@@ -9,7 +9,8 @@ import Button from '@mui/material/Button';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-//import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 function ModifyStock() {
 
@@ -47,6 +48,19 @@ function ModifyStock() {
         });
     };
 
+    const navigate = useNavigate();
+    const getRefundProducts = () => {
+        Swal.fire({
+            title: "Product Added Successfully",
+            icon: 'success',
+            text: "Redirecting in a second...",
+            timer: 1500,
+            showConfirmButton: false
+        }).then(function () {
+            navigate("/viewStock")
+        })
+    };
+
     return (
         <div>
             <div>
@@ -64,7 +78,7 @@ function ModifyStock() {
                             Modify Stock
                         </Typography> */}
 
-                        <Box component="form" onSubmit={handleSubmit(console.log)} sx={{ mt: 1 }} >
+                        <Box component="form" onSubmit={handleSubmit(getRefundProducts)} sx={{ mt: 1 }} >
 
                             <Autocomplete
                                 disablePortal
