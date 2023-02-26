@@ -18,6 +18,8 @@ import ProductDetails from './Pages/Orders/InStore/ProductDetails';
 import CustomerDetails from './Pages/Orders/InStore/CustomerDetails';
 import CheckoutPage from './Pages/Orders/InStore/CheckoutPage';
 import Review from './Pages/Orders/InStore/Review';
+import Invoice from './Pages/Refund/Invoice';
+
 
 function App() {
   const location = useLocation(); // get the current location of the page
