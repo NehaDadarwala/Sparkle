@@ -10,7 +10,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
-function ModifyStock() {
+function ModifyStock(props) {
 
     const productRefNumber = [
         { label: '#RING01' },
@@ -26,12 +26,13 @@ function ModifyStock() {
     const addButtonuseRef = React.useRef(null);
 
     const defaultValues = {
-        productName: '',
-        category: '',
-        qty: '',
-        price: '',
-        description: '',
+        productName: props.productName,
+        category:props.category,
+        qty: props.qty,
+        price:props.price,
+        description: props.description,
     };
+
 
     const [formValues, setFormValues] = useState(defaultValues)
 
@@ -204,7 +205,7 @@ function ModifyStock() {
                                         const { key } = event;
                                         console.log(key);
                                         if (key === "Enter") {
-                                            categoryuseRef.current.focus();
+                                            addButtonuseRef.current.focus();
                                         }
                                     }
                                 }}

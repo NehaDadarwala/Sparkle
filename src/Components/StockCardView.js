@@ -9,6 +9,7 @@ import ring from '../ring.png'
 import { useNavigate } from "react-router-dom";
 import { Grid } from '@mui/material';
 import { Container } from '@mui/system';
+import { useState } from 'react';
 
 const StockCardView = (props) => {
     let navigate = useNavigate();
@@ -16,6 +17,8 @@ const StockCardView = (props) => {
         let path = '/modifyStock';
         navigate(path);
     }
+
+    const [ViewStock, setViewStock] = useState("");
 
     return (
         <div>
