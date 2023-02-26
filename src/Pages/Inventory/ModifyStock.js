@@ -8,7 +8,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 
 function ModifyStock(props) {
 
@@ -18,6 +18,8 @@ function ModifyStock(props) {
         { label: '#NECKLACE01' }
     ];
 
+    const location = useLocation();
+
     const productNameuseRef = React.useRef(null);
     const categoryuseRef = React.useRef(null);
     const qtyuseRef = React.useRef(null);
@@ -26,11 +28,12 @@ function ModifyStock(props) {
     const addButtonuseRef = React.useRef(null);
 
     const defaultValues = {
-        productName: props.productName,
-        category:props.category,
-        qty: props.qty,
-        price:props.price,
-        description: props.description,
+        productName: location.state !== null ? location.state.productName :"",
+        category:location.state !== null ? location.state.category :"",
+        qty: location.state !== null ? location.state.qty :"",
+        price:location.state !== null ? location.state.price :"",
+        description: location.state !== null ? location.state.description :"",
+        productRefNumber: location.state !== null ? location.state.productRefNumber :""
     };
 
 
@@ -76,12 +79,12 @@ function ModifyStock(props) {
                         {/* <Typography component="h1" variant="h5">
                             Modify Stock
                         </Typography> */}
-
                         <Box component="form" onSubmit={handleSubmit(getRefundProducts)} sx={{ mt: 1 }} >
 
                             <Autocomplete
                                 disablePortal
                                 id="productRefNumber"
+                                value={formValues.productRefNumber}
                                 options={productRefNumber}
                                 fullWidth
                                 ListboxProps={{ style: { maxHeight: 150 } }}
@@ -144,6 +147,7 @@ function ModifyStock(props) {
                                 helperText={errors.category?.message}
                             />
                             <TextField
+                            value={formValues.qty}
                                 inputProps={{
                                     onKeyPress: event => {
                                         const { key } = event;
@@ -171,6 +175,7 @@ function ModifyStock(props) {
                                 helperText={errors.qty?.message}
                             />
                             <TextField
+                            value={formValues.price}
                                 inputProps={{
                                     onKeyPress: event => {
                                         const { key } = event;
@@ -190,7 +195,7 @@ function ModifyStock(props) {
                                     onChange: (e) => { handleInputChange(e) },
                                     required: "Price is required",
                                     pattern: {
-                                        value: /^\d+$/,
+                                        value:  /^\d+\.\d{0,2}$/,
                                         message: "Price should be number"
                                     }
                                 })}
@@ -207,7 +212,7 @@ function ModifyStock(props) {
                                         if (key === "Enter") {
                                             addButtonuseRef.current.focus();
                                         }
-                                    }
+                                    }   
                                 }}
                                 inputRef={descriptionuseRef}
                                 margin="normal"

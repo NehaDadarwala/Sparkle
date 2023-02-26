@@ -9,17 +9,14 @@ import ring from '../ring.png'
 import { useNavigate } from "react-router-dom";
 import { Grid } from '@mui/material';
 import { Container } from '@mui/system';
-import { useState } from 'react';
 
 const StockCardView = (props) => {
+    
+    
     let navigate = useNavigate();
-    const navigateToNewPage = () => {
-        let path = '/modifyStock';
-        navigate(path);
-    }
 
-    const [ViewStock, setViewStock] = useState("");
-
+    let path = '/modifyStock';
+       
     return (
         <div>
             <Container>
@@ -29,7 +26,7 @@ const StockCardView = (props) => {
               justify="center"
               style={{ marginTop: "1%" }}
             >
-             {props.stock.map((stock) => {
+             {props.stock.map((stock,index) => {
                return (
                 <Grid item xs={12} sm={6} md={4}>
                   <Card sx={{ maxWidth: 345, margin: 5 }}>
@@ -39,22 +36,22 @@ const StockCardView = (props) => {
                         title="Ring"
                     />
                     <CardContent align='left'>
-                        <Typography gutterBottom variant="h5" component="div">
-                            {stock.productName}
+                        <Typography   name ="productName">
+                        {stock.productName}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" >
+                        <Typography variant="body2" color="text.secondary" name="qty" >
                             Qty : {stock.qty}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Price : {stock.price}
+                        <Typography variant="body2" color="text.secondary" name="price">
+                            Price : {"$" + stock.price}
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" onClick={navigateToNewPage}>Modify</Button>
+                        <Button size="small" onClick={() => navigate(path,{state:stock}) +console.log(stock) }>Modify</Button>
                     </CardActions>
                 </Card>
                 </Grid>
-            );
+            ); 
           })}
          </Grid>
          </Container>
