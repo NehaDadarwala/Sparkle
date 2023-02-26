@@ -16,7 +16,7 @@ function CollapsibleExample() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <NavDropdown title="Orders" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#store">In store purchase</NavDropdown.Item>
+              <NavDropdown.Item href="/SearchPage">In store purchase</NavDropdown.Item>
               <NavDropdown.Item href="#special">Special Order</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/refund">Refund</Nav.Link>
