@@ -163,7 +163,7 @@ function ModifyStock() {
                                     required: "Quantity is required",
                                     pattern: {
                                         value: /^\d+$/,
-                                        message: "Should be number"
+                                        message: "Quantity should be number"
                                     }
                                 })}
                                 error={Boolean(errors.qty)}
@@ -190,7 +190,7 @@ function ModifyStock() {
                                     required: "Price is required",
                                     pattern: {
                                         value: /^\d+$/,
-                                        message: "Should be number"
+                                        message: "Price should be number"
                                     }
                                 })}
                                 error={Boolean(errors.price)}
