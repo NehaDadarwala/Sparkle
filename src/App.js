@@ -13,6 +13,11 @@ import BillDetails from './Pages/Refund/BillDetails';
 import ViewStock from './Pages/Inventory/ViewStock';
 import RefundBillDetails from './Pages/Refund/RefundBillDetails';
 import ModifyStock from './Pages/Inventory/ModifyStock';
+import SearchPage from './Pages/Orders/InStore/SearchPage';
+import ProductDetails from './Pages/Orders/InStore/ProductDetails';
+import CustomerDetails from './Pages/Orders/InStore/CustomerDetails';
+import CheckoutPage from './Pages/Orders/InStore/CheckoutPage';
+import Review from './Pages/Orders/InStore/Review';
 
 function App() {
   const location = useLocation(); // get the current location of the page
@@ -33,6 +38,11 @@ function App() {
         <Route path="/emplist" element={<EmpList />} />
         <Route path="/rememplist" element={<RemEmpList />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/SearchPage" element={<SearchPage/>} />
+        <Route path="/ProductDetails" element={<ProductDetails/>} />
+        <Route path="/CustomerDetails" element={<CustomerDetails/>} />
+        <Route path="/CheckoutPage" element={<CheckoutPage/>} />
+        <Route path="/Review" element={<Review/>} />
       </Routes>
     </div>
   );
