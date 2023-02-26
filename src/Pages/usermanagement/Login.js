@@ -26,7 +26,7 @@ localStorage.setItem("Email",Email);
 
 const log_in = (event) =>{
    
-if(Email=="Hargun.Chhabra@dal.ca" && password=="Test@123"){
+if(Email=="group8@dal.ca" && password=="Test@123"){
     // alert("loggedin")
     navigate("/Profile");
     setIsToggled(!isToggled)

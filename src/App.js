@@ -31,6 +31,7 @@ function App() {
         <Route path="/refund" element={<BillValidation/>} />
         <Route path="/billdetails" element={<BillDetails/>} />
         <Route path="/refundBillDetails" element={<RefundBillDetails/>} />
+        <Route path="/invoice" element={<Invoice />} replace={true} />
         <Route path="/viewStock" element={<ViewStock/>} />
         <Route path="/modifyStock" element={<ModifyStock/>} />
         <Route path="/Profile" element={<Profile />} />

@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import CustomButton from '../../Components/CustomButton';
 
-
 const columns = [
   {
     field: 'Product',
@@ -15,7 +14,7 @@ const columns = [
     field: 'Price',
     headerName: 'Price',
     type: 'number',
-    width: 300,
+    width: 250,
     align: 'left',
     headerAlign: "left",
   },
@@ -29,54 +28,71 @@ const rows = [
 const BillDetails = () => {
   const location = useLocation();
   const billnumber = location.state;
+  const Swal = require('sweetalert2')
+
 
 
   const [selectedRows, setSelectedRows] = useState([]);
 
   const navigate = useNavigate();
   const getRefundProducts = () => {
-    navigate('/refundBillDetails', { state: selectedRows });
+    if (selectedRows.length == 0) {
+      Swal.fire('Please select Products to refund')
+    } else {
+      navigate('/refundBillDetails', { state: selectedRows });
+    }
   };
-  
+
 
   return (
-   
+
     <div style={{ height: 400, width: '60%', margin: 'auto', marginTop: '3%' }}>
       <TextField
         variant="standard"
         value={"Bill Number: " + billnumber}
         disabled
         type="text"
-        sx={{ margin: '3%' }}
+        // fullWidth
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          marginTop: '3%',
+          "& .MuiInputBase-input.Mui-disabled": {
+            WebkitTextFillColor: "#444454",
+          },
+        }}
         InputProps={{
           disableUnderline: true,
         }}
       />
-        <DataGrid
-          rows={rows} // from the database call
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-          sx={{
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: '#5c6869',
-              color: 'white',
-              fontSize: 20,
-              fontWeight: 'bold',
-            },
-          }}
-          onSelectionModelChange={(ids) => {
-            const selectedIDs = new Set(ids);
-            const selectedRows = rows.filter((row) =>
-              selectedIDs.has(row.id),
-            );
-            setSelectedRows(selectedRows);
-          }}
-        />
-       <CustomButton label="Proceed" type="submit" onclickFunction={getRefundProducts}></CustomButton>
+      <DataGrid
+        GridLinesVisibility="None"
+        rows={rows} // from the database call
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        checkboxSelection
+        sx={{
+          "& .MuiDataGrid-columnHeaders": {
+            borderRadius: '20px 20px 0px 0px',
+
+            backgroundColor: '#bab79d',
+            color: '#444454',
+            fontSize: 20,
+            fontWeight: 'bold',
+          },
+          borderRadius: '20px',
+        }}
+        onSelectionModelChange={(ids) => {
+          const selectedIDs = new Set(ids);
+          const selectedRows = rows.filter((row) =>
+            selectedIDs.has(row.id),
+          );
+          setSelectedRows(selectedRows);
+        }}
+      />
+      <CustomButton label="Proceed" type="submit" onclickFunction={getRefundProducts}></CustomButton>
     </div>
-  
   )
 }
 

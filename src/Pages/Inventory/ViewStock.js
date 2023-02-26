@@ -7,19 +7,29 @@ function ViewStock() {
  
   //everything must be from database
   const stock = [{
-    productID:"ABC899900", 
-    productName:"Product - 1", 
+    productID:"1", 
+    productRefNumber:'#RING01',
+    productName:"Ring", 
     qty: 10,
     price: "$1990",
     image: "imgUrl"
     },
     {
-      productID:"ABC899901", 
-      productName:"Product - 2", 
+      productID:"2", 
+      productRefNumber:'#EARRING01',
+      productName:"Earring", 
       qty: 35,
       price: "$1890",
       image: "imgUrl"
-      }
+      },
+      {
+        productID:"3", 
+        productRefNumber:'#NECKLACE01',
+        productName:"Necklace", 
+        qty: 25,
+        price: "$180",
+        image: "imgUrl"
+        }
   ];
   
   return (
