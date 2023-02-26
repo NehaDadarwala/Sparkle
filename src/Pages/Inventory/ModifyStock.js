@@ -83,9 +83,11 @@ function ModifyStock() {
                                 id="productRefNumber"
                                 options={productRefNumber}
                                 fullWidth
-                                renderInput={(params) => <TextField {...params} label="Product Reference Number" />}
+                                ListboxProps={{ style: { maxHeight: 150 } }}
+                                renderInput={(params) => <TextField {...params} label="Product Reference Number" size='small' />}
                             />
                             <TextField
+                                autoFocus
                                 inputProps={{
                                     onKeyPress: event => {
                                         const { key } = event;
@@ -195,6 +197,8 @@ function ModifyStock() {
                                 helperText={errors.price?.message}
                             />
                             <TextField
+                                multiline
+                                rows={3}
                                 inputProps={{
                                     onKeyPress: event => {
                                         const { key } = event;
