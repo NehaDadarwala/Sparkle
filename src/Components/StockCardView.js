@@ -47,7 +47,7 @@ const StockCardView = (props) => {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" onClick={() => navigate(path,{state:stock}) +console.log(stock) }>Modify</Button>
+                        <Button size="small" onClick={() => navigate(path,{replace:true , state:stock}) +console.log(stock) }>Modify</Button>
                     </CardActions>
                 </Card>
                 </Grid>
