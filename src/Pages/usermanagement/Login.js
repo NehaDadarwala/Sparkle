@@ -1,8 +1,6 @@
 import React, {useState} from "react";
-
-import Navbar from '../../Components/Navbar'
-
 import {useNavigate} from "react-router-dom";
+import CustomButton from '../../Components/CustomButton';
 function Login(){
 
 
@@ -55,7 +53,8 @@ else{
                             <div><input type="email" placeholder="Email" onChange={(event)=>setEmail(event.target.value)}  required></input></div>
                             <div><input type="password" placeholder="Password" onChange={(event)=>setPassword(event.target.value)} required></input></div>
                         </div>
-                        <div className="containerind2"><button type="submit">Login</button></div>
+                        {/* <div className="containerind2"><button type="submit">Login</button></div> */}
+                        <div className="containerind2"><CustomButton type="submit" label="Login" onclickFunction={log_in}></CustomButton></div>
                     </form>
                 </div>
             </div>

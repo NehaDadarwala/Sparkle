@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-import Navbar from '../../Components/Navbar'
+import CustomButton from '../../Components/CustomButton';
 
 import {useNavigate} from "react-router-dom";
 function Logout(){
@@ -21,15 +21,6 @@ function Logout(){
 
 
 
-
-
-
-
-
-
-  
-
-
     return(
   
         <div>
@@ -42,7 +33,8 @@ function Logout(){
                             <div><h4>Are you Sure You want to logout</h4></div>
                            
                         </div>
-                        <div className="containerind2"><button onClick={logout}>Yes</button><button onClick={logoutno}>No</button></div>
+                        {/* <div className="containerind2"><button onClick={logout}>Yes</button><button onClick={logoutno}>No</button></div> */}
+                        <div className="containerind2"><CustomButton label="Yes" onclickFunction={logout}></CustomButton><CustomButton  label="No" onclickFunction={logoutno}></CustomButton></div>
                     </form>
                 </div>
             </div>

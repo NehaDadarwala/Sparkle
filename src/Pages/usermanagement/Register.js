@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-
+import CustomButton from '../../Components/CustomButton';
 import {useNavigate} from "react-router-dom";
 function Register(props){
 var bool=false
@@ -167,7 +167,8 @@ const cnfPasswordValidator= (event)=>{
                             {confpasswordError && <div style={{ color: 'red' }}>{confpasswordError}</div>}
 
                             
-                            <div className="containerind2" ><button type="submit" >Register</button></div>
+                            {/* <div className="containerind2" ><button type="submit" >Register</button></div> */}
+                            <div className="containerind2"><CustomButton label="Register" onclickFunction={reg}></CustomButton></div>
 
    
       
