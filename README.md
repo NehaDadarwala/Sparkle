@@ -1,70 +1,232 @@
-# Getting Started with Create React App
+# Project Proposal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Sparkle is an effective tool for managing and organizing the inventory, sales, and operations of a jewelry business. 
 
-## Available Scripts
+* *Date Created*: 29 FEB 2023
+* *Last Modification Date*: 29 FEB 2023
+* *Git URL*: <https://git.cs.dal.ca/hchhabra/csci5709-group8.git>
+* *Deployment URL*: <https://sparkle-dazzel-you.netlify.app/>
 
-In the project directory, you can run:
 
-### `npm start`
+## Authors
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* [Neha Dadarwala](neha.dadarwala@dal.ca) - *(Full Stack Developer)*
+* [Name](email@dal.ca) - *(Role)*
+* [Name](email@dal.ca) - *(Role)*
+* [Name](email@dal.ca) - *(Role)*
+* [Name](email@dal.ca) - *(Role)*
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Getting Started
+## Deployment
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To login into the system, you may use the following credentials
 
-### `npm run build`
+username: group8@dal.ca
+password: Test@123
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Built With
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* [React](https://reactjs.org/) - Front-end JavaScript Library
+* [React Bootstrap](https://www.npmjs.com/package/react-bootstrap) - Front-end Library
+* [Material UI](https://mui.com/) - React Component Library
+* [Netlify](https://www.netlify.com/) - Cloud Application Platform
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**
 
-### `npm run eject`
+## Sources Used
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### src\Pages\Refund\BillDetails.js
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+*Lines 68 - 93
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+<DataGrid
+    GridLinesVisibility="None"
+    rows={rows} // from the database call
+    columns={columns}
+    pageSize={5}
+    rowsPerPageOptions={[5]}
+    checkboxSelection
+    sx={{
+        "& .MuiDataGrid-columnHeaders": {
+        borderRadius: '20px 20px 0px 0px',
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+        backgroundColor: '#bab79d',
+        color: '#444454',
+        fontSize: 20,
+        fontWeight: 'bold',
+        },
+        borderRadius: '20px',
+    }}
+    onSelectionModelChange={(ids) => {
+        const selectedIDs = new Set(ids);
+        const selectedRows = rows.filter((row) =>
+        selectedIDs.has(row.id),
+        );
+        setSelectedRows(selectedRows);
+    }}
+/>
+```
 
-## Learn More
+The code above was created by adapting the code in [MUI Data Grid](https://mui.com/x/react-data-grid/) as shown below: 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+<Box sx={{ height: 400, width: '100%' }}>
+    <DataGrid
+    rows={rows}
+    columns={columns}
+    pageSize={5}
+    rowsPerPageOptions={[5]}
+    checkboxSelection
+    disableSelectionOnClick
+    experimentalFeatures={{ newEditingApi: true }}
+    />
+</Box>
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- The code in [MUI Data Grid](https://mui.com/x/react-data-grid/) was implemented by using MUI components.
+- [MUI Data Grid](https://mui.com/x/react-data-grid/)'s Code was used to implement a data table with checkboxes. 
+- [MUI Data Grid](https://mui.com/x/react-data-grid/)'s Code was modified to add styling using CSS and MUI property such as adding color for header and border styling.
 
-### Code Splitting
+### src\Pages\Refund\RefundBillDetails.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+*Lines 122 - 145
 
-### Analyzing the Bundle Size
+```
+<DataGrid
+    rows={rows}
+    columns={columns}
+    isRowHoverEnabled={true}
+    hideFooterPagination
+    hideFooterSelectedRowCount
+    sx={{
+        "& .MuiDataGrid-columnHeaders": {
+            borderRadius: '20px 20px 0px 0px',
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+            backgroundColor: '#bab79d',
+            color: '#444454',
+            fontSize: 20,
+            fontWeight: 'bold',
+        },
+        borderRadius: '20px',
+        "& .MuiDataGrid-row": {
+            "&:last-child": {
+                fontWeight: 'bold',
+                fontSize: 16,
+            }
+        },
+    }}
+/>
+```
 
-### Making a Progressive Web App
+The code above was created by adapting the code in [MUI Data Grid](https://mui.com/x/react-data-grid/) as shown below: 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+<Box sx={{ height: 400, width: '100%' }}>
+    <DataGrid
+    rows={rows}
+    columns={columns}
+    pageSize={5}
+    rowsPerPageOptions={[5]}
+    checkboxSelection
+    disableSelectionOnClick
+    experimentalFeatures={{ newEditingApi: true }}
+    />
+</Box>
+```
 
-### Advanced Configuration
+- The code in [MUI Data Grid](https://mui.com/x/react-data-grid/) was implemented by using MUI components.
+- [MUI Data Grid](https://mui.com/x/react-data-grid/)'s Code was used to implement a data table displaying the final bill details in efficient manner. 
+- [MUI Data Grid](https://mui.com/x/react-data-grid/)'s Code was modified to add styling using CSS and MUI property such as disabling footer and checkboxes. Also I added styling for last row of the the table.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
+### src\Pages\Refund\RefundBillDetails.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+*Lines 59 - 115*
 
-### `npm run build` fails to minify
+```
+if (paymentMode === 'Credit Card' || paymentMode === 'Debit Card') {
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    const { value: formValues } = await Swal.fire({
+        title: 'Enter Card Details',
+        html:
+            '<input required id="swal-input1" placeholder="Card Holder Name" class="swal2-input">' +
+            '<input required type="number" id="swal-input2" placeholder="Card Number"class="swal2-input">',
+        focusConfirm: false,
+        preConfirm: () => {
+            if (document.getElementById('swal-input1').value != '' || document.getElementById('swal-input1').value != '') {
+                return [
+                    document.getElementById('swal-input1').value,
+                    document.getElementById('swal-input2').value
+                ]
+            } else {
+                Swal.showValidationMessage('Input Fields Missing')
+            }
+        }
+    })
+
+    if (formValues) {
+        navigate('/invoice', {
+            replace: true,
+            state: {
+                payment: paymentMode,
+                row: rows,
+                cardDetails: formValues,
+            }
+        });
+    }
+} else {
+    const { value: formValues } = await Swal.fire({
+        title: 'Enter Customer Name',
+        html:
+            '<input required id="swal-input1" placeholder="Customer Name" class="swal1-input">',
+        preConfirm: () => {
+            if (document.getElementById('swal-input1').value != '') {
+                return [
+                    document.getElementById('swal-input1').value,
+                    "XXX"
+                ]
+            } else {
+                Swal.showValidationMessage('Input Field Missing')
+            }
+        }
+    })
+    if (formValues) {
+        navigate('/invoice', {
+            replace: true, 
+            state: {
+                payment: paymentMode,
+                row: rows,
+                cardDetails: formValues,
+            }
+        });
+    }
+}
+```
+
+The code above was created by adapting the code in [Sweetalert2](https://sweetalert2.github.io/) as shown below: 
+
+```
+const { value: formValues } = await Swal.fire({
+  title: 'Multiple inputs',
+  html:
+    '<input id="swal-input1" class="swal2-input">' +
+    '<input id="swal-input2" class="swal2-input">',
+  focusConfirm: false,
+  preConfirm: () => {
+    return [
+      document.getElementById('swal-input1').value,
+      document.getElementById('swal-input2').value
+    ]
+  }
+})
+
+if (formValues) {
+  Swal.fire(JSON.stringify(formValues))
+}
+```
+
+- The code in [Sweetalert2](https://sweetalert2.github.io/) was implemented by using the SweetAlert2.
+- [Sweetalert2](https://sweetalert2.github.io/)'s Code was used to get input data as a pop box that is customisable.
+- [Sweetalert2](https://sweetalert2.github.io/)'s Code was modified by adding validation in the preconfirm(), changing navigation on success, and change validation message
