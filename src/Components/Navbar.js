@@ -20,7 +20,13 @@ function CollapsibleExample() {
               <NavDropdown.Item href="#special">Special Order</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/refund">Refund</Nav.Link>
-            <Nav.Link href="#repair">Repair</Nav.Link>
+            <NavDropdown title="Repair" id="collasible-nav-dropdown">
+              <NavDropdown.Item href="/create">Create Repair</NavDropdown.Item>
+              <NavDropdown.Item href="/view">View Repair</NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title="Track" id="collasible-nav-dropdown">
+              <NavDropdown.Item href="/track">Track Repair</NavDropdown.Item> 
+            </NavDropdown>
             <Nav.Link href="#track">Track</Nav.Link>
             <NavDropdown title="Inventory" id="collasible-nav-dropdown">
               <NavDropdown.Item href="/viewStock">View</NavDropdown.Item>

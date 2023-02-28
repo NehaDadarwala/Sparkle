@@ -41,7 +41,7 @@ function ModifyStock() {
             description: location.state !== null ? location.state.description : "",
             productRefNumber: location.state !== null ? location.state.productRefNumber : ""
         };
-        
+
         setFormValues(location.state == null ? defaultValues : location.state);
         console.log(location.state);
         console.log(location.state);

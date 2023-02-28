@@ -19,6 +19,9 @@ import CustomerDetails from './Pages/Orders/InStore/CustomerDetails';
 import CheckoutPage from './Pages/Orders/InStore/CheckoutPage';
 import Review from './Pages/Orders/InStore/Review';
 import Invoice from './Pages/Refund/Invoice';
+import RepairForm from './Pages/Repair/RepairForm';
+import RepairList from './Pages/Repair/RepairList';
+import RepairTrack from './Pages/Repair/RepairTrack';
 
 
 function App() {
@@ -46,6 +49,9 @@ function App() {
         <Route path="/CustomerDetails" element={<CustomerDetails/>} />
         <Route path="/CheckoutPage" element={<CheckoutPage/>} />
         <Route path="/Review" element={<Review/>} />
+        <Route path="/create" element={<RepairForm/>} />
+        <Route path="/view" element={<RepairList/>}/>
+        <Route path="/track" element={<RepairTrack/>}/>
       </Routes>
     </div>
   );
