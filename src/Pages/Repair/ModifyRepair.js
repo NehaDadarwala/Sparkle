@@ -5,7 +5,7 @@ import CustomButton from '../../Components/CustomButton';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
-const RepairTrack = () => {
+const ModifyRepair = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [bag, setBag] = useState('');
   const [rstatus, setStatus] = useState('');
@@ -82,4 +82,4 @@ const RepairTrack = () => {
       </div>
   );
 }
-export default RepairTrack;
+export default ModifyRepair;
