@@ -8,12 +8,12 @@ import { FormControl, InputLabel } from '@mui/material';
 
 const columns = [
     {
-        field: 'Product',
+        field: 'productName',
         headerName: 'Product',
         width: '570',
     },
     {
-        field: 'Price',
+        field: 'price',
         headerName: 'Price',
         type: 'number',
         width: 340,
@@ -24,23 +24,22 @@ const columns = [
 
 const RefundBillDetails = () => {
     const location = useLocation();
-    const selectedRows = location.state;
+    const selectedRows = location.state.selectedRows;
+    const customerName = location.state.customerName;
     const Swal = require('sweetalert2')
-
 
     const [rows, setRows] = useState([]);
     const [paymentMode, setPaymentMode] = useState('Credit Card');
 
 
     const calculateTotal = useCallback(async () => {
-
         let totalRefundAmount = 0;
         selectedRows.forEach((row) => {
-            totalRefundAmount = totalRefundAmount + row.Price;
+            totalRefundAmount = totalRefundAmount + row.price;
         });
         let tax = totalRefundAmount * 0.05;
         totalRefundAmount = totalRefundAmount + tax;
-        setRows([...selectedRows, { id: 10220, Product: 'GST (5%) ', Price: tax }, { id: 10110, Product: 'Total', Price: totalRefundAmount }]);
+        setRows([...selectedRows, { _id: 10220, productName: 'GST (5%) ', price: tax }, { _id: 10110, productName: 'Total', price: totalRefundAmount }]);
     }, [selectedRows]);
 
     useEffect(() => {
@@ -48,16 +47,14 @@ const RefundBillDetails = () => {
         calculateTotal();
     }, [calculateTotal, selectedRows]);
 
-
-
     const handleChange = (event) => {
         setPaymentMode(event.target.value);
     };
 
     const navigate = useNavigate();
+
     const generateInvoice = async () => {
         if (paymentMode === 'Credit Card' || paymentMode === 'Debit Card') {
-
             const { value: formValues } = await Swal.fire({
                 title: 'Enter Card Details',
                 html:
@@ -65,7 +62,7 @@ const RefundBillDetails = () => {
                     '<input required type="number" id="swal-input2" placeholder="Card Number"class="swal2-input">',
                 focusConfirm: false,
                 preConfirm: () => {
-                    if (document.getElementById('swal-input1').value != '' || document.getElementById('swal-input1').value != '') {
+                    if (document.getElementById('swal-input1').value !== '' || document.getElementById('swal-input1').value !== '') {
                         return [
                             document.getElementById('swal-input1').value,
                             document.getElementById('swal-input2').value
@@ -75,11 +72,11 @@ const RefundBillDetails = () => {
                     }
                 }
             })
-
             if (formValues) {
                 navigate('/invoice', {
                     replace: true,
                     state: {
+                        customerName: customerName,
                         payment: paymentMode,
                         row: rows,
                         cardDetails: formValues,
@@ -92,7 +89,7 @@ const RefundBillDetails = () => {
                 html:
                     '<input required id="swal-input1" placeholder="Customer Name" class="swal1-input">',
                 preConfirm: () => {
-                    if (document.getElementById('swal-input1').value != '') {
+                    if (document.getElementById('swal-input1').value !== '') {
                         return [
                             document.getElementById('swal-input1').value,
                             "XXX"
@@ -104,8 +101,9 @@ const RefundBillDetails = () => {
             })
             if (formValues) {
                 navigate('/invoice', {
-                    replace: true, 
+                    replace: true,
                     state: {
+                        customerName: customerName,
                         payment: paymentMode,
                         row: rows,
                         cardDetails: formValues,
@@ -124,6 +122,7 @@ const RefundBillDetails = () => {
                 columns={columns}
                 isRowHoverEnabled={true}
                 hideFooterPagination
+                getRowId={(row) => row._id}
                 hideFooterSelectedRowCount
                 sx={{
                     "& .MuiDataGrid-columnHeaders": {

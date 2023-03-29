@@ -6,12 +6,12 @@ import CustomButton from '../../Components/CustomButton';
 
 const columns = [
   {
-    field: 'Product',
+    field: 'productName',
     headerName: 'Product',
     width: '570',
   },
   {
-    field: 'Price',
+    field: 'price',
     headerName: 'Price',
     type: 'number',
     width: 250,
@@ -20,26 +20,26 @@ const columns = [
   },
 ];
 
-const rows = [
-  { id: 1, Product: '10KT White Gold 10 INCH Chain', Price: 60.77 },
-  { id: 2, Product: '10KT white Yellow Gold Hoops', Price: 30.00 },
-];
-
 const BillDetails = () => {
   const location = useLocation();
-  const billnumber = location.state;
+  const bill = location.state.bill
+  const billnumber = bill._id;
+  const rows = bill.products
   const Swal = require('sweetalert2')
-
-
 
   const [selectedRows, setSelectedRows] = useState([]);
 
   const navigate = useNavigate();
   const getRefundProducts = () => {
-    if (selectedRows.length == 0) {
+    if (selectedRows.length === 0) {
       Swal.fire('Please select Products to refund')
     } else {
-      navigate('/refundBillDetails', { state: selectedRows });
+      navigate('/refundBillDetails', {
+        state: {
+          customerName: bill.customerName,
+          selectedRows: selectedRows,
+        }
+      });
     }
   };
 
@@ -52,13 +52,13 @@ const BillDetails = () => {
         value={"Bill Number: " + billnumber}
         disabled
         type="text"
-        // fullWidth
         sx={{
           alignItems: 'center',
           display: 'flex',
           marginTop: '3%',
           "& .MuiInputBase-input.Mui-disabled": {
             WebkitTextFillColor: "#444454",
+            width: '300px'
           },
         }}
         InputProps={{
@@ -72,10 +72,10 @@ const BillDetails = () => {
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
+        getRowId={(row) => row._id}
         sx={{
           "& .MuiDataGrid-columnHeaders": {
             borderRadius: '20px 20px 0px 0px',
-
             backgroundColor: '#bab79d',
             color: '#444454',
             fontSize: 20,
@@ -86,7 +86,7 @@ const BillDetails = () => {
         onSelectionModelChange={(ids) => {
           const selectedIDs = new Set(ids);
           const selectedRows = rows.filter((row) =>
-            selectedIDs.has(row.id),
+            selectedIDs.has(row._id),
           );
           setSelectedRows(selectedRows);
         }}

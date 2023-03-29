@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useCallback } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './invoice.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import CustomButton from '../../Components/CustomButton';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import axios from 'axios';
+
+function pad2(n) {
+    return n < 10 ? '0' + n : n
+}
+
+const generateBillNumber = () => {
+    var date = new Date();
+    var billnumber = date.getFullYear().toString() + pad2(date.getMonth() + 1) + pad2(date.getDate()) + pad2(date.getHours()) + pad2(date.getMinutes()) + pad2(date.getSeconds())
+    return "R" + billnumber
+}
 
 
 const Invoice = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dataFetch = useRef(false)
 
+
+    const [invoiceID, setInvoiceID] = useState([]);
     const [rows, setRows] = useState([]);
     const [tax, setTax] = useState(0);
     const [total, setTotal] = useState(0);
@@ -20,14 +34,55 @@ const Invoice = () => {
         navigate('/logout');
     };
 
+
+    const insertRefundInvoice = useCallback(async () => {
+        let todaysDate = new Date()
+        let data = JSON.stringify({
+            "_id": invoiceID,
+            "customerName": location.state.customerName,
+            "orderDate": todaysDate.toISOString().split('T')[0],
+            "products": rows,
+            "paymentDetails": {
+                "paymentMode": paymentMode,
+                "accountHolder": location.state.cardDetails[0],
+                "accountNumber": location.state.cardDetails[1]
+            }
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'https://sparkle-api.onrender.com/refund/newRefund',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+        try {
+            var response = await axios(config);
+            console.log(JSON.stringify(response.data));
+        } catch (error) {
+            console.log(JSON.stringify(error.message));
+        }
+    }, [invoiceID, location.state.cardDetails, location.state.customerName, paymentMode, rows])
+
     useEffect(() => {
-        if(location.state.row.length>2){
-            setTax(Math.round(location.state.row.slice(-2)[0].Price * 100)/100)
-            setTotal(Math.round(location.state.row.slice(-1)[0].Price * 100)/100)
+        if (location.state.row.length > 2) {
+            setTax(Math.round(location.state.row.slice(-2)[0].price * 100) / 100)
+            setTotal(Math.round(location.state.row.slice(-1)[0].price * 100) / 100)
         }
         setPaymentMode(location.state.payment);
         setRows(location.state.row);
+        setInvoiceID(generateBillNumber);
     }, [location.state]);
+
+    useEffect(() => {
+        if (dataFetch.current)
+            return
+        dataFetch.current = true
+
+        insertRefundInvoice();
+    }, [insertRefundInvoice]);
 
     return (
         <div className="App container mt-5">
@@ -37,7 +92,7 @@ const Invoice = () => {
                     <div className="col-md-8">
                         <div className="card">
                             <div className="d-flex flex-row p-2">
-                                <div className="d-flex flex-column"> <span className="font-weight-bold">Tax Invoice</span> <small>INV-001</small> </div>
+                                <div className="d-flex flex-column"> <span className="font-weight-bold">Tax Invoice</span> <small>{invoiceID}</small> </div>
 
                             </div>
 
@@ -50,7 +105,7 @@ const Invoice = () => {
                                             <td>From</td>
                                         </tr>
                                         <tr className="content">
-                                            <td className="font-weight-bold">Maecenas volutpat <br />Attn: Aenean nibh velit.<br />Canada</td>
+                                            <td className="font-weight-bold">{location.state.customerName}</td>
                                             <td className="font-weight-bold">Sparkle <br /> Attn: Suspendisse sapien nunc.<br /> Canada</td>
                                         </tr>
                                     </tbody>
@@ -64,11 +119,11 @@ const Invoice = () => {
                                             <td>Description</td>
                                             <td className="text-center">Price</td>
                                         </tr>
-                                        {rows.slice(0,rows.length-2).map((row, index) => {
+                                        {rows.slice(0, rows.length - 2).map((row, index) => {
                                             return (
                                                 <tr key={index} className="content">
-                                                    <td>{row.Product}</td>
-                                                    <td className="text-center">{row.Price}</td>
+                                                    <td>{row.productName}</td>
+                                                    <td className="text-center">{row.price}</td>
                                                 </tr>
                                             );
                                         })}
