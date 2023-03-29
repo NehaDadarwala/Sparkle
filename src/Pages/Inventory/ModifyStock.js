@@ -1,7 +1,6 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import { Autocomplete, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import React from 'react';
@@ -10,15 +9,13 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-
+import axios from 'axios';
 
 function ModifyStock() {
 
-    const product_ref_number = [
-        { label: '#RING01' },
-        { label: '#EARRING01' },
-        { label: '#NECKLACE01' }
-    ];
+    const [formValues, setFormValues] = useState([])
+    const [refNumber, setRefNumber] = useState([]);
+    const [category, setCategory] = useState([]);
 
     const location = useLocation();
     const productNameuseRef = React.useRef(null);
@@ -30,13 +27,40 @@ function ModifyStock() {
     const addButtonuseRef = React.useRef(null);
 
 
-
-    const [formValues, setFormValues] = useState([])
-
     useEffect(() => {
+
+        const getProductReferenceUrl = // "localhost:3000/inventory/getProductRefNumber"
+            "https://sparkle-api.onrender.com/inventory/getProductRefNumber"
+
+        const getCategory = "https://sparkle-api.onrender.com/inventory/category"
+
+        axios.get(getProductReferenceUrl)
+            .then(res => {
+                console.log(res.data);
+                const refDet = [];
+                refDet.push(res.data.product_ref_number);
+                refDet.map((refNumber) => {
+                    setRefNumber(refNumber);
+                    return (<></>)
+                });
+            });
+
+        axios.get(getCategory)
+            .then(res => {
+                console.log(res.data);
+                const cateDet = [];
+                cateDet.push(res.data.category);
+                console.log(cateDet);
+                cateDet.map((category) => {
+                    setCategory(category);
+                    return (<></>)
+                });
+            });
+
+
         const defaultValues = {
             product_name: location.state !== null ? location.state.product_name : "",
-            product_category: location.state !== null ? location.state.product_category : "",
+            category_id: location.state !== null ? location.state.category_id : "",
             qty: location.state !== null ? location.state.qty : "",
             price: location.state !== null ? location.state.price : "",
             product_description: location.state !== null ? location.state.product_description : "",
@@ -44,12 +68,11 @@ function ModifyStock() {
         };
 
         setFormValues(location.state == null ? defaultValues : location.state);
-        console.log(location.state);
-        console.log(location.state);
     }, [location.state]);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const handleInputChange = (e) => {
+        console.log(e.target.label);
         const { name, value } = e.target;
         console.log("name = " + name);
         console.log("value" + value);
@@ -59,7 +82,19 @@ function ModifyStock() {
         });
     };
 
+    const handleCategoryChange = (event, value) => {
+        console.log(value)
+        if (value) {
+            setFormValues({
+                ...formValues,
+                category_id: value._id,
+            });
+        }
+        console.log(formValues)
+    }
+    
     const navigate = useNavigate();
+
     const getRefundProducts = () => {
         Swal.fire({
             title: "Product Added Successfully",
@@ -72,30 +107,64 @@ function ModifyStock() {
         })
     };
 
-    return (
+    const onClickAdd = () => {
 
-        <Container component="main" maxWidth="xs">
+        const addProductUrl = "https://sparkle-api.onrender.com/inventory/addProduct"
+        console.log(formValues)
+        axios.post(addProductUrl,{
+            product_name: formValues.product_name,
+            category_id : formValues.category_id,
+            qty:formValues.qty,
+            price : formValues.price,
+            product_description : formValues.product_description,
+            image :formValues.image
+            //data: formValues
+        })
+        .then(
+            res =>{console.log(res);
+            console.log(res.data);
+            if(res.status === 200)
+            {
+                navigate("/viewStock")
+            }
+            else if(res.status === 401)
+            {
+            
+            }
+        })
+    }
+    return (
+        <Grid container spacing={2} alignItems="center" style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column'
+        }}>
             <CssBaseline />
-            <Box
+            <Box component="form" onSubmit={handleSubmit(onClickAdd)} noValidate
+                // sx={{}}
                 sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center'
+                    mt: 1, marginTop: 8,
+                    maxWidth: "100%"
                 }}
             >
-                <Box component="form" onSubmit={handleSubmit(getRefundProducts)} noValidate sx={{ mt: 1 }} >
-
+                {/*  */}
+                <Grid item>
                     <Autocomplete
+                        margin="normal"
                         disablePortal
                         id="productRefNumber"
                         value={formValues.product_ref_number}
-                        options={product_ref_number}
-                        fullWidth
+                        options={refNumber}
                         ListboxProps={{ style: { maxHeight: 150 } }}
-                        renderInput={(params) => <TextField {...params} label="Product Reference Number" size='small' />}
+                        renderInput={(params) => <TextField {...params} style={{ alignItems: "right" }} label="Product Reference Number" size='small' />}
                     />
-                    {console.log(location)}
+                </Grid>
+                <Grid item style={
+                    {
+                        marginTop: "5%"
+                    }
+                }>
                     <TextField
                         autoFocus
                         inputProps={{
@@ -105,11 +174,12 @@ function ModifyStock() {
                                 if (key === "Enter") {
                                     categoryuseRef.current.focus();
                                 }
-                            }
+                            },
+                            autoComplete: "off",
+                            defaultValue: formValues.product_name,
                         }}
-                        inputRef={product_ref_number}
-                        margin="normal"
                         fullWidth
+                        inputRef={refNumber}
                         label="Product Name"
                         name="product_name"
                         value={formValues.product_name}
@@ -122,10 +192,16 @@ function ModifyStock() {
                         })}
                         error={Boolean(errors.product_name)}
                         helperText={errors.product_name?.message}
-
                     />
-                    <TextField
+                </Grid>
+                <Grid item style={
+                    {
+                        marginTop: "5%"
+                    }}
+                >
+                    {/* <Autocomplete
                         inputProps={{
+                            // onKeyPress: handleKeyPress
                             onKeyPress: event => {
                                 const { key } = event;
                                 console.log(key);
@@ -134,26 +210,51 @@ function ModifyStock() {
                                 }
                             }
                         }}
-
                         inputRef={categoryuseRef}
-                        //ref={focusNextRef}
-                        margin="normal"
-                        fullWidth
-                        name="product_category"
-                        label="Category"
-                        value={formValues.product_category}
-                        {...register("product_category", {
+                        disablePortal
+                        name ="category_id"
+                        id="category_id"
+                        {...register("category_id", {
                             onChange: (e) => { handleInputChange(e) },
                             required: "Category is required.",
                             pattern: {
                                 message: "Category is required"
                             }
                         })}
-                        error={Boolean(errors.product_category)}
-                        helperText={errors.product_category?.message}
+                        options={category}
+                        ListboxProps={{ style: { maxHeight: 150 } }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                style={{ textAlign: "left" }}
+                                label="Category"
+                                size="small"
+                                name = "category_id"
+                                value={formValues.category_id}
+                                error={Boolean(errors.category_id)}
+                                helperText={errors.category_id?.message}
+                            />
+                        )}
+                    /> */}
+                    <Autocomplete
+                        id="category"
+                        options={category}
+                        value={category.find(c => c._id === formValues.category_id)}
+                        onChange={handleCategoryChange}
+                        getOptionLabel={(option) => option.label}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Category" variant="outlined" />
+                        )}
                     />
+
+                </Grid>
+                <Grid item style={
+                    {
+                        marginTop: "8.5%"
+                    }}>
                     <TextField
                         value={formValues.qty}
+                        type="number"
                         inputProps={{
                             onKeyPress: event => {
                                 const { key } = event;
@@ -164,11 +265,13 @@ function ModifyStock() {
                             }
                         }}
                         inputRef={qtyuseRef}
-                        margin="normal"
-                        fullWidth
                         name="qty"
                         label="Qty"
                         id="productQty"
+                        style={{
+                            marginRight: "1%",
+                            width: "49%"
+                        }}
                         {...register("qty", {
                             onChange: (e) => { handleInputChange(e) },
                             required: "Quantity is required",
@@ -181,6 +284,7 @@ function ModifyStock() {
                         helperText={errors.qty?.message}
                     />
                     <TextField
+                        type="number"
                         value={formValues.price}
                         inputProps={{
                             onKeyPress: event => {
@@ -192,21 +296,28 @@ function ModifyStock() {
                             }
                         }}
                         inputRef={priceuseRef}
-                        margin="normal"
-                        fullWidth
                         name="price"
                         label="Price"
+                        style={{
+                            marginLeft: "1%",
+                            width: "49%"
+                        }}
                         {...register("price", {
                             onChange: (e) => { handleInputChange(e) },
                             required: "Price is required",
                             pattern: {
-                                value: /^\d+\.\d{0,2}$/,
+                                value: /^\d+$/,
                                 message: "Price should be number"
                             }
                         })}
                         error={Boolean(errors.price)}
                         helperText={errors.price?.message}
                     />
+                </Grid>
+                <Grid item style={
+                    {
+                        marginTop: "5%"
+                    }}>
                     <TextField
                         multiline
                         rows={3}
@@ -215,7 +326,7 @@ function ModifyStock() {
                                 const { key } = event;
                                 console.log(key);
                                 if (key === "Enter") {
-                                    addButtonuseRef.current.focus();
+                                    imageRef.current.focus();
                                 }
                             }
                         }}
@@ -225,7 +336,7 @@ function ModifyStock() {
                         label="Description"
                         name="product_description"
                         value={formValues.product_description}
-                        {...register("description", {
+                        {...register("product_description", {
                             onChange: (e) => { handleInputChange(e) },
                             required: "Description is required.",
                             pattern: {
@@ -236,22 +347,25 @@ function ModifyStock() {
                         helperText={errors.product_description?.message}
 
                     />
+                </Grid>
+                <Grid item style={
+                    {
+                        marginTop: "5%"
+                    }}>
                     <TextField
-                    type="file"
-                    id="outlined-image"
+                        type="file"
+                        id="outlined-image"
                         value={formValues.image}
                         inputProps={{
                             onKeyPress: event => {
                                 const { key } = event;
                                 console.log(key);
                                 if (key === "Enter") {
-                                    imageRef.current.focus();
+                                    addButtonuseRef.current.focus();
                                 }
                             }
                         }}
                         inputRef={imageRef}
-                        margin="normal"
-                        fullWidth
                         name="image"
                         {...register("image", {
                             onChange: (e) => { handleInputChange(e) },
@@ -262,9 +376,10 @@ function ModifyStock() {
                         })}
                         error={Boolean(errors.image)}
                         helperText={errors.image?.message}
+                        fullWidth
                     />
-                
-                    {/* <Grid item>
+                </Grid>
+                {/* <Grid item>
                                     <CustomButton
                                         //ref={focusNextRef}
                                         label="Modify"
@@ -279,27 +394,28 @@ function ModifyStock() {
                                     />
                                
                                 </Grid> */}
-                    <Grid item>
-                        <Button style={{
-                            margin: "20px", backgroundColor: '#444454',
-                            color: '#bab79d', borderColor: '#b28faa', height: 50, width: 150,
-                            borderRadius: 7
-                        }} variant="contained" type="submit"
-                            ref={addButtonuseRef}>
-                            Add
-                        </Button>
-                        <Button style={{
-                            margin: "20px", backgroundColor: '#444454',
-                            color: '#bab79d', borderColor: '#b28faa', height: 50, width: 150,
-                            borderRadius: 7
-                        }} variant="contained" type="submit">
-                            Modify
-                        </Button>
-                    </Grid>
-                </Box>
-            </Box>
-        </Container>
+                <Grid item>
+                    <Button style={{
+                        margin: "20px", backgroundColor: '#444454',
+                        color: '#bab79d', borderColor: '#b28faa', height: 50, width: 150,
+                        borderRadius: 7
 
+                    }} variant="contained" type="submit"
+                        ref={addButtonuseRef}
+                        onClick={onClickAdd}
+                    >
+                        Add
+                    </Button>
+                    <Button style={{
+                        margin: "20px", backgroundColor: '#444454',
+                        color: '#bab79d', borderColor: '#b28faa', height: 50, width: 150,
+                        borderRadius: 7
+                    }} variant="contained" type="submit">
+                        Modify
+                    </Button>
+                </Grid>
+            </Box>
+        </Grid>
     )
 }
 

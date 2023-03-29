@@ -39,7 +39,7 @@ function App() {
         <Route path="/refundBillDetails" element={<RefundBillDetails/>} />
         <Route path="/invoice" element={<Invoice />} replace={true} />
         <Route path="/viewStock" element={<ViewStock/>} />
-        <Route path="/modifyStock" element={<ModifyStock /> } replace={true}/>
+        <Route path="/modifyStock" element={<ModifyStock /> }/>
         <Route path="/Profile" element={<Profile />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/emplist" element={<EmpList />} />
