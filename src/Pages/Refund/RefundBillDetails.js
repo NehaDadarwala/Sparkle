@@ -5,6 +5,7 @@ import CustomButton from '../../Components/CustomButton';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { FormControl, InputLabel } from '@mui/material';
+import axios from 'axios';
 
 const columns = [
     {
@@ -22,14 +23,50 @@ const columns = [
     },
 ];
 
+function pad2(n) {
+    return n < 10 ? '0' + n : n
+}
+
+const generateBillNumber = () => {
+    var date = new Date();
+    var billnumber = date.getFullYear().toString() + pad2(date.getMonth() + 1) + pad2(date.getDate()) + pad2(date.getHours()) + pad2(date.getMinutes()) + pad2(date.getSeconds())
+    return "R" + billnumber
+}
+
+
 const RefundBillDetails = () => {
     const location = useLocation();
     const selectedRows = location.state.selectedRows;
-    const customerName = location.state.customerName;
     const Swal = require('sweetalert2')
 
     const [rows, setRows] = useState([]);
     const [paymentMode, setPaymentMode] = useState('Credit Card');
+
+    const insertRefundInvoice = async (data) => {
+        data.products = data.products.slice(0, -2)
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'https://sparkle-api.onrender.com/refund/newRefund',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+        try {
+            var response = await axios(config);
+            console.log(JSON.stringify(response.data));
+            navigate('/invoice', {
+                replace: true,
+                state: {
+                    data: data
+                }
+            });
+        } catch (error) {
+            console.log("ERROR!!!")
+            console.log(JSON.stringify(error.message));
+        }
+    }
 
 
     const calculateTotal = useCallback(async () => {
@@ -73,15 +110,19 @@ const RefundBillDetails = () => {
                 }
             })
             if (formValues) {
-                navigate('/invoice', {
-                    replace: true,
-                    state: {
-                        customerName: customerName,
-                        payment: paymentMode,
-                        row: rows,
-                        cardDetails: formValues,
+                let todaysDate = new Date()
+                let data = JSON.parse(JSON.stringify({
+                    "_id": generateBillNumber(),
+                    "customerName": location.state.customerName,
+                    "orderDate": todaysDate.toISOString().split('T')[0],
+                    "products": rows,
+                    "paymentDetails": {
+                        "paymentMode": paymentMode,
+                        "accountHolder": formValues[0],
+                        "accountNumber": formValues[1]
                     }
-                });
+                }))
+                insertRefundInvoice(data)
             }
         } else {
             const { value: formValues } = await Swal.fire({
@@ -100,15 +141,19 @@ const RefundBillDetails = () => {
                 }
             })
             if (formValues) {
-                navigate('/invoice', {
-                    replace: true,
-                    state: {
-                        customerName: customerName,
-                        payment: paymentMode,
-                        row: rows,
-                        cardDetails: formValues,
+                let todaysDate = new Date()
+                let data = JSON.parse(JSON.stringify({
+                    "_id": generateBillNumber(),
+                    "customerName": location.state.customerName,
+                    "orderDate": todaysDate.toISOString().split('T')[0],
+                    "products": rows,
+                    "paymentDetails": {
+                        "paymentMode": paymentMode,
+                        "accountHolder": formValues[0],
+                        "accountNumber": formValues[1]
                     }
-                });
+                }))
+                insertRefundInvoice(data)
             }
         }
     }
