@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 
 function ModifyStock() {
 
-    const productRefNumber = [
+    const product_ref_number = [
         { label: '#RING01' },
         { label: '#EARRING01' },
         { label: '#NECKLACE01' }
@@ -26,20 +26,21 @@ function ModifyStock() {
     const qtyuseRef = React.useRef(null);
     const priceuseRef = React.useRef(null);
     const descriptionuseRef = React.useRef(null);
+    const imageRef = React.useRef(null);
     const addButtonuseRef = React.useRef(null);
 
-    
+
 
     const [formValues, setFormValues] = useState([])
 
     useEffect(() => {
         const defaultValues = {
-            productName: location.state !== null ? location.state.productName : "",
-            category: location.state !== null ? location.state.category : "",
+            product_name: location.state !== null ? location.state.product_name : "",
+            product_category: location.state !== null ? location.state.product_category : "",
             qty: location.state !== null ? location.state.qty : "",
             price: location.state !== null ? location.state.price : "",
-            description: location.state !== null ? location.state.description : "",
-            productRefNumber: location.state !== null ? location.state.productRefNumber : ""
+            product_description: location.state !== null ? location.state.product_description : "",
+            product_ref_number: location.state !== null ? location.state.product_ref_number : ""
         };
 
         setFormValues(location.state == null ? defaultValues : location.state);
@@ -88,8 +89,8 @@ function ModifyStock() {
                     <Autocomplete
                         disablePortal
                         id="productRefNumber"
-                        value={formValues.productRefNumber}
-                        options={productRefNumber}
+                        value={formValues.product_ref_number}
+                        options={product_ref_number}
                         fullWidth
                         ListboxProps={{ style: { maxHeight: 150 } }}
                         renderInput={(params) => <TextField {...params} label="Product Reference Number" size='small' />}
@@ -106,21 +107,21 @@ function ModifyStock() {
                                 }
                             }
                         }}
-                        inputRef={productNameuseRef}
+                        inputRef={product_ref_number}
                         margin="normal"
                         fullWidth
                         label="Product Name"
-                        name="productName"
-                        value={formValues.productName}
-                        {...register("productName", {
+                        name="product_name"
+                        value={formValues.product_name}
+                        {...register("product_name", {
                             onChange: (e) => { handleInputChange(e) },
                             required: "Product Name is required.",
                             pattern: {
                                 message: "Product Name is required"
                             }
                         })}
-                        error={Boolean(errors.productName)}
-                        helperText={errors.productName?.message}
+                        error={Boolean(errors.product_name)}
+                        helperText={errors.product_name?.message}
 
                     />
                     <TextField
@@ -138,18 +139,18 @@ function ModifyStock() {
                         //ref={focusNextRef}
                         margin="normal"
                         fullWidth
-                        name="category"
+                        name="product_category"
                         label="Category"
-                        value={formValues.category}
-                        {...register("category", {
+                        value={formValues.product_category}
+                        {...register("product_category", {
                             onChange: (e) => { handleInputChange(e) },
                             required: "Category is required.",
                             pattern: {
                                 message: "Category is required"
                             }
                         })}
-                        error={Boolean(errors.category)}
-                        helperText={errors.category?.message}
+                        error={Boolean(errors.product_category)}
+                        helperText={errors.product_category?.message}
                     />
                     <TextField
                         value={formValues.qty}
@@ -222,8 +223,8 @@ function ModifyStock() {
                         margin="normal"
                         fullWidth
                         label="Description"
-                        name="description"
-                        value={formValues.description}
+                        name="product_description"
+                        value={formValues.product_description}
                         {...register("description", {
                             onChange: (e) => { handleInputChange(e) },
                             required: "Description is required.",
@@ -231,10 +232,38 @@ function ModifyStock() {
                                 message: "Description is required"
                             }
                         })}
-                        error={Boolean(errors.description)}
-                        helperText={errors.description?.message}
+                        error={Boolean(errors.product_description)}
+                        helperText={errors.product_description?.message}
 
                     />
+                    <TextField
+                    type="file"
+                    id="outlined-image"
+                        value={formValues.image}
+                        inputProps={{
+                            onKeyPress: event => {
+                                const { key } = event;
+                                console.log(key);
+                                if (key === "Enter") {
+                                    imageRef.current.focus();
+                                }
+                            }
+                        }}
+                        inputRef={imageRef}
+                        margin="normal"
+                        fullWidth
+                        name="image"
+                        {...register("image", {
+                            onChange: (e) => { handleInputChange(e) },
+                            required: "Image is required",
+                            pattern: {
+                                message: "Please select an Image"
+                            }
+                        })}
+                        error={Boolean(errors.image)}
+                        helperText={errors.image?.message}
+                    />
+                
                     {/* <Grid item>
                                     <CustomButton
                                         //ref={focusNextRef}
