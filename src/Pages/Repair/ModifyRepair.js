@@ -61,7 +61,7 @@ const ModifyRepair = () => {
               error={statusError}
               onChange={handleStatusChange}
               helperText={statusError ? 'This field is required' : ''} >
-          <MenuItem value="Picked up">Picked up</MenuItem>
+          <MenuItem value="Ready To Pick up">Picked up</MenuItem>
           <MenuItem value="Complete">Complete</MenuItem>
           <MenuItem value="Return">Return</MenuItem>
       </TextField>
