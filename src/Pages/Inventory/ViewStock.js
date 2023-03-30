@@ -1,7 +1,7 @@
 import React from 'react'
 import StockCardView from '../../Components/StockCardView'
 import { useEffect, useState } from 'react'
-import axios from 'axios';
+import axiosApi from '../../Common/AxiosApi';
 
 function ViewStock() {
 
@@ -9,9 +9,9 @@ function ViewStock() {
 
     useEffect(() => {
 
-        const stockUrl = "https://sparkle-api.onrender.com/inventory/viewStock"
+        const stockUrl = "/inventory/viewStock"
 
-        axios.get(stockUrl)
+        axiosApi.get(stockUrl)
             .then(res => {
               console.log(res.data.stock);
                 const stockDet = [];

@@ -26,7 +26,6 @@ function ModifyStock() {
     // const imageRef = React.useRef(null);
     // const addButtonuseRef = React.useRef(null);
 
-
     useEffect(() => {
         const getProductRefNumber = "/inventory/getProductRefNumber"
         const getCategory = "/inventory/category"
@@ -111,56 +110,61 @@ function ModifyStock() {
     };
 
     const onClickAdd = async () => {
-        const addProduct = "/inventory/addProduct"
-        await axiosApi.post(addProduct, {
-            product_name: formValues.product_name,
-            category_id: formValues.category_id,
-            qty: formValues.qty,
-            price: formValues.price,
-            product_description: formValues.product_description,
-            image: formValues.image,
-        }, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }
-        )
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                if (res.status === 200) {
-                    navigate("/viewStock");
+        handleSubmit(async () => {
+            const addProduct = "/inventory/addProduct"
+            await axiosApi.post(addProduct, {
+                product_name: formValues.product_name,
+                category_id: formValues.category_id,
+                qty: formValues.qty,
+                price: formValues.price,
+                product_description: formValues.product_description,
+                image: formValues.image,
+            }, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
                 }
             })
-            .catch((err) => console.log(err));
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    if (res.status === 200) {
+                        navigate("/viewStock");
+                    }
+                })
+                .catch((err) => console.log(err));
+        })((errors) => {
+            // handle form validation errors here
+        });
     };
 
     const onClickModify = async () => {
+        handleSubmit(async (data) => {
+            const modifyProductUrl = "/inventory/updateStock/" + formValues._id
+            console.log(formValues)
 
-        const modifyProductUrl = "/inventory/updateStock/" + formValues._id
-        console.log(formValues)
-
-        await axiosApi.put(modifyProductUrl, {
-            product_name: formValues.product_name,
-            category_id: formValues.category_id,
-            qty: formValues.qty,
-            price: formValues.price,
-            product_description: formValues.product_description,
-            ...(formValues.image instanceof File && { image: formValues.image })
-        }, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                if (res.status === 200) {
-                    navigate("/viewStock");
+            await axiosApi.put(modifyProductUrl, {
+                product_name: formValues.product_name,
+                category_id: formValues.category_id,
+                qty: formValues.qty,
+                price: formValues.price,
+                product_description: formValues.product_description,
+                ...(formValues.image instanceof File && { image: formValues.image })
+            }, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
                 }
             })
-            .catch((err) => console.log(err));
-
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    if (res.status === 200) {
+                        navigate("/viewStock");
+                    }
+                })
+                .catch((err) => console.log(err));
+        })((errors) => {
+            // handle form validation errors here
+        });
     };
 
     return (
@@ -172,7 +176,7 @@ function ModifyStock() {
             margin: 'normal'
         }}>
             <CssBaseline />
-            <Box noValidate
+            <Box component="form" noValidate
                 // sx={{}}
                 sx={{
                     mt: 1, marginTop: 8,
@@ -416,13 +420,13 @@ function ModifyStock() {
                         // }}
                         // inputRef={imageRef}
                         name="image"
-                        {...register("image", {
-                            onChange: (e) => { handleInputChange(e) },
-                            required: "Image is required",
-                            pattern: {
-                                message: "Please select an Image"
-                            }
-                        })}
+                        // {...register("image", {
+                        //     onChange: (e) => { handleInputChange(e) },
+                        //     required: "Image is required",
+                        //     pattern: {
+                        //         message: "Please select an Image"
+                        //     }
+                        // })}
                         error={Boolean(errors.image)}
                         helperText={errors.image?.message}
                         fullWidth
@@ -430,28 +434,12 @@ function ModifyStock() {
                     />
                     <p>Selected File: {formValues.image_name}</p>
                 </Grid>
-                {/* <Grid item>
-                                    <CustomButton
-                                        //ref={focusNextRef}
-                                        label="Modify"
-                                        type="submit"
-                                    />
-                          
-                                    <CustomButton
-                                        //ref={focusNextRef}
-                                        label="Add"
-                                        type="submit"
-                                        
-                                    />
-                               
-                                </Grid> */}
                 <Grid item>
                     <Button style={{
                         margin: "20px", backgroundColor: '#444454',
                         color: '#bab79d', borderColor: '#b28faa', height: 50, width: 150,
                         borderRadius: 7
                     }} variant="contained"
-                        //ref={addButtonuseRef}
                         onClick={onClickAdd}
                     >
                         Add
