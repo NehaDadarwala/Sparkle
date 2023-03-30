@@ -18,19 +18,19 @@ function ModifyStock() {
     const [category, setCategory] = useState([]);
 
     const location = useLocation();
-    const productNameuseRef = React.useRef(null);
-    const categoryuseRef = React.useRef(null);
-    const qtyuseRef = React.useRef(null);
-    const priceuseRef = React.useRef(null);
-    const descriptionuseRef = React.useRef(null);
-    const imageRef = React.useRef(null);
-    const addButtonuseRef = React.useRef(null);
+    // const productNameuseRef = React.useRef(null);
+    // const categoryuseRef = React.useRef(null);
+    // const qtyuseRef = React.useRef(null);
+    // const priceuseRef = React.useRef(null);
+    // const descriptionuseRef = React.useRef(null);
+    // const imageRef = React.useRef(null);
+    // const addButtonuseRef = React.useRef(null);
 
 
     useEffect(() => {
 
         const getProductReferenceUrl = // "localhost:3000/inventory/getProductRefNumber"
-        "https://sparkle-api.onrender.com/inventory/getProductRefNumber";
+            "https://sparkle-api.onrender.com/inventory/getProductRefNumber";
 
         const getCategory = "https://sparkle-api.onrender.com/inventory/category"
 
@@ -73,9 +73,13 @@ function ModifyStock() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const handleInputChange = (e) => {
         console.log(e.target.label);
-        const { name, value } = e.target;
+        const target = e.target;
+        const value = target.type === 'file' ? target.files[0] : target.value;
+        const name = target.name;
+
         console.log("name = " + name);
         console.log("value" + value);
+
         setFormValues({
             ...formValues,
             [name]: value,
@@ -92,7 +96,7 @@ function ModifyStock() {
         }
         console.log(formValues)
     }
-    
+
     const navigate = useNavigate();
 
     const getRefundProducts = () => {
@@ -107,32 +111,34 @@ function ModifyStock() {
         })
     };
 
-    const onClickAdd = () => {
+    const onClickAdd = async () => {
 
         const addProductUrl = "https://sparkle-api.onrender.com/inventory/addProduct"
         console.log(formValues)
-        axios.post(addProductUrl,{
+
+        await axios.post(addProductUrl, {
             product_name: formValues.product_name,
-            category_id : formValues.category_id,
-            qty:formValues.qty,
-            price : formValues.price,
-            product_description : formValues.product_description,
-            image :formValues.image
-            //data: formValues
-        })
-        .then(
-            res =>{console.log(res);
-            console.log(res.data);
-            if(res.status === 200)
-            {
-                navigate("/viewStock")
+            category_id: formValues.category_id,
+            qty: formValues.qty,
+            price: formValues.price,
+            product_description: formValues.product_description,
+            image: formValues.image,
+        }, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
             }
-            else if(res.status === 401)
-            {
-            
-            }
-        })
-    }
+        }
+        )
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                if (res.status === 200) {
+                    navigate("/viewStock");
+                }
+            })
+            .catch((err) => console.log(err));
+    };
+
     return (
         <Grid container spacing={2} alignItems="center" style={{
             display: 'flex',
@@ -141,7 +147,7 @@ function ModifyStock() {
             flexDirection: 'column'
         }}>
             <CssBaseline />
-            <Box component="form" onSubmit={handleSubmit(onClickAdd)} noValidate
+            <Box noValidate
                 // sx={{}}
                 sx={{
                     mt: 1, marginTop: 8,
@@ -167,17 +173,17 @@ function ModifyStock() {
                 }>
                     <TextField
                         autoFocus
-                        inputProps={{
-                            onKeyPress: event => {
-                                const { key } = event;
-                                console.log(key);
-                                if (key === "Enter") {
-                                    categoryuseRef.current.focus();
-                                }
-                            },
-                            autoComplete: "off",
-                            defaultValue: formValues.product_name,
-                        }}
+                        // inputProps={{
+                        //     onKeyPress: event => {
+                        //         const { key } = event;
+                        //         console.log(key);
+                        //         if (key === "Enter") {
+                        //             categoryuseRef.current.focus();
+                        //         }
+                        //     },
+                        //     autoComplete: "off",
+                        //     defaultValue: formValues.product_name,
+                        // }}
                         fullWidth
                         inputRef={refNumber}
                         label="Product Name"
@@ -255,16 +261,16 @@ function ModifyStock() {
                     <TextField
                         value={formValues.qty}
                         type="number"
-                        inputProps={{
-                            onKeyPress: event => {
-                                const { key } = event;
-                                console.log(key);
-                                if (key === "Enter") {
-                                    priceuseRef.current.focus();
-                                }
-                            }
-                        }}
-                        inputRef={qtyuseRef}
+                        // inputProps={{
+                        //     onKeyPress: event => {
+                        //         const { key } = event;
+                        //         console.log(key);
+                        //         if (key === "Enter") {
+                        //             priceuseRef.current.focus();
+                        //         }
+                        //     }
+                        // }}
+                        // inputRef={qtyuseRef}
                         name="qty"
                         label="Qty"
                         id="productQty"
@@ -286,16 +292,16 @@ function ModifyStock() {
                     <TextField
                         type="number"
                         value={formValues.price}
-                        inputProps={{
-                            onKeyPress: event => {
-                                const { key } = event;
-                                console.log(key);
-                                if (key === "Enter") {
-                                    descriptionuseRef.current.focus();
-                                }
-                            }
-                        }}
-                        inputRef={priceuseRef}
+                        // inputProps={{
+                        //     onKeyPress: event => {
+                        //         const { key } = event;
+                        //         console.log(key);
+                        //         if (key === "Enter") {
+                        //             descriptionuseRef.current.focus();
+                        //         }
+                        //     }
+                        // }}
+                        // inputRef={priceuseRef}
                         name="price"
                         label="Price"
                         style={{
@@ -321,16 +327,16 @@ function ModifyStock() {
                     <TextField
                         multiline
                         rows={3}
-                        inputProps={{
-                            onKeyPress: event => {
-                                const { key } = event;
-                                console.log(key);
-                                if (key === "Enter") {
-                                    imageRef.current.focus();
-                                }
-                            }
-                        }}
-                        inputRef={descriptionuseRef}
+                        // inputProps={{
+                        //     onKeyPress: event => {
+                        //         const { key } = event;
+                        //         console.log(key);
+                        //         if (key === "Enter") {
+                        //             imageRef.current.focus();
+                        //         }
+                        //     }
+                        // }}
+                        // inputRef={descriptionuseRef}
                         margin="normal"
                         fullWidth
                         label="Description"
@@ -355,17 +361,17 @@ function ModifyStock() {
                     <TextField
                         type="file"
                         id="outlined-image"
-                        value={formValues.image}
-                        inputProps={{
-                            onKeyPress: event => {
-                                const { key } = event;
-                                console.log(key);
-                                if (key === "Enter") {
-                                    addButtonuseRef.current.focus();
-                                }
-                            }
-                        }}
-                        inputRef={imageRef}
+                        //value={formValues.image}
+                        // inputProps={{
+                        //     onKeyPress: event => {
+                        //         const { key } = event;
+                        //         console.log(key);
+                        //         if (key === "Enter") {
+                        //             addButtonuseRef.current.focus();
+                        //         }
+                        //     }
+                        // }}
+                        // inputRef={imageRef}
                         name="image"
                         {...register("image", {
                             onChange: (e) => { handleInputChange(e) },
@@ -399,9 +405,8 @@ function ModifyStock() {
                         margin: "20px", backgroundColor: '#444454',
                         color: '#bab79d', borderColor: '#b28faa', height: 50, width: 150,
                         borderRadius: 7
-
-                    }} variant="contained" type="submit"
-                        ref={addButtonuseRef}
+                    }} variant="contained"
+                        //ref={addButtonuseRef}
                         onClick={onClickAdd}
                     >
                         Add
