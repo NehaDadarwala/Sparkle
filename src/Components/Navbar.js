@@ -27,8 +27,8 @@ function CollapsibleExample() {
               <NavDropdown.Item href="/track" >Special Order</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Inventory" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="/viewStock">View</NavDropdown.Item>
-              <NavDropdown.Item href="/modifyStock" >Modify Stock</NavDropdown.Item>
+              <NavDropdown.Item href="/viewStock">View Stock</NavDropdown.Item>
+              <NavDropdown.Item href="/modifyStock" >Add/Modify Stock</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="User Management" id="collasible-nav-dropdown">
               <NavDropdown.Item href="/Register">Add Employee</NavDropdown.Item>
