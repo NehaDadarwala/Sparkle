@@ -1,9 +1,12 @@
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '../../Components/CustomButton';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
-const BillDetails = () => {
+
+const RepairList = () => {
     // const [rows, setRows] = useState([]);
 
     const navigate = useNavigate();
@@ -49,9 +52,9 @@ const BillDetails = () => {
         },
         
         {
-            field: 'Date',
-            headerName: 'Date',
-            type: 'Date',
+            field: 'bag',
+            headerName: 'Bag number',
+            type: 'number',
             width: '150',
             align: 'left',
             headerAlign: "left",
@@ -64,11 +67,24 @@ const BillDetails = () => {
             }
         },
     ];
+    const [rows, setRows] = useState([]);
+    // const rows = [
+    //     { id: '01',InvoiceID: 'R10010', customerName:'Jane Doe', phoneNumber: '1234556677', Status: 'new', Amount: 60.77, bag: '12344'},
+    //     { id: '02',InvoiceID: 'R12300',  customerName:'David Warren',phoneNumber: '1234556677', Status: 'new', Amount: 140,bag: '12344' },
+    // ];
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('https://sparkle-api.onrender.com/repair/list');
+            setRows(response.data.list);
+          } catch (error) {
+            console.error(error);
+          }
+        };
     
-    const rows = [
-        { id: '01',InvoiceID: 'R10010', customerName:'Jane Doe', phoneNumber: '1234556677', Status: 'new', Amount: 60.77, Date:'2023-02-08'},
-        { id: '02',InvoiceID: 'R12300',  customerName:'David Warren',phoneNumber: '1234556677', Status: 'new', Amount: 140, Date:'2023-02-16'},
-    ];
+        fetchData();
+      }, []);
     
 
     return (
@@ -96,4 +112,4 @@ const BillDetails = () => {
     )
 }
 
-export default BillDetails
+export default RepairList

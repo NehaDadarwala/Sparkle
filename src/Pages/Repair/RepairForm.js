@@ -3,25 +3,40 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import './modal.css';
 import CustomButton from '../../Components/CustomButton';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Swal from 'sweetalert2';
-  
+import axios from 'axios';
+
+
 const RepairForm = () => {
-  const [phone, setPhone] = useState('');
-  const [bag, setBag] = useState('');
-  const [name, setFname] = useState('');
-  const [desc, setDesc] = useState('');
-  const [cost, setCost]= useState('');
+  const [phonenum, setPhone] = useState('');
+  const [bagnum, setBag] = useState('');
+  const [cusname, setFname] = useState('');
+  const [description, setDesc] = useState('');
+  const [repaircost, setCost] = useState('');
   const [status, setStatus] = useState('');
-  const [instruction, setInstruction]= useState('');
+  const [instruction, setInstruction] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (phone === '' || bag === '' || name === '' || desc === '' || cost === '' || status === '' || instruction === '') {
+    if (phonenum === '' || bagnum === '' || cusname === '' || description === '' || repaircost === '' || status === '' || instruction === '') {
       setFormSubmitted(true);
       return;
-    }else 
+    }
+    let jsonObj = {
+      phonenum: phonenum,
+      bagnum: bagnum,
+      status: status,
+      instruction: instruction,
+      cusname: cusname,
+      description: description,
+      repaircost: repaircost,
+
+    }
+    console.log("JSON OBJECT", jsonObj)
+    axios.post('https://sparkle-api.onrender.com/repair/create', jsonObj)
+    //.then(function (response) {
     Swal.fire({
       title: 'Repair Added Successfully ',
       position: 'top-end',
@@ -29,17 +44,20 @@ const RepairForm = () => {
       showConfirmButton: false,
       timer: 1500
     }).then(function () {
-      window.location.href = "/create";
-  })
-    
-}
-  const phoneError = phone === '' && formSubmitted; 
-  const bagError = bag === ''&& formSubmitted;
-  const nameError = name === ''&& formSubmitted;
-  const descError = desc === ''&& formSubmitted;
-  const costError = cost === ''&& formSubmitted;
-  const statusError = status === ''&& formSubmitted;
-  const instructionError = instruction === ''&& formSubmitted;
+      window.location.href = "/createRepair";
+
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  const phoneError = phonenum === '' && formSubmitted;
+  const bagError = bagnum === '' && formSubmitted;
+  const nameError = cusname === '' && formSubmitted;
+  const descError = description === '' && formSubmitted;
+  const costError = repaircost === '' && formSubmitted;
+  const statusError = status === '' && formSubmitted;
+  const instructionError = instruction === '' && formSubmitted;
 
   const handlePhoneChange = (event) => {
     setPhone(event.target.value);
@@ -62,111 +80,124 @@ const RepairForm = () => {
   const handleInstructionChange = (event) => {
     setInstruction(event.target.value);
   };
-  
-  
-    return (
-        <div style={{ marginTop: '5%' }}>
-      <form >
-        <Grid container alignItems="center"  direction="column">
-        <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 3, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-          <Grid item>
-            <TextField
-              id="outlined-basic"
-              label="Phone Number*"
-              type="number"
-              value={phone}
-              error={phoneError}
-              onChange={handlePhoneChange}
-              helperText={phoneError ? 'This field is required' : ''}
-            />
-            <TextField
-              id="outlined-multiline"
-              label="Repair Bag Number*"
-              type="number"
-              value={bag}
-              error={bagError}
-              onChange={handleBagChange}
-              helperText={bagError ? 'This field is required' : ''}
-            />
-            
-          </Grid>
-          <Grid item>
-            <TextField
-              label="Name*"
-              type="text"
-              name="fname"
-              value={name}
-              error={nameError}
-              onChange={handleNameChange}
-              helperText={nameError ? 'This field is required' : ''}
-            />
-            
-            <TextField
-              label="Description*"
-              type="text"
-              name="description"
-              value={desc}
-              error={descError}
-              onChange={handleDescChange}
-              helperText={descError ? 'This field is required' : ''}
-            />
-            
-          </Grid>
-          <Grid item>
-            <TextField
-              label="Estimated Cost*"
-              type="number"
-              name="cost"
-              value={cost}
-              error={costError}
-              onChange={handleCostChange}
-              helperText={costError ? 'This field is required' : ''}
-            />
-            <TextField
-              label="Status*"
-              type="text"
-              name="rstatus"
-              value={status}
-              error={statusError}
-              onChange={handleStatusChange}
-              helperText={statusError ? 'This field is required' : ''}
-            />
-          </Grid>
-          <Grid>
-            <TextField
-                label="Repair Instruction*"
-                type="text"
-                style={{width:'92%'}}
-                value={instruction}
-                error={instructionError}
-              onChange={handleInstructionChange}
-              helperText={instructionError ? 'This field is required' : ''}
-            />
-          </Grid>
 
-          <Grid item>
-            
-            <CustomButton onclickFunction={handleSubmit}
-              label="Create"
-               type="submit"
-              
+
+
+  const inputRef = useRef(null);
+
+  const handleFocus = () => {
+    inputRef.current.setNativeProps({ textAlign: 'left' });
+  };
+
+  return (
+    <div style={{ marginTop: '5%' }}>
+      <form >
+        <Grid container alignItems="center" direction="column">
+          <Box
+            component="form"
+            sx={{
+              '& .MuiTextField-root': { m: 3, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <Grid item>
+              <TextField
+                id="outlined-basic"
+                label="Phone Number*"
+                type="number"
+                value={phonenum}
+                error={phoneError}
+                onChange={handlePhoneChange}
+                helperText={phoneError ? 'This field is required' : ''}
+              />
+              <TextField
+                id="outlined-multiline"
+                label="Repair Bag Number*"
+                type="number"
+                value={bagnum}
+                error={bagError}
+                onChange={handleBagChange}
+                helperText={bagError ? 'This field is required' : ''}
               />
 
-          </Grid>
+            </Grid>
+            <Grid item>
+              <TextField
+                label="Name*"
+                type="text"
+                name="fname"
+                value={cusname}
+                error={nameError}
+                onChange={handleNameChange}
+                helperText={nameError ? 'This field is required' : ''}
+                ref={inputRef}
+                style={{ textAlign: 'left' }}
+                onFocus={handleFocus}
+              />
+
+              <TextField
+                label="Description*"
+                type="text"
+                name="description"
+                value={description}
+                error={descError}
+                onChange={handleDescChange}
+                helperText={descError ? 'This field is required' : ''}
+                style={{ textAlign: 'left' }}
+              />
+
+            </Grid>
+            <Grid item>
+              <TextField
+                label="Estimated Cost*"
+                type="number"
+                name="cost"
+                value={repaircost}
+                error={costError}
+                onChange={handleCostChange}
+                helperText={costError ? 'This field is required' : ''}
+              />
+              <TextField
+                label="Status*"
+                type="text"
+                name="rstatus"
+                value={status}
+                error={statusError}
+                onChange={handleStatusChange}
+                helperText={statusError ? 'This field is required' : ''}
+                style={{ textAlign: 'left' }}
+              />
+            </Grid>
+            <Grid>
+              <TextField
+                label="Repair Instruction*"
+                type="text"
+                style={{ width: '92%', textAlign: 'left' }}
+                value={instruction}
+                error={instructionError}
+                onChange={handleInstructionChange}
+                helperText={instructionError ? 'This field is required' : ''}
+
+              />
+            </Grid>
+
+            <Grid item>
+
+              <CustomButton onclickFunction={handleSubmit}
+                label="Create"
+                type="submit"
+
+              />
+
+            </Grid>
           </Box>
         </Grid>
-        
+
       </form>
-      
-        </div>
-    )
+
+    </div>
+  )
 }
 
 export default RepairForm
