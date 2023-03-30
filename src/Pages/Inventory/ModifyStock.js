@@ -59,6 +59,7 @@ function ModifyStock() {
 
 
         const defaultValues = {
+            _id: location.state !== null ? location.state._id : "",
             product_name: location.state !== null ? location.state.product_name : "",
             category_id: location.state !== null ? location.state.category_id : "",
             qty: location.state !== null ? location.state.qty : "",
@@ -68,6 +69,7 @@ function ModifyStock() {
         };
 
         setFormValues(location.state == null ? defaultValues : location.state);
+        console.log(formValues)
     }, [location.state]);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -144,7 +146,8 @@ function ModifyStock() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            margin: 'normal'
         }}>
             <CssBaseline />
             <Box noValidate
@@ -157,13 +160,18 @@ function ModifyStock() {
                 {/*  */}
                 <Grid item>
                     <Autocomplete
-                        margin="normal"
+                        //margin="normal"
                         disablePortal
                         id="productRefNumber"
-                        value={formValues.product_ref_number}
+                        value={{ label: formValues.product_ref_number }}
                         options={refNumber}
                         ListboxProps={{ style: { maxHeight: 150 } }}
-                        renderInput={(params) => <TextField {...params} style={{ alignItems: "right" }} label="Product Reference Number" size='small' />}
+                        renderInput={(params) =>
+                            <TextField {...params}
+                                style={{ alignItems: "right" }}
+                                defaultValue={formValues.product_ref_number}
+                                label="Product Reference Number"
+                                size='small' />}
                     />
                 </Grid>
                 <Grid item style={
@@ -198,6 +206,7 @@ function ModifyStock() {
                         })}
                         error={Boolean(errors.product_name)}
                         helperText={errors.product_name?.message}
+                        required
                     />
                 </Grid>
                 <Grid item style={
@@ -242,15 +251,25 @@ function ModifyStock() {
                             />
                         )}
                     /> */}
+
                     <Autocomplete
                         id="category"
                         options={category}
-                        value={category.find(c => c._id === formValues.category_id)}
+                        // value={category.find(c => c._id === formValues.category_id)}    
+                        //value={{ label: }}
+                        value={
+                            category.find((c) => c._id === formValues.category_id) || { label: "" }
+                        }
                         onChange={handleCategoryChange}
                         getOptionLabel={(option) => option.label}
+                        getOptionSelected={(option, value) => option._id === value._id}
                         renderInput={(params) => (
-                            <TextField {...params} label="Category" variant="outlined" />
+                            <TextField {...params} label="Category" variant="outlined"
+                            required
+                            //defaultValue={category.find(c => c._id === formValues.category_id)}
+                            />
                         )}
+                        
                     />
 
                 </Grid>
@@ -288,6 +307,7 @@ function ModifyStock() {
                         })}
                         error={Boolean(errors.qty)}
                         helperText={errors.qty?.message}
+                        required
                     />
                     <TextField
                         type="number"
@@ -318,6 +338,7 @@ function ModifyStock() {
                         })}
                         error={Boolean(errors.price)}
                         helperText={errors.price?.message}
+                        required
                     />
                 </Grid>
                 <Grid item style={
@@ -351,7 +372,7 @@ function ModifyStock() {
                         })}
                         error={Boolean(errors.product_description)}
                         helperText={errors.product_description?.message}
-
+                        required
                     />
                 </Grid>
                 <Grid item style={
@@ -383,6 +404,7 @@ function ModifyStock() {
                         error={Boolean(errors.image)}
                         helperText={errors.image?.message}
                         fullWidth
+                        required
                     />
                 </Grid>
                 {/* <Grid item>
