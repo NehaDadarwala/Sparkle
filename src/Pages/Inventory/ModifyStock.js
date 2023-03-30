@@ -30,7 +30,7 @@ function ModifyStock() {
     useEffect(() => {
 
         const getProductReferenceUrl = // "localhost:3000/inventory/getProductRefNumber"
-            "https://sparkle-api.onrender.com/inventory/getProductRefNumber"
+        "https://sparkle-api.onrender.com/inventory/getProductRefNumber";
 
         const getCategory = "https://sparkle-api.onrender.com/inventory/category"
 
