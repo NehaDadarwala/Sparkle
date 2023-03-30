@@ -20,7 +20,7 @@ const Invoice = () => {
     };
 
     useEffect(() => {
-        // console.log("INPUT :: ", location.state.data.products)
+        console.log("INPUT :: ", location.state.data)
         if (location.state.data.products.length > 2) {
             setTax(Math.round(location.state.data.products.slice(-2)[0].price * 100) / 100)
             setTotal(Math.round(location.state.data.products.slice(-1)[0].price * 100) / 100)
