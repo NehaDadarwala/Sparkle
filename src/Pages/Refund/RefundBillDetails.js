@@ -117,7 +117,7 @@ const RefundBillDetails = () => {
                     "_id": generateBillNumber(),
                     "customerName": location.state.customerName,
                     "orderDate": todaysDate.toISOString().split('T')[0],
-                    "products": selectedRows,
+                    "products": rows,
                     "paymentDetails": {
                         "paymentMode": paymentMode,
                         "accountHolder": formValues[0],
