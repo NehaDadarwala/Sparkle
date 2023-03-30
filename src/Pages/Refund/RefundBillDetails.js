@@ -43,7 +43,9 @@ const RefundBillDetails = () => {
     const [paymentMode, setPaymentMode] = useState('Credit Card');
 
     const insertRefundInvoice = async (data) => {
-        data.products = data.products.slice(0, -2)
+        // console.log("ROWS: ", rows)
+        // console.log("SELECTED ROWS: ", selectedRows )
+
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
@@ -51,7 +53,7 @@ const RefundBillDetails = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            data: data
+            data: selectedRows
         };
         try {
             var response = await axios(config);
@@ -115,7 +117,7 @@ const RefundBillDetails = () => {
                     "_id": generateBillNumber(),
                     "customerName": location.state.customerName,
                     "orderDate": todaysDate.toISOString().split('T')[0],
-                    "products": rows,
+                    "products": selectedRows,
                     "paymentDetails": {
                         "paymentMode": paymentMode,
                         "accountHolder": formValues[0],
