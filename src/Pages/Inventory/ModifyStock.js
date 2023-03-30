@@ -61,12 +61,13 @@ function ModifyStock() {
             qty: location.state !== null ? location.state.qty : "",
             price: location.state !== null ? location.state.price : "",
             product_description: location.state !== null ? location.state.product_description : "",
-            product_ref_number: location.state !== null ? location.state.product_ref_number : ""
+            product_ref_number: location.state !== null ? location.state.product_ref_number : "",
+            image: location.state !== null ? location.state.image : "",
         };
 
         setFormValues(location.state == null ? defaultValues : location.state);
         console.log(formValues)
-    }, [location.state]);
+    }, [location.state], []);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const handleInputChange = (e) => {
@@ -145,13 +146,12 @@ function ModifyStock() {
             qty: formValues.qty,
             price: formValues.price,
             product_description: formValues.product_description,
-            image: formValues.image,
+            ...(formValues.image instanceof File && { image: formValues.image })
         }, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
-        }
-        )
+        })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
@@ -460,8 +460,8 @@ function ModifyStock() {
                         margin: "20px", backgroundColor: '#444454',
                         color: '#bab79d', borderColor: '#b28faa', height: 50, width: 150,
                         borderRadius: 7
-                    }} variant="contained" 
-                    onClick={onClickModify}
+                    }} variant="contained"
+                        onClick={onClickModify}
                     >
                         Modify
                     </Button>
