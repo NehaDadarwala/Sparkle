@@ -9,7 +9,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import axios from 'axios';
+import axiosApi from '../../Common/AxiosApi';
 
 function ModifyStock() {
 
@@ -28,13 +28,9 @@ function ModifyStock() {
 
 
     useEffect(() => {
-
-        const getProductReferenceUrl = // "localhost:3000/inventory/getProductRefNumber"
-            "https://sparkle-api.onrender.com/inventory/getProductRefNumber";
-
-        const getCategory = "https://sparkle-api.onrender.com/inventory/category"
-
-        axios.get(getProductReferenceUrl)
+        const getProductRefNumber = "/inventory/getProductRefNumber"
+        const getCategory = "/inventory/category"
+        axiosApi.get(getProductRefNumber)
             .then(res => {
                 console.log(res.data);
                 const refDet = [];
@@ -45,7 +41,7 @@ function ModifyStock() {
                 });
             });
 
-        axios.get(getCategory)
+        axiosApi.get(getCategory)
             .then(res => {
                 console.log(res.data);
                 const cateDet = [];
@@ -114,11 +110,8 @@ function ModifyStock() {
     };
 
     const onClickAdd = async () => {
-
-        const addProductUrl = "https://sparkle-api.onrender.com/inventory/addProduct"
-        console.log(formValues)
-
-        await axios.post(addProductUrl, {
+        const addProduct = "/inventory/addProduct"
+        await axiosApi.post(addProduct, {
             product_name: formValues.product_name,
             category_id: formValues.category_id,
             qty: formValues.qty,
@@ -139,6 +132,35 @@ function ModifyStock() {
                 }
             })
             .catch((err) => console.log(err));
+    };
+
+    const onClickModify = async () => {
+
+        const modifyProductUrl = "/inventory/updateStock/" + formValues._id
+        console.log(formValues)
+
+        await axiosApi.put(modifyProductUrl, {
+            product_name: formValues.product_name,
+            category_id: formValues.category_id,
+            qty: formValues.qty,
+            price: formValues.price,
+            product_description: formValues.product_description,
+            image: formValues.image,
+        }, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+        )
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                if (res.status === 200) {
+                    navigate("/viewStock");
+                }
+            })
+            .catch((err) => console.log(err));
+
     };
 
     return (
@@ -265,11 +287,11 @@ function ModifyStock() {
                         getOptionSelected={(option, value) => option._id === value._id}
                         renderInput={(params) => (
                             <TextField {...params} label="Category" variant="outlined"
-                            required
+                                required
                             //defaultValue={category.find(c => c._id === formValues.category_id)}
                             />
                         )}
-                        
+
                     />
 
                 </Grid>
@@ -406,6 +428,7 @@ function ModifyStock() {
                         fullWidth
                         required
                     />
+                    <p>Selected File: {formValues.image_name}</p>
                 </Grid>
                 {/* <Grid item>
                                     <CustomButton
@@ -437,7 +460,9 @@ function ModifyStock() {
                         margin: "20px", backgroundColor: '#444454',
                         color: '#bab79d', borderColor: '#b28faa', height: 50, width: 150,
                         borderRadius: 7
-                    }} variant="contained" type="submit">
+                    }} variant="contained" 
+                    onClick={onClickModify}
+                    >
                         Modify
                     </Button>
                 </Grid>
