@@ -43,6 +43,7 @@ const RefundBillDetails = () => {
     const [paymentMode, setPaymentMode] = useState('Credit Card');
 
     const insertRefundInvoice = async (data) => {
+        console.log("DATA 1:: ", data);
         let dbJson = JSON.parse(JSON.stringify(data));
         dbJson.products = selectedRows
         let config = {
@@ -56,6 +57,7 @@ const RefundBillDetails = () => {
         };
         try {
             var response = await axios(config);
+            console.log("DATA 2 :: ", data);
             console.log(JSON.stringify(response.data));
             navigate('/invoice', {
                 replace: true,
