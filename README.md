@@ -31,6 +31,7 @@ password: Test@123
 * [React Bootstrap](https://www.npmjs.com/package/react-bootstrap) - Front-end Library
 * [Material UI](https://mui.com/) - React Component Library
 * [Netlify](https://www.netlify.com/) - Cloud Application Platform
+* [Axios](https://www.npmjs.com/package/axios) - Promised-based HTTP client for JavaScript
 
 **
 
