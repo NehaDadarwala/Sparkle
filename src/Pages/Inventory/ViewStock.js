@@ -16,17 +16,14 @@ function ViewStock() {
               console.log(res.data.stock);
                 const stockDet = [];
                 stockDet.push(res.data.stock);
-                //const dataUrl = `data:${response.headers['content-type']};base64,${Buffer.from(response.data.i, 'binary').toString('base64')}`;
-                
-                //const imageUrl = ;
-
+                console.log(stock)
                 stockDet.map((stock) => {
                     setStock(stock);
                     return(<></>)
                 });
             });
         console.log(stock);
-    }
+    },[]
 
     );
  

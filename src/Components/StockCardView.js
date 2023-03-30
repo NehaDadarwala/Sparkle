@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
 import { Grid } from '@mui/material';
 import { Container } from '@mui/system';
+import { Buffer } from 'buffer';
 
 const StockCardView = (props) => {
 
@@ -26,12 +27,12 @@ const StockCardView = (props) => {
           style={{ marginTop: "1%" }}
         >
           {props.stock.map((stock, index) => {
+             const imgData = new Buffer(stock.image.data.data).toString('base64');
             return (
               <Grid item xs={12} sm={6} md={4}>
-                <Card sx={{ maxWidth: 345, margin: 5 }}>
-                  {/* <img src={`data:image/png;base64,${base64String}`} alt="" /> */}
+                <Card sx={{ maxWidth: 345, margin: 5 }}>                  
                   <CardMedia component="img"
-                    image={'https://sparkle-api.onrender.com/public/images/' + stock.image}
+                    image={`data:image/png;base64,${imgData}`}
                     sx={{ height: 300 }} //temp
                     title={stock.product_name}
                   />
