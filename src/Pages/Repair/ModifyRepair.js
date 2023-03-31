@@ -52,23 +52,13 @@ const ModifyRepair = () => {
           showConfirmButton: false,
           timer: 1500
         }).then(function () {
-          window.location.href = "/Profile";
+          window.location.href = "/track";
         });
       })
       .catch((error) => {
         console.log(error);
       });
   }
-
-      Swal.fire({
-        title: 'Status Changed Successfully ',
-        position: 'top-end',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      }).then(function () {
-        window.location.href = "/Profile";
-      })
   }
   return (
 
