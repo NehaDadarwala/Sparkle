@@ -76,7 +76,9 @@ function ModifyStock() {
 
     }, [location.state], []);
 
-    const { register, handleSubmit, formState: { errors } } = useForm({defaultValues: location.state});
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: location.state
+    });
 
     const handleInputChange = async (e) => {
         console.log(e.target.label);
@@ -198,7 +200,7 @@ function ModifyStock() {
                     timer: 2000,
                     showConfirmButton: false
                 }).then(function () {
-                    setFormValues(defaultValues);
+                    //setFormValues(defaultValues);
                 })
             }
 
@@ -277,7 +279,7 @@ function ModifyStock() {
                     timer: 2000,
                     showConfirmButton: false
                 }).then(function () {
-                    setFormValues(defaultValues);
+                    //setFormValues(defaultValues);
                 })
             }
 
@@ -345,9 +347,18 @@ function ModifyStock() {
                         value={formValues?.product_name || ''}
                         {...register("product_name", {
                             onChange: (e) => { handleInputChange(e) },
-                            required: "Product Name is required.",
+                            //required: "Product Name is required.",
                             pattern: {
                                 message: "Product Name is required"
+                            },
+                            validate: () => {
+                                const productName = formValues.product_name.trim()
+                                console.log(productName);
+                                if ( productName!== "") {
+                                    return true;
+                                } else {
+                                    return "ProductName is required";
+                                }
                             }
                         })}
                         error={Boolean(errors.product_name)}
@@ -381,9 +392,17 @@ function ModifyStock() {
                                 value={formValues.category_id}
                                 {...register("category_id", {
                                     onChange: (e) => { handleCategoryChange(e) },
-                                    required: "Category is required.",
+                                    //required: "Category is required.",
                                     pattern: {
                                         message: "Category is required"
+                                    },
+                                    validate: () => {
+                                        const cate_id = formValues.category_id.trim()
+                                        if (cate_id !=="") {
+                                            return true;
+                                        } else {
+                                            return "Category is required";
+                                        }
                                     }
                                 })
                                 }
@@ -412,10 +431,18 @@ function ModifyStock() {
                         }}
                         {...register("qty", {
                             onChange: (e) => { handleInputChange(e) },
-                            required: "Quantity is required",
+                            //required: "Quantity is required",
                             pattern: {
                                 value: /^\d+$/,
                                 message: "Quantity should be number"
+                            },
+                            validate: () => {
+                                
+                                if (formValues.qty !== "") {
+                                    return true;
+                                } else {
+                                    return "Quantity is required";
+                                }
                             }
                         })}
                         error={Boolean(errors.qty)}
@@ -434,11 +461,19 @@ function ModifyStock() {
                         }}
                         {...register("price", {
                             onChange: (e) => { handleInputChange(e) },
-                            required: "Price is required",
+                            //required: "Price is required",
                             pattern: {
                                 value: /^\d+$/,
                                 message: "Price should be number"
+                            },
+                            validate: () => {
+                                if (formValues.price !== "") {
+                                    return true;
+                                } else {
+                                    return "Price is required";
+                                }
                             }
+                            
                         })}
                         error={Boolean(errors.price)}
                         helperText={errors.price?.message}
@@ -460,9 +495,16 @@ function ModifyStock() {
                         value={formValues.product_description}
                         {...register("product_description", {
                             onChange: (e) => { handleInputChange(e) },
-                            required: "Description is required.",
+                            //required: "Description is required.",
                             pattern: {
                                 message: "Description is required"
+                            },
+                            validate: () => {
+                                if (formValues.product_description.trim().length > 0) {
+                                    return true;
+                                } else {
+                                    return "Description is required";
+                                }
                             }
                         })
                         }
