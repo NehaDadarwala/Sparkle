@@ -1,3 +1,5 @@
+// Neha Dadarwala - neha.dadarwala@dal.ca
+
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './invoice.css';

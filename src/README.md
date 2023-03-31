@@ -13,8 +13,8 @@ Sparkle is an effective tool for managing and organizing the inventory, sales, a
 * [Neha Dadarwala](neha.dadarwala@dal.ca) - *(Full Stack Developer)*
 * [Vrutika Kakadiya](vrutika.kakadiya@dal.ca) - *(Designer and Integrator)*
 * [Hargun.Chhabra](Hargun.Chhabra@dal.ca) - *(Front End Developer)*
-* [Name](email@dal.ca) - *(Role)*
-* [Name](email@dal.ca) - *(Role)*
+* [Sakshi Chaitanya Vaidya](sakshgi.vaidya@dal.ca) - *(Full Stack Developer)*
+* [Dev Pratap Singh Rajawat](dv269119@dal.ca) - *(Full Stack Developer)*
 
 
 ## Getting Started
@@ -338,5 +338,219 @@ Swal.fire({
 The code was created by adapting the code in my assignment1(https://git.cs.dal.ca/hchhabra/csci5709/-/blob/assignment1)  
 
 ```
+```
+### src\Pages\usermanagement\Listemployees.js
+
+*lines 32-37*
+
+*mycode:*
+
+```
+{people.map(person => (
+          <table key={person.name}>
+           <tr><td>Name</td><td>{person.name}</td></tr> 
+          
+           <tr><td>Role</td><td>{person.role}</td></tr> 
+          </table>
+
+```
+
+*reference code:*
+
+```
+
+            <div>
+                {Mails.map((Mail, index) => {
+                    return <h1 key={index}>{Mail.from}</h1>
+                 })}
+            </div>
+        </Layout>
+
+```
+
+```
+
+The code was created by adapting the code in my appsloveworld.com (accepted answer)(https://www.appsloveworld.com/reactjs/200/189/how-can-i-map-my-dictionary-one-element)  
+
+### Image
+
+```
+The ring image for the application is used from [FAVPNG](https://favpng.com/png_view/wedding-ring-engagement-ring-wedding-ring-diamond-cut-png/HkKEwRUM)
+```
+### Components/StockCardView.js
+
+*Lines 32 - 52*
+
+```
+ <Card sx={{ maxWidth: 345, margin: 5 }}>
+                    <CardMedia
+                        image={ring}
+                        sx={{ height: 300 }}
+                        title="Ring"
+                    />
+                    <CardContent align='left'>
+                        <Typography   name ="productName">
+                        {stock.productName}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" name="qty" >
+                            Qty : {stock.qty}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" name="price">
+                            Price : {"$" + stock.price}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small" onClick={() => navigate(path,{replace:true , state:stock}) +console.log(stock) }>Modify</Button>
+                    </CardActions>
+                </Card>
+```
+
+The code above was created by adapting the code in [Siriwat K's Github repo](https://github.com/mui/material-ui/blob/v5.11.10/docs/data/material/components/cards/ActionAreaCard.tsx) as shown below: 
+
+```
+<Card sx={{ maxWidth: 345 }}>
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          height="140"
+          image="/static/images/cards/contemplative-reptile.jpg"
+          alt="green iguana"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            Lizard
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Lizards are a widespread group of squamate reptiles, with over 6,000
+            species, ranging across all continents except Antarctica
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
+```
+
+- The code in [Siriwat K's Github repo](https://github.com/mui/material-ui/blob/v5.11.10/docs/data/material/components/cards/ActionAreaCard.tsx) was implemented by using MUI components.
+- [Siriwat K's Github repo](https://github.com/mui/material-ui/blob/v5.11.10/docs/data/material/components/cards/ActionAreaCard.tsx)'s Code was used to implement a current stock card view. 
+- [Siriwat K's Github repo](hhttps://github.com/mui/material-ui/blob/v5.11.10/docs/data/material/components/cards/ActionAreaCard.tsx)'s Code was modified to add styling and proper box format.
+
+### Pages/Inventory/ModifyStock.js
+
+*Lines 88 - 96*
+
+```
+  <Autocomplete
+                        disablePortal
+                        id="productRefNumber"
+                        value={formValues.productRefNumber}
+                        options={productRefNumber}
+                        fullWidth
+                        ListboxProps={{ style: { maxHeight: 150 } }}
+                        renderInput={(params) => <TextField {...params} label="Product Reference Number" size='small' />}
+                    />
+```
+
+The code above was created by adapting the code in [MUI Core](https://mui.com/material-ui/react-autocomplete/) as shown below: 
+
+```
+<Autocomplete
+  disablePortal
+  id="combo-box-demo"
+  options={top100Films}
+  sx={{ width: 300 }}
+  renderInput={(params) => <TextField {...params} label="Movie" />}
+/>
+```
+
+- The code in [MUI Core](https://mui.com/material-ui/react-autocomplete/) was implemented by using MUI components.
+- [MUI Core](https://mui.com/material-ui/react-autocomplete/)'s Code was used to implement a search box in modify stock. 
+- [MUI Core](https://mui.com/material-ui/react-autocomplete/)'s Code was modified by changing data to the search box and according to form style.
+
+### Pages/Inventory/ModifyStock.js
+
+*Lines 62 - 72*
+
+```
+  const getRefundProducts = () => {
+        Swal.fire({
+            title: "Product Added Successfully",
+            icon: 'success',
+            text: "Redirecting in a second...",
+            timer: 1500,
+            showConfirmButton: false
+        }).then(function () {
+            navigate("/viewStock")
+        })
+    };
+
+```
+
+The code above was created by adapting the code in [Stackoverflow](https://stackoverflow.com/questions/37358423/how-to-redirect-page-after-click-on-ok-button-on-sweet-alert) as shown below: 
+
+```
+swal({
+  title: "Success!",
+  text: "Redirecting in 2 seconds.",
+  type: "success",
+  timer: 2000,
+  showConfirmButton: false
+}, function(){
+      window.location.href = "//stackoverflow.com/a/37358578/797495";
+});
+```
+
+- The code in [Stackoverflow](https://stackoverflow.com/questions/37358423/how-to-redirect-page-after-click-on-ok-button-on-sweet-alert) was implemented by using sweetalert2.
+- [Stackoverflow](https://stackoverflow.com/questions/37358423/how-to-redirect-page-after-click-on-ok-button-on-sweet-alert)'s Code was used to implement an alert. 
+- [Stackoverflow](https://stackoverflow.com/questions/37358423/how-to-redirect-page-after-click-on-ok-button-on-sweet-alert)'s Code was modified by changing data according to the need for an instance the timer.
+
+### Pages/Order/InStore/CheckoutPage.js
+
+* Lines 14-38 *
+```
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return <CustomerDetails />;
+    case 1:
+      return <Review />;
+    default:
+      throw new Error('Unknown step');
+  }
+}
 
 
+
+const CheckoutPage= ()=> {
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+ ```
+ The code written by adapting the code in https://github.com/mui/material-ui/blob/v5.11.10/docs/data/material/getting-started/templates/checkout/Checkout.js
+```
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return <AddressForm />;
+    case 1:
+      return <PaymentForm />;
+    case 2:
+      return <Review />;
+    default:
+      throw new Error('Unknown step');
+  }
+}
+
+const theme = createTheme();
+
+export default function Checkout() {
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
+```

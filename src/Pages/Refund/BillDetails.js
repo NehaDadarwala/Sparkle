@@ -1,3 +1,5 @@
+// Neha Dadarwala - neha.dadarwala@dal.ca
+
 import { TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from "react";

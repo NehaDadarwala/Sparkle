@@ -1,3 +1,5 @@
+// Neha Dadarwala - neha.dadarwala@dal.ca
+
 import { useNavigate, useLocation } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import { useCallback, useEffect, useState } from "react";
