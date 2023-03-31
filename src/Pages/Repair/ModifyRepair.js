@@ -4,14 +4,18 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CustomButton from '../../Components/CustomButton';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const ModifyRepair = () => {
+  const location = useLocation();
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [bag, setBag] = useState('');
+  const [bag, setBag] = useState(location.state.bag);
+  const [_id] = useState(location.state._id)
   const [rstatus, setStatus] = useState('');
   const bagError = bag === '' && formSubmitted;
   const statusError = rstatus === '' && formSubmitted;
-
+ 
   const handleBagChange = (event) => {
     setBag(event.target.value);
   };
@@ -24,7 +28,38 @@ const ModifyRepair = () => {
     if (bag === '' || rstatus === '') {
       setFormSubmitted(true);
       return;
-    } else
+    } else {
+    const data = JSON.stringify({
+      "status": rstatus
+    });
+
+    const config = {
+      method: 'put',
+      maxBodyLength: Infinity,
+      url: `http://localhost:3000/repair/modify/${_id}`,
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        Swal.fire({
+          title: 'Status Changed Successfully ',
+          position: 'top-end',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(function () {
+          window.location.href = "/Profile";
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
       Swal.fire({
         title: 'Status Changed Successfully ',
         position: 'top-end',
@@ -62,7 +97,7 @@ const ModifyRepair = () => {
               error={statusError}
               onChange={handleStatusChange}
               helperText={statusError ? 'This field is required' : ''} >
-              <MenuItem value="Pickup">Ready to Pick up</MenuItem>
+              <MenuItem value="Ready to Pickup">Ready to Pick up</MenuItem>
               <MenuItem value="Complete">Complete</MenuItem>
               <MenuItem value="Return">Return</MenuItem>
             </TextField>

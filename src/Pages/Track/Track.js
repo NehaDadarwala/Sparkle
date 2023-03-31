@@ -42,8 +42,11 @@ const RepairList = () => {
     const navigate = useNavigate();
 
     const onModify = (row) => {
-
-        navigate('/modifyRepair', { state: row });
+        const state = {
+            _id: row._id,
+            bag: row.bag
+        };
+        navigate('/modifyRepair', { state});
 
     };
     const handleGetRowId = (e) => {

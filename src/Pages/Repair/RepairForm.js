@@ -1,3 +1,4 @@
+
 import Grid from "@material-ui/core/Grid";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -24,6 +25,27 @@ const RepairForm = () => {
       setFormSubmitted(true);
       return;
     }
+    if (phonenum.length < 9 || phonenum.length > 9) {
+      Swal.fire({
+        title: 'Phone Number must be 9 digits',
+        position: 'top-end',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    }
+    if (bagnum.length < 6 || bagnum.length > 6) {
+      Swal.fire({
+        title: 'Bag Number must be 6 digits',
+        position: 'top-end',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    }
+  
     let jsonObj = {
       phonenum: phonenum,
       bagnum: bagnum,
