@@ -20,6 +20,17 @@ function ModifyStock() {
     const [isSearched,setIsSearched] = useState("");
     const location = useLocation();
     const { isFromViewStock } = useParams();
+    
+    const defaultValues = {
+        _id: location.state !== null ? location.state._id : "",
+        product_name: location.state !== null ? location.state.product_name : "",
+        category_id: location.state !== null ? location.state.category_id : "",
+        qty: location.state !== null ? location.state.qty : "",
+        price: location.state !== null ? location.state.price : "",
+        product_description: location.state !== null ? location.state.product_description : "",
+        product_ref_number: location.state !== null ? location.state.product_ref_number : "",
+        image: location.state !== null ? location.state.image : "",
+    };
 
     //const isViewStock = new URLSearchParams(location.search).get('viewStock') === 'true';
 
@@ -49,19 +60,8 @@ function ModifyStock() {
                 });
             });
 
-
-        const defaultValues = {
-            _id: location.state !== null ? location.state._id : "",
-            product_name: location.state !== null ? location.state.product_name : "",
-            category_id: location.state !== null ? location.state.category_id : "",
-            qty: location.state !== null ? location.state.qty : "",
-            price: location.state !== null ? location.state.price : "",
-            product_description: location.state !== null ? location.state.product_description : "",
-            product_ref_number: location.state !== null ? location.state.product_ref_number : "",
-            image: location.state !== null ? location.state.image : "",
-        };
-
         setFormValues(location.state == null ? defaultValues : location.state);
+        
         console.log(formValues)
     }, [location.state], []);
 
@@ -103,6 +103,10 @@ function ModifyStock() {
                 ...formValues,
                 _id: value._id
             });
+        }
+        else
+        {
+            setFormValues(defaultValues)
         }
         setIsSearched(true)
         console.log(formValues)
@@ -204,15 +208,15 @@ function ModifyStock() {
     };
 
     return (
-        <Grid container spacing={2} alignItems="center" style={{
+        <Grid container spacing={2} alignItems="center"
+        style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            flexDirection: 'column',
             margin: 'normal'
         }}>
             <CssBaseline />
-            <Box component="form" noValidate
+            <Box component="form" noValidate autoComplete="off"
                 // sx={{}}
                 sx={{
                     mt: 1, marginTop: 8,
@@ -263,7 +267,8 @@ function ModifyStock() {
                         error={Boolean(errors.product_name)}
                         helperText={errors.product_name?.message}
                         required
-                        variant="outlined"
+                        InputLabelProps={{ shrink: true }}
+                        //variant="outlined"
                     />
                 </Grid>
                 <Grid item style={
@@ -330,7 +335,7 @@ function ModifyStock() {
                         error={Boolean(errors.qty)}
                         helperText={errors.qty?.message}
                         required
-                        variant="outlined"
+                        InputLabelProps={{ shrink: true }}
                     />
                     <TextField
                         type="number"
@@ -352,7 +357,7 @@ function ModifyStock() {
                         error={Boolean(errors.price)}
                         helperText={errors.price?.message}
                         required
-                        variant="outlined"
+                        InputLabelProps={{ shrink: true }}
                     />
                 </Grid>
                 <Grid item style={
@@ -378,7 +383,7 @@ function ModifyStock() {
                         error={Boolean(errors.product_description)}
                         helperText={errors.product_description?.message}
                         required
-                        variant="outlined"
+                        InputLabelProps={{ shrink: true }}
                     />
                 </Grid>
                 <Grid item style={
@@ -400,7 +405,7 @@ function ModifyStock() {
                         helperText={errors.image?.message}
                         fullWidth
                         required
-                        variant="outlined"
+                        InputLabelProps={{ shrink: true }}
                     />
                     <p>Previous Image: {formValues.image_name}</p>
                 </Grid>
