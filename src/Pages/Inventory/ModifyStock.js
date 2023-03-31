@@ -325,7 +325,7 @@ function ModifyStock() {
                         style={{ height: "150" }}
                         renderInput={(params) => (
                             <TextField {...params} label="Search by Reference Number" variant="outlined"
-                                required
+                                //required
                                 size="small"
                                 value={formValues._id}
                             />
