@@ -1,3 +1,5 @@
+//Auther : Sakshi Chaitanya Vaidya, B00917159
+
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -11,16 +13,16 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import axiosApi from '../../Common/AxiosApi';
 import { useParams } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+
 function ModifyStock() {
 
     const [formValues, setFormValues] = useState([])
     const [refNumber, setRefNumber] = useState([]);
     const [category, setCategory] = useState([]);
-    const [isSearched,setIsSearched] = useState("");
+    const [isSearched, setIsSearched] = useState("");
     const location = useLocation();
     const { isFromViewStock } = useParams();
-    
+
     const defaultValues = {
         _id: location.state !== null ? location.state._id : "",
         product_name: location.state !== null ? location.state.product_name : "",
@@ -61,7 +63,7 @@ function ModifyStock() {
             });
 
         setFormValues(location.state == null ? defaultValues : location.state);
-        
+
         console.log(formValues)
     }, [location.state], []);
 
@@ -104,8 +106,7 @@ function ModifyStock() {
                 _id: value._id
             });
         }
-        else
-        {
+        else {
             setFormValues(defaultValues)
         }
         setIsSearched(true)
@@ -129,26 +130,49 @@ function ModifyStock() {
     const onClickAdd = async () => {
         handleSubmit(async () => {
             const addProduct = "/inventory/addProduct"
-            await axiosApi.post(addProduct, {
-                product_name: formValues.product_name,
-                category_id: formValues.category_id,
-                qty: formValues.qty,
-                price: formValues.price,
-                product_description: formValues.product_description,
-                image: formValues.image,
-            }, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-                .then((res) => {
-                    console.log(res);
-                    console.log(res.data);
-                    if (res.status === 200) {
-                        navigate("/viewStock");
+
+            if (formValues._id === "") {
+                await axiosApi.post(addProduct, {
+                    product_name: formValues.product_name,
+                    category_id: formValues.category_id,
+                    qty: formValues.qty,
+                    price: formValues.price,
+                    product_description: formValues.product_description,
+                    image: formValues.image,
+                }, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
                     }
                 })
-                .catch((err) => console.log(err));
+                    .then((res) => {
+                        console.log(res);
+                        console.log(res.data);
+                        if (res.status === 200) {
+                            Swal.fire({
+                                title: "Product Added..!!",
+                                icon: 'success',
+                                text: "Redirecting in a second...",
+                                timer: 1500,
+                                showConfirmButton: false
+                            }).then(function () {
+                                navigate("/viewStock");
+                            })
+                        }
+                    })
+                    .catch((err) => console.log(err));
+            }
+            else {
+                Swal.fire({
+                    title: "Product is already exists.., Use Modify button to update",
+                    icon: 'warning',
+                    text: "Redirecting in a second...",
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(function () {
+                    setFormValues(defaultValues);
+                })
+            }
+
         })((errors) => {
             // handle form validation errors here
         });
@@ -174,47 +198,67 @@ function ModifyStock() {
             setIsSearched(true)
         }
         else {
-           setIsSearched(false)
+            setIsSearched(false)
         }
         console.log(isSearched)
     }, [formValues._id]);
 
 
     const onClickModify = async () => {
-
         const modifyProductUrl = "/inventory/updateStock/" + formValues._id
         console.log(formValues)
 
-        await axiosApi.put(modifyProductUrl, {
-            product_name: formValues.product_name,
-            category_id: formValues.category_id,
-            qty: formValues.qty,
-            price: formValues.price,
-            product_description: formValues.product_description,
-            ...(formValues.image instanceof File && { image: formValues.image })
-        }, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                if (res.status === 200) {
-                    navigate("/viewStock");
+        if (formValues._id !== "") {
+            await axiosApi.put(modifyProductUrl, {
+                product_name: formValues.product_name,
+                category_id: formValues.category_id,
+                qty: formValues.qty,
+                price: formValues.price,
+                product_description: formValues.product_description,
+                ...(formValues.image instanceof File && { image: formValues.image })
+            }, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
                 }
             })
-            .catch((err) => console.log(err));
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    if (res.status === 200) {
+                        Swal.fire({
+                            title: "Product Updated..!!",
+                            icon: 'success',
+                            text: "Redirecting in a second...",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(function () {
+                            navigate("/viewStock");
+                        })
+                    }
+                })
+                .catch((err) => console.log(err));
+        }
+        else {
+            Swal.fire({
+                title: "Product is not exists, please add it using Add button",
+                icon: 'warning',
+                text: "Redirecting in a second...",
+                timer: 2000,
+                showConfirmButton: false
+            }).then(function () {
+                setFormValues(defaultValues);
+            })
+        }
     };
 
     return (
         <Grid container spacing={2} alignItems="center"
-        style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: 'normal'
-        }}>
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                margin: 'normal'
+            }}>
             <CssBaseline />
             <Box component="form" noValidate autoComplete="off"
                 // sx={{}}
@@ -268,7 +312,7 @@ function ModifyStock() {
                         helperText={errors.product_name?.message}
                         required
                         InputLabelProps={{ shrink: true }}
-                        //variant="outlined"
+                    //variant="outlined"
                     />
                 </Grid>
                 <Grid item style={
