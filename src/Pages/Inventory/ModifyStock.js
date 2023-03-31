@@ -502,7 +502,7 @@ function ModifyStock() {
                         required
                         InputLabelProps={{ shrink: true }}
                     />
-                    <p>Previous Image: {formValues.image_name}</p>
+                    <p>Selecred Image: {formValues.image_name}</p>
                 </Grid>
                 <Grid item>
                     <Button style={{
