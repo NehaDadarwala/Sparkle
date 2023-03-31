@@ -32,11 +32,9 @@ const RepairForm = () => {
       cusname: cusname,
       description: description,
       repaircost: repaircost,
-
     }
     console.log("JSON OBJECT", jsonObj)
     axios.post('https://sparkle-api.onrender.com/repair/create', jsonObj)
-    //.then(function (response) {
     Swal.fire({
       title: 'Repair Added Successfully ',
       position: 'top-end',
@@ -80,8 +78,6 @@ const RepairForm = () => {
   const handleInstructionChange = (event) => {
     setInstruction(event.target.value);
   };
-
-
 
   const inputRef = useRef(null);
 

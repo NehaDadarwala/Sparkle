@@ -7,50 +7,63 @@ import axios from 'axios';
 
 
 const RepairList = () => {
-    // const [rows, setRows] = useState([]);
+
+    const [rows, setRows] = useState([]);
+
+
+    useEffect(() => {
+
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: 'http://localhost:3000/repair/list',
+            headers: {}
+        };
+        axios.request(config)
+            .then((response) => {
+                const data = response.data.list;
+                const formattedData = data.map((item) => {
+                    return {
+                        _id: item._id,
+                        name: item.name,
+                        phone: item.phone,
+                        status: item.status,
+                        cost: item.cost,
+                        bag: item.bag
+                    };
+                });
+                setRows(formattedData);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     const navigate = useNavigate();
 
     const onModify = (row) => {
-    
-            navigate('/modifyRepair', { state: row });
-        
+
+        navigate('/modifyRepair', { state: row });
+
     };
-    
+    const handleGetRowId = (e) => {
+        return e._id
+    }
+
     const columns = [
         {
-            field: 'InvoiceID',
+            field: '_id',
             headerName: 'Invoice ID',
             width: '150',
             headerAlign: "left",
         },
+
         {
-            field: 'customerName',
-            headerName: 'Customer Name',
-            width: '190',
-            headerAlign: "left",
-        },
-        {
-            field: 'phoneNumber',
+            field: 'phone',
             headerName: 'Phone Number',
             width: '190',
             headerAlign: "left",
         },
-        {
-            field: 'Status',
-            headerName: 'Status',
-            type: 'string',
-            width: '150',
-            align: 'left',
-            headerAlign: "left",
-        },
-        {
-            field: 'Amount',
-            headerName: 'Amount',
-            width: '150',
-            headerAlign: "left",
-        },
-        
         {
             field: 'bag',
             headerName: 'Bag number',
@@ -60,40 +73,46 @@ const RepairList = () => {
             headerAlign: "left",
         },
         {
-            field: 'actions', headerName: 'Actions', width: 150, align: 'center', headerAlign: "center",renderCell: (params) => {
+            field: 'name',
+            headerName: 'Customer Name',
+            width: '190',
+            headerAlign: "left",
+        },
+        {
+            field: 'cost',
+            headerName: 'Amount',
+            width: '150',
+            headerAlign: "left",
+        },
+
+        {
+            field: 'status',
+            headerName: 'Status',
+            type: 'string',
+            width: '150',
+            align: 'left',
+            headerAlign: "left",
+        },
+
+
+        {
+            field: 'actions', headerName: 'Actions', width: 150, align: 'center', headerAlign: "center", renderCell: (params) => {
                 return (
-                    <CustomButton label="Modify" type="submit" onclickFunction={() =>  onModify(params.row)}></CustomButton>
+                    <CustomButton label="Modify" type="submit" onclickFunction={() => onModify(params.row)}></CustomButton>
                 );
             }
         },
     ];
-    const [rows, setRows] = useState([]);
-    // const rows = [
-    //     { id: '01',InvoiceID: 'R10010', customerName:'Jane Doe', phoneNumber: '1234556677', Status: 'new', Amount: 60.77, bag: '12344'},
-    //     { id: '02',InvoiceID: 'R12300',  customerName:'David Warren',phoneNumber: '1234556677', Status: 'new', Amount: 140,bag: '12344' },
-    // ];
-
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.get('https://sparkle-api.onrender.com/repair/list');
-            setRows(response.data.list);
-          } catch (error) {
-            console.error(error);
-          }
-        };
-    
-        fetchData();
-      }, []);
-    
 
     return (
+
 
         <div style={{ height: 400, width: '80%', margin: 'auto', marginTop: '3%' }}>
             <DataGrid
                 GridLinesVisibility="None"
-                rows={rows} // from the database call
+                rows={rows}
                 columns={columns}
+                getRowId={handleGetRowId}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 sx={{
