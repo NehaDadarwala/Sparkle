@@ -36,7 +36,7 @@ const ModifyRepair = () => {
     const config = {
       method: 'put',
       maxBodyLength: Infinity,
-      url: `http://localhost:3000/repair/modify/${_id}`,
+      url: `https://sparkle-api.onrender.com/repair/modify/${_id}`,
       headers: { 
         'Content-Type': 'application/json'
       },
