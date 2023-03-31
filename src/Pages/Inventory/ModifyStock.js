@@ -244,7 +244,7 @@ function ModifyStock() {
                 qty: formValues.qty,
                 price: formValues.price,
                 product_description: formValues.product_description,
-                ...(formValues.image instanceof File && { image: formValues.image })
+                ...(formValues.image instanceof Blob && { image: formValues.image })
             }, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
