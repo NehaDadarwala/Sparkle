@@ -1,4 +1,8 @@
-//Auther : Sakshi Chaitanya Vaidya, B00917159
+/**
+ * Author : Sakshi Chaitanya Vaidya
+ * Banner No : B00917159
+ * Email: sakshi.vaidya@dal.ca
+ */
 
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -13,6 +17,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import axiosApi from '../../Common/AxiosApi';
 import { useParams } from 'react-router-dom';
+import imageCompression from 'browser-image-compression'; 
 
 function ModifyStock() {
 
@@ -69,7 +74,7 @@ function ModifyStock() {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const handleInputChange = (e) => {
+    const handleInputChange = async(e) => {
         console.log(e.target.label);
         const target = e.target;
         const value = target.type === 'file' ? target.files[0] : target.value;
@@ -83,6 +88,30 @@ function ModifyStock() {
             [name]: value,
         });
     };
+
+    const handleImgChange = async(e) => {
+       
+        const value = e.target.files[0]
+
+        const options = {
+            maxSizeMb: 0.05,
+            maxWidthOrHeight: 300,
+            useWebWorker: true
+          };
+
+        if (value) {
+            const compressedFile = await imageCompression(value, options);
+            console.log(compressedFile)
+            setFormValues({
+                ...formValues,
+                image: compressedFile,
+            });
+        }
+        console.log(formValues)
+    }
+    useEffect(() => {
+        console.log(formValues)
+    }, [formValues.image]);
 
     const handleCategoryChange = (event, value) => {
         console.log(value)
@@ -115,17 +144,17 @@ function ModifyStock() {
 
     const navigate = useNavigate();
 
-    const getRefundProducts = () => {
-        Swal.fire({
-            title: "Product Added Successfully",
-            icon: 'success',
-            text: "Redirecting in a second...",
-            timer: 1500,
-            showConfirmButton: false
-        }).then(function () {
-            navigate("/viewStock")
-        })
-    };
+    // const getRefundProducts = () => {
+    //     Swal.fire({
+    //         title: "Product Added Successfully",
+    //         icon: 'success',
+    //         text: "Redirecting in a second...",
+    //         timer: 1500,
+    //         showConfirmButton: false
+    //     }).then(function () {
+    //         navigate("/viewStock")
+    //     })
+    // };
 
     const onClickAdd = async () => {
         handleSubmit(async () => {
@@ -439,7 +468,7 @@ function ModifyStock() {
                         id="image"
                         name="image"
                         {...register("image", {
-                            onChange: (e) => { handleInputChange(e) },
+                            onChange: (e) => { handleImgChange(e) },
                             required: "Image is required",
                             pattern: {
                                 message: "Please select an Image"

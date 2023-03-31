@@ -1,4 +1,8 @@
-//Auther : Sakshi Chaitanya Vaidya, B00917159
+/**
+ * Author : Sakshi Chaitanya Vaidya
+ * Banner No : B00917159
+ * Email: sakshi.vaidya@dal.ca
+ */
 
 import axios from "axios";
 
