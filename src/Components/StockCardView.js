@@ -15,7 +15,7 @@ const StockCardView = (props) => {
 
   let navigate = useNavigate();
 
-  let path = '/modifyStock';
+  let path = '/modifyStock/true';
 
   return (
     <div>

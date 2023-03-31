@@ -10,21 +10,18 @@ import Swal from 'sweetalert2';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import axiosApi from '../../Common/AxiosApi';
-
+import { useParams } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 function ModifyStock() {
 
     const [formValues, setFormValues] = useState([])
     const [refNumber, setRefNumber] = useState([]);
     const [category, setCategory] = useState([]);
-
+    const [isSearched,setIsSearched] = useState("");
     const location = useLocation();
-    // const productNameuseRef = React.useRef(null);
-    // const categoryuseRef = React.useRef(null);
-    // const qtyuseRef = React.useRef(null);
-    // const priceuseRef = React.useRef(null);
-    // const descriptionuseRef = React.useRef(null);
-    // const imageRef = React.useRef(null);
-    // const addButtonuseRef = React.useRef(null);
+    const { isFromViewStock } = useParams();
+
+    //const isViewStock = new URLSearchParams(location.search).get('viewStock') === 'true';
 
     useEffect(() => {
         const getProductRefNumber = "/inventory/getProductRefNumber"
@@ -69,6 +66,7 @@ function ModifyStock() {
     }, [location.state], []);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
+
     const handleInputChange = (e) => {
         console.log(e.target.label);
         const target = e.target;
@@ -92,6 +90,21 @@ function ModifyStock() {
                 category_id: value._id,
             });
         }
+        console.log(formValues)
+    }
+    useEffect(() => {
+        console.log(formValues)
+    }, [formValues]);
+
+    const handleRefNumberChange = (event, value) => {
+        console.log(value)
+        if (value) {
+            setFormValues({
+                ...formValues,
+                _id: value._id
+            });
+        }
+        setIsSearched(true)
         console.log(formValues)
     }
 
@@ -137,34 +150,57 @@ function ModifyStock() {
         });
     };
 
-    const onClickModify = async () => {
-        handleSubmit(async (data) => {
-            const modifyProductUrl = "/inventory/updateStock/" + formValues._id
-            console.log(formValues)
 
-            await axiosApi.put(modifyProductUrl, {
-                product_name: formValues.product_name,
-                category_id: formValues.category_id,
-                qty: formValues.qty,
-                price: formValues.price,
-                product_description: formValues.product_description,
-                ...(formValues.image instanceof File && { image: formValues.image })
-            }, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+    useEffect(() => {
+
+        const getProductById = "inventory/getProduct/" + formValues._id
+
+        axiosApi.get(getProductById)
+            .then(res => {
+                console.log(res.data);
+                const prodDet = [];
+                prodDet.push(res.data.product);
+                console.log(prodDet);
+                prodDet.map((product) => {
+                    setFormValues(product);
+                    return (<></>)
+                });
+            });
+        if (formValues._id) {
+            setIsSearched(true)
+        }
+        else {
+           setIsSearched(false)
+        }
+        console.log(isSearched)
+    }, [formValues._id]);
+
+
+    const onClickModify = async () => {
+
+        const modifyProductUrl = "/inventory/updateStock/" + formValues._id
+        console.log(formValues)
+
+        await axiosApi.put(modifyProductUrl, {
+            product_name: formValues.product_name,
+            category_id: formValues.category_id,
+            qty: formValues.qty,
+            price: formValues.price,
+            product_description: formValues.product_description,
+            ...(formValues.image instanceof File && { image: formValues.image })
+        }, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                if (res.status === 200) {
+                    navigate("/viewStock");
                 }
             })
-                .then((res) => {
-                    console.log(res);
-                    console.log(res.data);
-                    if (res.status === 200) {
-                        navigate("/viewStock");
-                    }
-                })
-                .catch((err) => console.log(err));
-        })((errors) => {
-            // handle form validation errors here
-        });
+            .catch((err) => console.log(err));
     };
 
     return (
@@ -186,18 +222,23 @@ function ModifyStock() {
                 {/*  */}
                 <Grid item>
                     <Autocomplete
-                        //margin="normal"
-                        disablePortal
-                        id="productRefNumber"
-                        value={{ label: formValues.product_ref_number }}
+                        id="prodRefNumber"
                         options={refNumber}
-                        ListboxProps={{ style: { maxHeight: 150 } }}
-                        renderInput={(params) =>
-                            <TextField {...params}
-                                style={{ alignItems: "right" }}
-                                defaultValue={formValues.product_ref_number}
-                                label="Product Reference Number"
-                                size='small' />}
+                        value={
+                            refNumber.find((c) => c._id === formValues._id) || { label: "" }
+                        }
+                        onChange={handleRefNumberChange}
+                        getOptionLabel={(option) => option.label}
+                        getOptionSelected={(option, value) => option._id === value._id}
+                        style={{ height: "150" }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Search by Reference Number" variant="outlined"
+                                required
+                                size="small"
+                                value={formValues._id}
+                            />
+                        )}
+
                     />
                 </Grid>
                 <Grid item style={
@@ -207,17 +248,6 @@ function ModifyStock() {
                 }>
                     <TextField
                         autoFocus
-                        // inputProps={{
-                        //     onKeyPress: event => {
-                        //         const { key } = event;
-                        //         console.log(key);
-                        //         if (key === "Enter") {
-                        //             categoryuseRef.current.focus();
-                        //         }
-                        //     },
-                        //     autoComplete: "off",
-                        //     defaultValue: formValues.product_name,
-                        // }}
                         fullWidth
                         inputRef={refNumber}
                         label="Product Name"
@@ -233,6 +263,7 @@ function ModifyStock() {
                         error={Boolean(errors.product_name)}
                         helperText={errors.product_name?.message}
                         required
+                        variant="outlined"
                     />
                 </Grid>
                 <Grid item style={
@@ -240,58 +271,33 @@ function ModifyStock() {
                         marginTop: "5%"
                     }}
                 >
-                    {/* <Autocomplete
-                        inputProps={{
-                            // onKeyPress: handleKeyPress
-                            onKeyPress: event => {
-                                const { key } = event;
-                                console.log(key);
-                                if (key === "Enter") {
-                                    qtyuseRef.current.focus();
-                                }
-                            }
-                        }}
-                        inputRef={categoryuseRef}
-                        disablePortal
-                        name ="category_id"
-                        id="category_id"
-                        {...register("category_id", {
-                            onChange: (e) => { handleInputChange(e) },
-                            required: "Category is required.",
-                            pattern: {
-                                message: "Category is required"
-                            }
-                        })}
-                        options={category}
-                        ListboxProps={{ style: { maxHeight: 150 } }}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                style={{ textAlign: "left" }}
-                                label="Category"
-                                size="small"
-                                name = "category_id"
-                                value={formValues.category_id}
-                                error={Boolean(errors.category_id)}
-                                helperText={errors.category_id?.message}
-                            />
-                        )}
-                    /> */}
-
                     <Autocomplete
                         id="category"
+                        paperStyle={{ maxHeight: 200, overflow: 'auto' }}
                         options={category}
-                        // value={category.find(c => c._id === formValues.category_id)}    
-                        //value={{ label: }}
+                        disabled={(isFromViewStock === true || isSearched === true) && Boolean(formValues.category_id)}
                         value={
                             category.find((c) => c._id === formValues.category_id) || { label: "" }
                         }
                         onChange={handleCategoryChange}
                         getOptionLabel={(option) => option.label}
                         getOptionSelected={(option, value) => option._id === value._id}
+                        style={{ height: "150" }}
                         renderInput={(params) => (
                             <TextField {...params} label="Category" variant="outlined"
                                 required
+                                size="small"
+                                value={formValues.category_id}
+                                {...register("category_id", {
+                                    onChange: (e) => { handleCategoryChange(e) },
+                                    required: "Category is required.",
+                                    pattern: {
+                                        message: "Category is required"
+                                    }
+                                })
+                                }
+                                error={Boolean(errors.category_id)}
+                                helperText={errors.category_id?.message}
                             //defaultValue={category.find(c => c._id === formValues.category_id)}
                             />
                         )}
@@ -301,21 +307,11 @@ function ModifyStock() {
                 </Grid>
                 <Grid item style={
                     {
-                        marginTop: "8.5%"
+                        marginTop: "5%"
                     }}>
                     <TextField
                         value={formValues.qty}
                         type="number"
-                        // inputProps={{
-                        //     onKeyPress: event => {
-                        //         const { key } = event;
-                        //         console.log(key);
-                        //         if (key === "Enter") {
-                        //             priceuseRef.current.focus();
-                        //         }
-                        //     }
-                        // }}
-                        // inputRef={qtyuseRef}
                         name="qty"
                         label="Qty"
                         id="productQty"
@@ -334,20 +330,11 @@ function ModifyStock() {
                         error={Boolean(errors.qty)}
                         helperText={errors.qty?.message}
                         required
+                        variant="outlined"
                     />
                     <TextField
                         type="number"
                         value={formValues.price}
-                        // inputProps={{
-                        //     onKeyPress: event => {
-                        //         const { key } = event;
-                        //         console.log(key);
-                        //         if (key === "Enter") {
-                        //             descriptionuseRef.current.focus();
-                        //         }
-                        //     }
-                        // }}
-                        // inputRef={priceuseRef}
                         name="price"
                         label="Price"
                         style={{
@@ -365,25 +352,16 @@ function ModifyStock() {
                         error={Boolean(errors.price)}
                         helperText={errors.price?.message}
                         required
+                        variant="outlined"
                     />
                 </Grid>
                 <Grid item style={
                     {
-                        marginTop: "5%"
+                        marginTop: "1%"
                     }}>
                     <TextField
                         multiline
                         rows={3}
-                        // inputProps={{
-                        //     onKeyPress: event => {
-                        //         const { key } = event;
-                        //         console.log(key);
-                        //         if (key === "Enter") {
-                        //             imageRef.current.focus();
-                        //         }
-                        //     }
-                        // }}
-                        // inputRef={descriptionuseRef}
                         margin="normal"
                         fullWidth
                         label="Description"
@@ -395,48 +373,40 @@ function ModifyStock() {
                             pattern: {
                                 message: "Description is required"
                             }
-                        })}
+                        })
+                        }
                         error={Boolean(errors.product_description)}
                         helperText={errors.product_description?.message}
                         required
+                        variant="outlined"
                     />
                 </Grid>
                 <Grid item style={
                     {
-                        marginTop: "5%"
+                        marginTop: "3%"
                     }}>
                     <TextField
                         type="file"
-                        id="outlined-image"
-                        //value={formValues.image}
-                        // inputProps={{
-                        //     onKeyPress: event => {
-                        //         const { key } = event;
-                        //         console.log(key);
-                        //         if (key === "Enter") {
-                        //             addButtonuseRef.current.focus();
-                        //         }
-                        //     }
-                        // }}
-                        // inputRef={imageRef}
+                        id="image"
                         name="image"
-                        // {...register("image", {
-                        //     onChange: (e) => { handleInputChange(e) },
-                        //     required: "Image is required",
-                        //     pattern: {
-                        //         message: "Please select an Image"
-                        //     }
-                        // })}
+                        {...register("image", {
+                            onChange: (e) => { handleInputChange(e) },
+                            required: "Image is required",
+                            pattern: {
+                                message: "Please select an Image"
+                            }
+                        })}
                         error={Boolean(errors.image)}
                         helperText={errors.image?.message}
                         fullWidth
                         required
+                        variant="outlined"
                     />
-                    <p>Selected File: {formValues.image_name}</p>
+                    <p>Previous Image: {formValues.image_name}</p>
                 </Grid>
                 <Grid item>
                     <Button style={{
-                        margin: "20px", backgroundColor: '#444454',
+                        margin: "5%", backgroundColor: '#444454',
                         color: '#bab79d', borderColor: '#b28faa', height: 50, width: 150,
                         borderRadius: 7
                     }} variant="contained"
@@ -445,7 +415,7 @@ function ModifyStock() {
                         Add
                     </Button>
                     <Button style={{
-                        margin: "20px", backgroundColor: '#444454',
+                        margin: "5%", backgroundColor: '#444454',
                         color: '#bab79d', borderColor: '#b28faa', height: 50, width: 150,
                         borderRadius: 7
                     }} variant="contained"
