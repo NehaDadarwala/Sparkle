@@ -13,7 +13,7 @@ Sparkle is an effective tool for managing and organizing the inventory, sales, a
 * [Neha Dadarwala](neha.dadarwala@dal.ca) - *(Full Stack Developer)*
 * [Vrutika Kakadiya](vrutika.kakadiya@dal.ca) - *(Designer and Integrator)*
 * [Hargun.Chhabra](Hargun.Chhabra@dal.ca) - *(Front End Developer)*
-* [Sakshi Chaitanya Vaidya](sakshgi.vaidya@dal.ca) - *(Full Stack Developer)*
+* [Sakshi Chaitanya Vaidya](sakshi.vaidya@dal.ca) - *(Full Stack Developer)*
 * [Name](email@dal.ca) - *(Role)*
 
 

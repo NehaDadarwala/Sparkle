@@ -17,15 +17,16 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import axiosApi from '../../Common/AxiosApi';
 import { useParams } from 'react-router-dom';
-import imageCompression from 'browser-image-compression'; 
+import imageCompression from 'browser-image-compression';
 
 function ModifyStock() {
-
-    const [formValues, setFormValues] = useState([])
+    const location = useLocation();
+    const [formValues, setFormValues] = useState([]);
     const [refNumber, setRefNumber] = useState([]);
     const [category, setCategory] = useState([]);
     const [isSearched, setIsSearched] = useState("");
-    const location = useLocation();
+    const [fileSelected, setFileSelected] = useState(false);
+    
     const { isFromViewStock } = useParams();
 
     const defaultValues = {
@@ -37,6 +38,7 @@ function ModifyStock() {
         product_description: location.state !== null ? location.state.product_description : "",
         product_ref_number: location.state !== null ? location.state.product_ref_number : "",
         image: location.state !== null ? location.state.image : "",
+        image_name :location.state !== null ? location.state.image_name : "",
     };
 
     //const isViewStock = new URLSearchParams(location.search).get('viewStock') === 'true';
@@ -67,14 +69,16 @@ function ModifyStock() {
                 });
             });
 
-        setFormValues(location.state == null ? defaultValues : location.state);
+        setFormValues(defaultValues);
+        // console.log(location.state)
+        // console.log("formvalues" + {formValues})
+        // console.log(formValues)
 
-        console.log(formValues)
     }, [location.state], []);
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm({defaultValues: location.state});
 
-    const handleInputChange = async(e) => {
+    const handleInputChange = async (e) => {
         console.log(e.target.label);
         const target = e.target;
         const value = target.type === 'file' ? target.files[0] : target.value;
@@ -89,28 +93,35 @@ function ModifyStock() {
         });
     };
 
-    const handleImgChange = async(e) => {
-       
+    const handleImgChange = async (e) => {
+
         const value = e.target.files[0]
 
         const options = {
             maxSizeMb: 0.05,
             maxWidthOrHeight: 300,
             useWebWorker: true
-          };
+        };
 
         if (value) {
             const compressedFile = await imageCompression(value, options);
+            setFileSelected(true);
             console.log(compressedFile)
             setFormValues({
                 ...formValues,
                 image: compressedFile,
+                image_name :value.name
             });
+        }
+        else
+        {
+            setFileSelected(false)
         }
         console.log(formValues)
     }
     useEffect(() => {
-        console.log(formValues)
+        console.log(formValues.image_name)
+        //console.log(formValues)
     }, [formValues.image]);
 
     const handleCategoryChange = (event, value) => {
@@ -121,10 +132,10 @@ function ModifyStock() {
                 category_id: value._id,
             });
         }
-        console.log(formValues)
+        //console.log(formValues)
     }
-    useEffect(() => {
-        console.log(formValues)
+    useEffect((e) => {
+        //console.log(formValues)
     }, [formValues]);
 
     const handleRefNumberChange = (event, value) => {
@@ -136,25 +147,14 @@ function ModifyStock() {
             });
         }
         else {
+            console.log(defaultValues)
             setFormValues(defaultValues)
         }
         setIsSearched(true)
-        console.log(formValues)
+        //console.log(formValues)
     }
 
     const navigate = useNavigate();
-
-    // const getRefundProducts = () => {
-    //     Swal.fire({
-    //         title: "Product Added Successfully",
-    //         icon: 'success',
-    //         text: "Redirecting in a second...",
-    //         timer: 1500,
-    //         showConfirmButton: false
-    //     }).then(function () {
-    //         navigate("/viewStock")
-    //     })
-    // };
 
     const onClickAdd = async () => {
         handleSubmit(async () => {
@@ -209,76 +209,89 @@ function ModifyStock() {
 
 
     useEffect(() => {
-
         const getProductById = "inventory/getProduct/" + formValues._id
-
-        axiosApi.get(getProductById)
-            .then(res => {
-                console.log(res.data);
-                const prodDet = [];
-                prodDet.push(res.data.product);
-                console.log(prodDet);
-                prodDet.map((product) => {
-                    setFormValues(product);
-                    return (<></>)
+        if (formValues._id !== "") {
+            axiosApi.get(getProductById)
+                .then(res => {
+                    console.log(res.data);
+                    const prodDet = [];
+                    prodDet.push(res.data.product);
+                    console.log(prodDet);
+                    prodDet.map((product) => {
+                        setFormValues(product);
+                        return (<></>)
+                    });
                 });
-            });
-        if (formValues._id) {
-            setIsSearched(true)
-        }
-        else {
-            setIsSearched(false)
+            if (formValues._id) {
+                setIsSearched(true)
+            }
+            else {
+                setIsSearched(false)
+            }
         }
         console.log(isSearched)
     }, [formValues._id]);
 
 
     const onClickModify = async () => {
-        const modifyProductUrl = "/inventory/updateStock/" + formValues._id
-        console.log(formValues)
-
-        if (formValues._id !== "") {
-            await axiosApi.put(modifyProductUrl, {
-                product_name: formValues.product_name,
-                category_id: formValues.category_id,
-                qty: formValues.qty,
-                price: formValues.price,
-                product_description: formValues.product_description,
-                ...(formValues.image instanceof Blob && { image: formValues.image })
-            }, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-                .then((res) => {
-                    console.log(res);
-                    console.log(res.data);
-                    if (res.status === 200) {
-                        Swal.fire({
-                            title: "Product Updated..!!",
-                            icon: 'success',
-                            text: "Redirecting in a second...",
-                            timer: 1500,
-                            showConfirmButton: false
-                        }).then(function () {
-                            navigate("/viewStock");
-                        })
+        handleSubmit(async () => {
+            console.log(formValues._id)
+            const modifyProductUrl = "/inventory/updateStock/" + formValues._id
+            console.log(formValues)
+    
+            if (formValues._id !== "") {
+                await axiosApi.put(modifyProductUrl, {
+                    product_name: formValues.product_name,
+                    category_id: formValues.category_id,
+                    qty: formValues.qty,
+                    price: formValues.price,
+                    product_description: formValues.product_description,
+                    ...(formValues.image instanceof Blob && { image: formValues.image })
+                }, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
                     }
                 })
-                .catch((err) => console.log(err));
-        }
-        else {
-            Swal.fire({
-                title: "Product is not exists, please add it using Add button",
-                icon: 'warning',
-                text: "Redirecting in a second...",
-                timer: 2000,
-                showConfirmButton: false
-            }).then(function () {
-                setFormValues(defaultValues);
-            })
-        }
+                    .then((res) => {
+                        console.log(res);
+                        console.log(res.data);
+                        if (res.status === 200) {
+                            Swal.fire({
+                                title: "Product Updated..!!",
+                                icon: 'success',
+                                text: "Redirecting in a second...",
+                                timer: 1500,
+                                showConfirmButton: false
+                            }).then(function () {
+                                navigate("/viewStock");
+                            })
+                        }
+                    })
+                    .catch((err) => console.log(err));
+            }
+            else {
+                Swal.fire({
+                    title: "Product is not exists, please add it using Add button",
+                    icon: 'warning',
+                    text: "Redirecting in a second...",
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(function () {
+                    setFormValues(defaultValues);
+                })
+            }
+
+        })((errors) => {
+            // handle form validation errors here
+        });
     };
+    
+    // const onClickModify = async () => {
+    //     handleSubmit(async () => {
+           
+    //     })
+       
+    // };
 
     return (
         <Grid container spacing={2} alignItems="center"
@@ -329,7 +342,7 @@ function ModifyStock() {
                         inputRef={refNumber}
                         label="Product Name"
                         name="product_name"
-                        value={formValues.product_name}
+                        value={formValues?.product_name || ''}
                         {...register("product_name", {
                             onChange: (e) => { handleInputChange(e) },
                             required: "Product Name is required.",
@@ -388,7 +401,7 @@ function ModifyStock() {
                         marginTop: "5%"
                     }}>
                     <TextField
-                        value={formValues.qty}
+                        value={formValues.qty || ''}
                         type="number"
                         name="qty"
                         label="Qty"
@@ -467,15 +480,24 @@ function ModifyStock() {
                         type="file"
                         id="image"
                         name="image"
-                        {...register("image", {
+                        defaultValue={formValues.image_name}
+                        {...register("image_name", {
                             onChange: (e) => { handleImgChange(e) },
-                            required: "Image is required",
+                            //required: "Image is required",
                             pattern: {
-                                message: "Please select an Image"
+                                message: "Image is required"
+                            },
+                            validate: () => {
+                                console.log(formValues.image_name.length)
+                                if (formValues.image_name.length > 0) {
+                                    return true;
+                                } else {
+                                    return "Please select an Image";
+                                }
                             }
                         })}
-                        error={Boolean(errors.image)}
-                        helperText={errors.image?.message}
+                        error={Boolean(errors.image_name)}
+                        helperText={errors.image_name?.message}
                         fullWidth
                         required
                         InputLabelProps={{ shrink: true }}
