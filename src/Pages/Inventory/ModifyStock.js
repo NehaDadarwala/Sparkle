@@ -330,6 +330,7 @@ function ModifyStock() {
                                 value={formValues._id}
                             />
                         )}
+                        InputLabelProps={{ shrink: true }}
 
                     />
                 </Grid>
@@ -408,6 +409,7 @@ function ModifyStock() {
                                 }
                                 error={Boolean(errors.category_id)}
                                 helperText={errors.category_id?.message}
+                                InputLabelProps={{ shrink: true }}
                             //defaultValue={category.find(c => c._id === formValues.category_id)}
                             />
                         )}
