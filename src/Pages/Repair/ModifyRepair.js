@@ -9,8 +9,8 @@ const ModifyRepair = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [bag, setBag] = useState('');
   const [rstatus, setStatus] = useState('');
-  const bagError = bag === ''&& formSubmitted;
-  const statusError = rstatus === ''&& formSubmitted;  
+  const bagError = bag === '' && formSubmitted;
+  const statusError = rstatus === '' && formSubmitted;
 
   const handleBagChange = (event) => {
     setBag(event.target.value);
@@ -21,65 +21,66 @@ const ModifyRepair = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (bag === '' || rstatus === '' ) {
+    if (bag === '' || rstatus === '') {
       setFormSubmitted(true);
       return;
-    }else 
-    Swal.fire({
-      title: 'Status Changed Successfully ',
-      position: 'top-end',
-      icon: 'success',
-      showConfirmButton: false,
-      timer: 1500
-    }).then(function () {
-      window.location.href = "/Profile";
-  })
-}
+    } else
+      Swal.fire({
+        title: 'Status Changed Successfully ',
+        position: 'top-end',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(function () {
+        window.location.href = "/Profile";
+      })
+  }
   return (
-  
+
     <div style={{ marginTop: '15%' }}>
       <form >
-      <Grid container spacing={2} alignItems="center" style={{
-           display: 'flex',
-           justifyContent: 'center',
-           alignItems: 'center',
-           flexDirection:'column' }}>
-      <Grid item>
-        <TextField 
-              label="Repair bag number*" 
-              variant="outlined" 
+        <Grid container spacing={2} alignItems="center" style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column'
+        }}>
+          <Grid item>
+            <TextField
+              label="Repair bag number*"
+              variant="outlined"
               type="number"
-              style={{width: '235px'}}
+              style={{ width: '235px' }}
               value={bag}
               error={bagError}
               onChange={handleBagChange}
               helperText={bagError ? 'This field is required' : ''} />
-      </Grid>
-      <Grid item>
-        <TextField select label="Status*" variant="outlined" style={{width: '235px',marginTop:'15%'}} 
+          </Grid>
+          <Grid item>
+            <TextField select label="Status*" variant="outlined" style={{ width: '235px', marginTop: '15%' }}
               value={rstatus}
               error={statusError}
               onChange={handleStatusChange}
               helperText={statusError ? 'This field is required' : ''} >
-          <MenuItem value="Pickup">Ready to Pick up</MenuItem>
-          <MenuItem value="Complete">Complete</MenuItem>
-          <MenuItem value="Return">Return</MenuItem>
-      </TextField>
-      </Grid>
-    
-     
-       <Grid item style={{marginTop:'2%'}}>
-            
-            <CustomButton 
+              <MenuItem value="Pickup">Ready to Pick up</MenuItem>
+              <MenuItem value="Complete">Complete</MenuItem>
+              <MenuItem value="Return">Return</MenuItem>
+            </TextField>
+          </Grid>
+
+
+          <Grid item style={{ marginTop: '2%' }}>
+
+            <CustomButton
               label="Submit"
               type="submit"
               onclickFunction={handleSubmit}
-              ></CustomButton>
-            </Grid>
-            
+            ></CustomButton>
+          </Grid>
+
         </Grid>
       </form>
-      </div>
+    </div>
   );
 }
 export default ModifyRepair;
