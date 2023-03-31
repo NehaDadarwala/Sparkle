@@ -4,19 +4,15 @@ import CustomButton from '../../Components/CustomButton';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-
-
 const RepairList = () => {
 
     const [rows, setRows] = useState([]);
-
-
+    
     useEffect(() => {
-
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'http://localhost:3000/repair/list',
+            url: 'https://sparkle-api.onrender.com/repair/list',
             headers: {}
         };
         axios.request(config)
@@ -52,7 +48,7 @@ const RepairList = () => {
     const handleGetRowId = (e) => {
         return e._id
     }
-
+    
     const columns = [
         {
             field: '_id',
@@ -60,7 +56,6 @@ const RepairList = () => {
             width: '150',
             headerAlign: "left",
         },
-
         {
             field: 'phone',
             headerName: 'Phone Number',
@@ -87,7 +82,6 @@ const RepairList = () => {
             width: '150',
             headerAlign: "left",
         },
-
         {
             field: 'status',
             headerName: 'Status',
@@ -96,8 +90,6 @@ const RepairList = () => {
             align: 'left',
             headerAlign: "left",
         },
-
-
         {
             field: 'actions', headerName: 'Actions', width: 150, align: 'center', headerAlign: "center", renderCell: (params) => {
                 return (
