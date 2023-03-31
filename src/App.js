@@ -22,7 +22,7 @@ import Invoice from './Pages/Refund/Invoice';
 import RepairForm from './Pages/Repair/RepairForm';
 import RepairList from './Pages/Repair/RepairList';
 import ModifyRepair from './Pages/Repair/ModifyRepair';
-import Track from './Pages/Track/Track';
+import Track from './Pages/Track/TrackRepair';
 
 
 function App() {
