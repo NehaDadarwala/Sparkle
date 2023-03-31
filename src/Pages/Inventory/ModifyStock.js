@@ -279,7 +279,7 @@ function ModifyStock() {
                     timer: 2000,
                     showConfirmButton: false
                 }).then(function () {
-                    //setFormValues(defaultValues);
+                    setFormValues(formValues);
                 })
             }
 
