@@ -26,7 +26,7 @@ const RepairForm = () => {
       setFormSubmitted(true);
       return;
     }
-    if (phonenum.length < 9 || phonenum.length > 9) {
+    if (phonenum.length < 10 || phonenum.length > 10) {
       Swal.fire({
         title: 'Phone Number must be 9 digits',
         position: 'top-end',
