@@ -7,7 +7,7 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import { Autocomplete, Grid } from '@mui/material';
+import { Autocomplete, Grid,Container} from '@mui/material';
 import Button from '@mui/material/Button';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -296,7 +296,8 @@ function ModifyStock() {
     // };
 
     return (
-        <Grid container spacing={2} alignItems="center"
+        <Container component="main" maxWidth="xs">
+        <Grid 
             style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -570,6 +571,7 @@ function ModifyStock() {
                 </Grid>
             </Box>
         </Grid>
+        </Container>
     )
 }
 
