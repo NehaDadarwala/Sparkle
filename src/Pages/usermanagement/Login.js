@@ -13,27 +13,12 @@ const [password,setPassword]=useState("");
 const navigate=useNavigate();
 localStorage.setItem("Email",Email);
 
-// const changer = (event) =>{
 
-
-
-//     navigate("/Register");
-
-
-// }
 
 
 const log_in =async (event) =>{
    
-// if(Email=="group8@dal.ca" && password=="Test@123"){
-//     // alert("loggedin")
-//     navigate("/Profile");
-//     setIsToggled(!isToggled)
-//     localStorage.setItem("isToggled",isToggled);
-// }
-// else{
-//     alert("invalid credentials")
-// }
+
 
 await axios.post(`https://sparkle-api.onrender.com/user/login`, { email:Email,password:password })
       .then(res => {
@@ -71,7 +56,7 @@ await axios.post(`https://sparkle-api.onrender.com/user/login`, { email:Email,pa
      
    );
 
-// return("hello");
+
 };
 
 export default Login;

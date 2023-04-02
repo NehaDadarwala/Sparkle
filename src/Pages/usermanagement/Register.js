@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import CustomButton from '../../Components/CustomButton';
 import {useNavigate} from "react-router-dom";
 import { Phone } from "@mui/icons-material";
+
 function Register(props){
 var bool=false
 
@@ -16,6 +17,7 @@ const [Email,setEmail]=useState("");
 const [password,setPassword]=useState("");
 const [phone,setPhone]=useState("");
 const [confirmpassword,setConfirmPassword]=useState("");
+
 
 const navigate=useNavigate();
 
@@ -51,16 +53,7 @@ const reg =async (event) =>{
 if(Namevalidator() && EmailValidator() && passwordValidator() && cnfPasswordValidator() && phoneValidator){
     setFormError("")
     localStorage.setItem("name", FirstName+" "+ LastName);
-    // if(localStorage.getItem("people")!=null){
-    //     var people=JSON.parse(localStorage.getItem("people"));
-    //     people.push({name:localStorage.getItem("name"),role:"sales associate"});
-    //     // localStorage.removeItem("name");
-    //     localStorage.setItem("people",JSON.stringify(people))
-        
-    //  }
-    //  else{
-    // localStorage.setItem("people",JSON.stringify([{name:FirstName+" "+LastName,role:"sales associate"}]));
-    //  }
+
 
     try {
         const response = await fetch("https://sparkle-api.onrender.com/user/createuser", {
@@ -76,14 +69,15 @@ if(Namevalidator() && EmailValidator() && passwordValidator() && cnfPasswordVali
         const data = await response.json();
         // setUser(data);
         console.log(data)
+        
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
 
     console.log("success register")
     
+    
     navigate("/Profile");
-
 
 }
 
