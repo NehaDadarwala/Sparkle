@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import CustomButton from '../../Components/CustomButton';
+import axios from 'axios';
 function Login(){
 
 
@@ -22,17 +23,25 @@ localStorage.setItem("Email",Email);
 // }
 
 
-const log_in = (event) =>{
+const log_in =async (event) =>{
    
-if(Email=="group8@dal.ca" && password=="Test@123"){
-    // alert("loggedin")
-    navigate("/Profile");
-    setIsToggled(!isToggled)
-    localStorage.setItem("isToggled",isToggled);
-}
-else{
-    alert("invalid credentials")
-}
+// if(Email=="group8@dal.ca" && password=="Test@123"){
+//     // alert("loggedin")
+//     navigate("/Profile");
+//     setIsToggled(!isToggled)
+//     localStorage.setItem("isToggled",isToggled);
+// }
+// else{
+//     alert("invalid credentials")
+// }
+
+await axios.post(`https://sparkle-api.onrender.com/user/login`, { email:Email,password:password })
+      .then(res => {
+        // console.log(res);
+        console.log(res.data.token);
+        localStorage.setItem('authtoken',res.data.token);
+        navigate("/Profile");
+      })
 }
 
 

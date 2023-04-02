@@ -2,6 +2,7 @@ import React, {useState} from "react";
 
 import CustomButton from '../../Components/CustomButton';
 import {useNavigate} from "react-router-dom";
+import { Phone } from "@mui/icons-material";
 function Register(props){
 var bool=false
 
@@ -13,6 +14,7 @@ const [FirstName,setFirstName]=useState("");
 const [LastName,setLastName]=useState("");
 const [Email,setEmail]=useState("");
 const [password,setPassword]=useState("");
+const [phone,setPhone]=useState("");
 const [confirmpassword,setConfirmPassword]=useState("");
 
 const navigate=useNavigate();
@@ -32,6 +34,9 @@ const [confpasswordval,setconfPasswordval]=useState(true)
 const [emailError, setEmailError] = useState('');
 const [emailval,setEmailval]=useState(true)
 
+const [phoneError, setPhoneError] = useState('');
+const [phoneval,setPhoneval]=useState(true)
+
 const [FormError, setFormError] = useState('');
 
 
@@ -39,23 +44,41 @@ const [FormError, setFormError] = useState('');
  
 
 
-const reg = (event) =>{
+const reg =async (event) =>{
     event.preventDefault()
 
 
-if(Namevalidator() && EmailValidator() && passwordValidator() && cnfPasswordValidator()){
+if(Namevalidator() && EmailValidator() && passwordValidator() && cnfPasswordValidator() && phoneValidator){
     setFormError("")
     localStorage.setItem("name", FirstName+" "+ LastName);
-    if(localStorage.getItem("people")!=null){
-        var people=JSON.parse(localStorage.getItem("people"));
-        people.push({name:localStorage.getItem("name"),role:"sales associate"});
-        // localStorage.removeItem("name");
-        localStorage.setItem("people",JSON.stringify(people))
+    // if(localStorage.getItem("people")!=null){
+    //     var people=JSON.parse(localStorage.getItem("people"));
+    //     people.push({name:localStorage.getItem("name"),role:"sales associate"});
+    //     // localStorage.removeItem("name");
+    //     localStorage.setItem("people",JSON.stringify(people))
         
-     }
-     else{
-    localStorage.setItem("people",JSON.stringify([{name:FirstName+" "+LastName,role:"sales associate"}]));
-     }
+    //  }
+    //  else{
+    // localStorage.setItem("people",JSON.stringify([{name:FirstName+" "+LastName,role:"sales associate"}]));
+    //  }
+
+    try {
+        const response = await fetch("https://sparkle-api.onrender.com/user/createuser", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email: Email,name:FirstName+" "+LastName,phone:phone,password:password })
+        });
+        if (!response.ok) {
+          throw new Error('you may be trying to create a duplicate user use different email and phone number');
+        }
+        const data = await response.json();
+        // setUser(data);
+        console.log(data)
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
 
     console.log("success register")
     
@@ -114,16 +137,34 @@ const EmailValidator= (event)=>{
 
 
 const passwordValidator= (event)=>{
-    if(password.length<8 &&  /^[a-zA-Z0-9\s_.-]+$/.test(password)){
+    if(password=="" && password.length<8 &&  /^[a-zA-Z0-9\s_.-]+$/.test(password)){
 
         setPasswordval(false)
         setPasswordError('password length should be atleast 8 characters, password must be alphanumeric with special characters')
+        console.log(false)
         return false
         
     }
     else{
         setPasswordError('')
         setPasswordval(true)
+        console.log(true)
+        return true
+    }
+
+}
+
+const phoneValidator= (event)=>{
+    if(phone.length!=10 ){
+
+        setPhoneval(false)
+        setPhoneError('phone length should be  10 characters')
+        return false
+        
+    }
+    else{
+        setPhoneError('')
+        setPhoneval(true)
         return true
     }
 
@@ -161,6 +202,8 @@ const cnfPasswordValidator= (event)=>{
                             {LastNameError && <div style={{ color: 'red' }}>{LastNameError}</div>}
                             <div><input type="text" placeholder="Email" onChange={(event)=>setEmail(event.target.value)} style={{ borderColor: emailval ? 'green' : 'red' }}  required></input></div>
                             {emailError && <div style={{ color: 'red' }}>{emailError}</div>}
+                            <div><input type="text" placeholder="Phone" onChange={(event)=>setPhone(event.target.value)} style={{ borderColor: phoneval ? 'green' : 'red' }}  required></input></div>
+                            {phoneError && <div style={{ color: 'red' }}>{phoneError}</div>}
                             <div><input type="password" placeholder="Password" onChange={(event)=>setPassword(event.target.value)} style={{ borderColor: passwordval ? 'green' : 'red' }} required></input></div>
                             { passwordError && <div style={{ color: 'red' }}>{passwordError}</div>}
                             <div><input type="password" placeholder="Confirm Password" onChange={(event)=>setConfirmPassword(event.target.value)} style={{ borderColor: confpasswordval ? 'green' : 'red' }} required></input></div>

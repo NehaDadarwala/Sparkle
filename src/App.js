@@ -2,12 +2,15 @@
 import './App.css';
 import Navbar from './Components/Navbar';
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+
 import Login from './Pages/usermanagement/Login';
 import Profile from './Pages/usermanagement/Profile';
 import Register from './Pages/usermanagement/Register';
-import RemEmpList from './Pages/usermanagement/RemoveEmp';
+import EmpProfile from './Pages/usermanagement/employeprofile';
 import EmpList from './Pages/usermanagement/Listemployees';
 import Logout from './Pages/usermanagement/Logout';
+import UpdateForm from './Pages/usermanagement/updateEmp';
+
 import BillValidation from './Pages/Refund/BillValidation';
 import BillDetails from './Pages/Refund/BillDetails';
 import ViewStock from './Pages/Inventory/ViewStock';
@@ -33,18 +36,21 @@ function App() {
     <div>
       {showNavbar && <Navbar />}
       <Routes>
-        <Route path="/" element={<Login />} />
+      <Route path="/" element={<Login />} />
+        <Route path="/Profile" element={<Profile />} />
+        <Route path="/Register" element={<Register />} />
+        <Route path="/emplist" element={<EmpList />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/updateemployee" element={<UpdateForm />} />
+        <Route path="/empprofile" element={<EmpProfile/>}/>
+        
         <Route path="/refund" element={<BillValidation/>} />
         <Route path="/billdetails" element={<BillDetails/>} />
         <Route path="/refundBillDetails" element={<RefundBillDetails/>} />
         <Route path="/invoice" element={<Invoice />} replace={true} />
         <Route path="/viewStock" element={<ViewStock/>} />
         <Route path="/modifyStock/:isFromViewStock" element={<ModifyStock /> }/>
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/Register" element={<Register />} />
-        <Route path="/emplist" element={<EmpList />} />
-        <Route path="/rememplist" element={<RemEmpList />} />
-        <Route path="/logout" element={<Logout />} />
+   
         <Route path="/SearchPage" element={<SearchPage/>} />
         <Route path="/ProductDetails" element={<ProductDetails/>} />
         <Route path="/CustomerDetails" element={<CustomerDetails/>} />
