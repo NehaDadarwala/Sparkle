@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './Components/Navbar';
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
+import Landing from './Landing';
 import Login from './Pages/usermanagement/Login';
 import Profile from './Pages/usermanagement/Profile';
 import Register from './Pages/usermanagement/Register';
@@ -31,12 +32,13 @@ import Track from './Pages/Track/TrackRepair';
 function App() {
   const location = useLocation(); // get the current location of the page
   const showNavbar = location.pathname !== "/"; // check if the current path is not "/" (i.e. Login page)
-
+  const showNavbar1 = location.pathname !== "/Login";
   return (
     <div>
-      {showNavbar && <Navbar />}
+      {showNavbar && showNavbar1 && <Navbar />}
       <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Landing />} />
+      <Route path="/Login" element={<Login />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/emplist" element={<EmpList />} />
