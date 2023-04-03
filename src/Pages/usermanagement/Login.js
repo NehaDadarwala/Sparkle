@@ -19,6 +19,8 @@ const [Email,setEmail]=useState("");
 const [password,setPassword]=useState("");
 const navigate=useNavigate();
 localStorage.setItem("Email",Email);
+const [error,setError]=useState(false);
+const [errorMessage,setErrorMessage]=useState('');
 
 
 
@@ -29,15 +31,24 @@ const log_in =async (event) =>{
 
 await axios.post(`https://sparkle-api.onrender.com/user/login`, { email:Email,password:password })
       .then(res => {
+        console.log(res.status)
+        
         // console.log(res);
         console.log(res.data.token);
         localStorage.setItem('authtoken',res.data.token);
         navigate("/Profile");
+      
+      }).catch((error)=>{
+        setError(true)
+        setErrorMessage('Wrong credentials please try again or call admin or support')
       })
 }
 
 
-
+const removeerror=()=>{
+    setError(false)
+    setErrorMessage('')
+  }
 
   
 
@@ -55,11 +66,21 @@ await axios.post(`https://sparkle-api.onrender.com/user/login`, { email:Email,pa
                             <div><input type="password" placeholder="Password" onChange={(event)=>setPassword(event.target.value)} required></input></div>
                         </div>
                         {/* <div className="containerind2"><button type="submit">Login</button></div> */}
-                        <div className="containerind2"><CustomButton type="submit" label="Login" onclickFunction={log_in}></CustomButton></div>
+                        <div className="containerind2"><CustomButton type="submit" label="Login" onclickFunction={log_in}></CustomButton>
+                      
+                        </div>
+                      
                     </form>
+                    
                 </div>
+                {error && <div style={{ color: 'red' }}>{errorMessage}</div>}
+                        {error && <button style={{ color: 'red' }} onClick={removeerror}>ok</button>}
             </div>
+            
+              
+           
             </div>
+            
      
    );
 

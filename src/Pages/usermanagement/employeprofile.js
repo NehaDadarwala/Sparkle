@@ -67,7 +67,7 @@ function EmpProfile(){
         
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
-        setError("true")
+        setError(true)
         setErrormessage('some problem with deleting user or you dont have the necessary permission try again or call support')
       }
    
