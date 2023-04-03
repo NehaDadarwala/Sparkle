@@ -1,3 +1,9 @@
+/**
+ * Author : Hargun Chhabra
+ * Banner No : B00899294
+ * Email: Hargun.Chhabra@dal.ca
+ */
+
 import React, { useState, useEffect } from 'react';
 import Register from './Register';
 import axios from 'axios';

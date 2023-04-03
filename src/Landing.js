@@ -1,3 +1,10 @@
+/**
+ * Author : Hargun Chhabra
+ * Banner No : B00899294
+ * Email: Hargun.Chhabra@dal.ca
+ */
+
+
 import React from 'react';
 import './Landing.css';
 
