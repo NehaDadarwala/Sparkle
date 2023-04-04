@@ -20,7 +20,7 @@ function Landing() {
         <div className="navbar">
           <ul>
             <li>
-              <a href="https://sparkle-dazzel-you.netlify.app/Login">Log In</a>
+              <a href="/Login">Log In</a>
             </li>
           </ul>
         </div>
