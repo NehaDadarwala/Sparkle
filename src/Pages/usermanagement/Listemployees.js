@@ -16,37 +16,64 @@ function EmpList() {
   const [errormessage,setErrormessage]=useState('');
   const [peoplecopy,setpeopleCopy]=useState([]);
 
+
   useEffect(() => {
-    const fetchEmpList = async () => {
-      try {
-        const response = await fetch("https://sparkle-api.onrender.com/user/getalluser", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ authtoken: localStorage.getItem('authtoken') })
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-          
-        }
-        const data = await response.json();
-        setPeople(data);
-        setpeopleCopy(data);
-      } catch (error) {
-        
-        setError(true)
-        setErrormessage("you dont seem to have necessary permisiion")
-        
-      }
-    };
-    fetchEmpList();
+    if(usercheck){
+     fetchEmpList();}
+    
+
+   
   }, []);
 
+
+
+  const fetchEmpList = async () => {
+    try {
+      const response = await fetch("https://sparkle-api.onrender.com/user/getalluser", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ authtoken: localStorage.getItem('authtoken') })
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+        
+      }
+      const data = await response.json();
+      setPeople(data);
+      setpeopleCopy(data);
+    } catch (error) {
+      
+      setError(true)
+      setErrormessage("you dont seem to have necessary permisiion or you are not loggedin properly please try again")
+      
+    }
+  };
+
+  const usercheck=()=>{
+    if(localStorage.getItem('role')=='admin' || localStorage.getItem('role')=='sales associate'){
+        setError(false)
+        setErrormessage('')
+        return(true)
+    }else{
+        setError(true)
+        setErrormessage('you dont seem to have necessary permisiion or you are not loggedin properly please try again')
+        return(false)
+        
+    }
+  }
+
   const removeerror=()=>{
+    if(usercheck()){
     setError(false)
     setErrormessage('')
-    navigate('/Profile')
+    navigate('/Profile')}
+    else{
+      setError(false)
+      setErrormessage('')
+      navigate('/Login')
+    }
   }
 
   const stylesli = {
@@ -83,6 +110,7 @@ function EmpList() {
   }
 
   return (
+    
     <div>
       <div>{!error &&
         <input
@@ -100,10 +128,12 @@ function EmpList() {
           ))}
         </ul>
       </div>
+      
       <div className='containerind2'>
       {error && <div style={{ color: 'red' }}>{errormessage}</div>}
       {error && <button style={{ color: 'red' }} onClick={removeerror}>ok</button>}
       </div>
+
     </div>
   );
 };

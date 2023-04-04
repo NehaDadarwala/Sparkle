@@ -4,13 +4,16 @@
  * Email: Hargun.Chhabra@dal.ca
  */
 
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 
 import CustomButton from '../../Components/CustomButton';
 import {useNavigate} from "react-router-dom";
 import { Phone } from "@mui/icons-material";
 
 function Register(props){
+
+
+
 var bool=false
 
 
@@ -23,6 +26,10 @@ const [Email,setEmail]=useState("");
 const [password,setPassword]=useState("");
 const [phone,setPhone]=useState("");
 const [confirmpassword,setConfirmPassword]=useState("");
+
+const [error,setError]=useState(false);
+const [errormessage,setErrormessage]=useState('');
+
 
 
 const navigate=useNavigate();
@@ -47,7 +54,28 @@ const [phoneval,setPhoneval]=useState(true)
 
 const [FormError, setFormError] = useState('');
 
+useEffect(() => {
+    usercheck();
 
+
+}, []);
+
+const removeerror=()=>{
+    setError(false)
+    setErrormessage('')
+    navigate('/Login')
+  }
+
+  const usercheck=()=>{
+    if(localStorage.getItem('role')=='admin' || localStorage.getItem('role')=='sales associate'){
+        setError(false)
+        setErrormessage('')
+    }else{
+        setError(true)
+        setErrormessage('you dont seemed to be properly logged in please try again')
+        
+    }
+  }
 
  
 
@@ -190,7 +218,7 @@ const cnfPasswordValidator= (event)=>{
     return(
       
    <div className="containerind">
-        
+        {!error &&
 
                     <form onSubmit={reg}>
                         <div>
@@ -217,6 +245,10 @@ const cnfPasswordValidator= (event)=>{
                         </div>
                         {FormError && <div style={{ color: 'red' }}>{FormError}</div>}
                     </form>
+}  <div className='containerind2'>
+      {error && <div style={{ color: 'red' }}>{errormessage}</div>}
+      {error && <button style={{ color: 'red' }} onClick={removeerror}>ok</button>}
+      </div>
                     </div>
                    
                     
