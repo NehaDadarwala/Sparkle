@@ -272,78 +272,7 @@ Swal.fire({
 - [sweetalert2](https://sweetalert2.github.io/)'s Code was used because I wanted to show pop up message on successful submission of form
 - [sweetalert2](https://sweetalert2.github.io/)'s Code was modified by changing title and adding route after message is shown
 
-### src\Pages\usermanagement\Register.js
 
-*lines 152 - 179*
-
-*mycode:*
-``` 
-    <div className="containerind">
-        
-
-                    <form onSubmit={reg}>
-                        <div>
-                            
-                            <div><input type="text" placeholder="First Name" id="name" onChange={(event)=>setFirstName(event.target.value) } style={{ borderColor: FirstNameval ? 'green' : 'red' }}   required></input></div>
-                            {FirstNameError && <div style={{ color: 'red' }}>{FirstNameError}</div>}
-                            <div><input type="text" placeholder="Last Name" id="phnnumber" onChange={(event)=>setLastName(event.target.value)} style={{ borderColor: LastNameval ? 'green' : 'red' }}  required></input></div>
-                            {LastNameError && <div style={{ color: 'red' }}>{LastNameError}</div>}
-                            <div><input type="text" placeholder="Email" onChange={(event)=>setEmail(event.target.value)} style={{ borderColor: emailval ? 'green' : 'red' }}  required></input></div>
-                            {emailError && <div style={{ color: 'red' }}>{emailError}</div>}
-                            <div><input type="password" placeholder="Password" onChange={(event)=>setPassword(event.target.value)} style={{ borderColor: passwordval ? 'green' : 'red' }} required></input></div>
-                            { passwordError && <div style={{ color: 'red' }}>{passwordError}</div>}
-                            <div><input type="password" placeholder="Confirm Password" onChange={(event)=>setConfirmPassword(event.target.value)} style={{ borderColor: confpasswordval ? 'green' : 'red' }} required></input></div>
-                            {confpasswordError && <div style={{ color: 'red' }}>{confpasswordError}</div>}
-
-                            
-                            {/* <div className="containerind2" ><button type="submit" >Register</button></div> */}
-                            <div className="containerind2"><CustomButton label="Register" onclickFunction={reg}></CustomButton></div>
-
-   
-      
-                        </div>
-                        {FormError && <div style={{ color: 'red' }}>{FormError}</div>}
-                    </form>
-                    </div>
-                      
-```
-
-*reference code:*
-``` 
-    <html>
-            <head></head>
-   
-                <div>
-                    <form onSubmit={reg}>
-                        <div>
-                            <div><input type="text" placeholder="Name" onChange={(event)=>setName(event.target.value)} required></input></div>
-                            <div><input type="text" placeholder="Phone Number" onChange={(event)=>setPhone(event.target.value)} required></input></div>
-                            <div><input type="email" placeholder="Email" onChange={(event)=>setEmail(event.target.value)} required></input></div>
-                            <div><input type="email" placeholder="Confirm Email" onChange={(event)=>setConfirmEmail(event.target.value)} required></input></div>
-                            <div><input type="password" placeholder="Password" onChange={(event)=>setPassword(event.target.value)} required></input></div>
-                            <div><input type="password" placeholder="Confirm Password" onChange={(event)=>setConfirmPassword(event.target.value)} required></input></div>
-                            <div>    
-                                <select name="cars" id="cars" onChange={(event)=> setChoice(!bool)}>
-                                    <option value="sales associate">Sales Associate</option>
-                                    <option value="manager">Store Manager</option>
-                                </select>
-                            </div>
-      
-                            <div ><button type="submit" >Register</button><button onClick={change} >Login</button></div>
-
-   
-      
-                        </div>
-        
-                    </form>
-                </div></html>
-``` 
-
-```
-
-The code was created by adapting the code in my assignment1(https://git.cs.dal.ca/hchhabra/csci5709/-/blob/assignment1)  
-
-```
 
 ### Image
 
@@ -679,39 +608,84 @@ postData("https://example.com/answer", { answer: 42 }).then((data) => {
 *Lines 32 - 40*
 
 ```
-const fetchEmpList = async () => {
-      try {
-        const response = await fetch("https://sparkle-api.onrender.com/user/getalluser", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ authtoken: localStorage.getItem('authtoken') })
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-          
-        }
-        const data = await response.json();
-        setPeople(data);
-        setpeopleCopy(data);
-      } catch (error) {
-        
+await axios.post(`https://sparkle-api.onrender.com/user/login`, { email:Email,password:password })
+      .then(res => {
+        localStorage.setItem('authtoken',res.data.token);
+        navigate("/Profile");
+      
+      }).catch((error)=>{
         setError(true)
-        setErrormessage("you dont seem to have necessary permisiion")
-        
-      }
+        setErrorMessage('Wrong credentials please try again or call admin or support')
+      })
+}
+
     
 
 ```
 
 
+
+
+
+The code above was created by adapting the code in [React + Axios - HTTP POST Request Examples](https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples) 
+
 ```
- <ul style={stylesul}>
-          {people.map(person => (
-            <li key={person.email} onClick={() => clickable(person.email)} style={stylesli}>{person.name}</li>
-          ))}
-        </ul>
+componentDidMount() {
+    // Simple POST request with a JSON body using axios
+    const article = { title: 'React POST Request Example' };
+    axios.post('https://reqres.in/api/articles', article)
+        .then(response => this.setState({ articleId: response.data.id }));
+}
+
+```
+
+
+### src\Pages\usermanagement\Register.js
+
+* Complete code *
+
+*mycode:*
+``` 
+   All the code in this file is adaptation of the code in /component/register.js taken from my [tutorial3](https://git.cs.dal.ca/hchhabra/csci5709/-/tree/tutorial3)  and adaptation of the code in [Fetch Api documentation](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+```
+
+### src\Pages\Refund\Profile.js
+
+*Lines 22 - 41 and 58-65*
+
+```
+const fetchEmpList = async () => {
+       try {
+          const response = await fetch("https://sparkle-api.onrender.com/user/getdetail", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ authtoken: localStorage.getItem('authtoken') })
+          });
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const data = await response.json();
+          setUser(data);
+          localStorage.setItem('role',data.role);
+          
+        } catch (error) {
+        
+        }
+
+```
+
+
+```
+ <Card>
+          <Card.Body>
+          <Card.Title>{user.name}</Card.Title> 
+         
+            <Card.Subtitle>Logged in as: {user.email}</Card.Subtitle>
+          
+          </Card.Body>
+        </Card>
 
 ```
 
@@ -749,5 +723,774 @@ postData("https://example.com/answer", { answer: 42 }).then((data) => {
         <span className="input-label">key: {i} Name: {subjects[keyName]}</span>
     </li>
 ))}
+
+```
+
+```
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+
+function BasicExample() {
+  return (
+    <Card style={{ width: '18rem' }}>
+      <Card.Img variant="top" src="holder.js/100px180" />
+      <Card.Body>
+        <Card.Title>Card Title</Card.Title>
+        <Card.Text>
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.
+        </Card.Text>
+        <Button variant="primary">Go somewhere</Button>
+      </Card.Body>
+    </Card>
+  );
+}
+
+export default BasicExample;
+
+```
+
+### src\Pages\Refund\updateEmp.js
+
+*Lines 46 - 47*
+
+```
+   await axios.put('https://sparkle-api.onrender.com/user/updateuser',obj).then(response => {console.log(response);navigate("/Profile");});
+  }catch(error){
+    
+  }
+
+    
+
+```
+
+The code above was created by adapting the code in [React + Axios - HTTP POST Request Examples](https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples) 
+
+```
+useEffect(() => {
+    // PUT request using axios inside useEffect React hook
+    const article = { title: 'React Hooks PUT Request Example' };
+    axios.put('https://reqres.in/api/articles/1', article)
+        .then(response => setUpdatedAt(response.data.updatedAt));
+
+// empty dependency array means this effect will only run once (like componentDidMount in classes)
+}, []);
+
+```
+
+
+
+### src\Landing.css
+
+Lines 15 - 84*
+
+```
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+  
+body {
+    background-color: white;
+    color: black;
+    font-family: "Fira Sans", sans-serif;
+    background-color: white;
+}
+  
+nav {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 5%;
+    background-color: #b09c91;
+}
+  
+nav .heading {
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+}
+  
+nav ul {
+    display: flex;
+    list-style: none;
+}
+  
+nav ul li {
+    padding: 8px 15px;
+    border-radius: 10px;
+    transition: 0.2s ease-in;
+}
+  
+nav ul li a {
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: none;
+    color: white;
+}
+  
+nav ul li:hover {
+    background-color: #b09c91;
+}
+  
+nav ul li a:hover {
+    color: white;
+}
+  
+nav .sideMenuButton {
+    font-size: 30px;
+    font-weight: bolder;
+    cursor: pointer;
+    display: none;
+}
+  
+/* responsive navbar css */
+@media screen and (max-width: 600px) {
+    nav .sideMenuButton {
+        display: flex;
+    }
+  
+    nav .navbar {
+        display: none;
+    }
+  
+    .sideNavigationBar {
+        display: block !important;
+    }
+}
+  
+.sideNavigationBar {
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0%;
+    background-color: green;
+    overflow-x: hidden;
+    transition: 0.3s ease-in;
+    padding-top: 60px;
+    display: none;
+}
+  
+.sideNavigationBar a {
+    padding: 8px 8px 8px 40px;
+    display: block;
+    font-size: 25px;
+    font-weight: 500;
+    color: #d1d1d1;
+    transition: 0.3s;
+    text-decoration: none;
+}
+  
+.sideNavigationBar a button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #b09c91;
+    font-size: 16px;
+    border-style: none;
+    font-weight: 700;
+}
+  
+.sideNavigationBar a:hover {
+    color: white;
+}
+  
+.sideNavigationBar .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 20px;
+    margin-left: 50px;
+}
+  
+.line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2% 5%;
+}
+  
+.line .side1 {
+    padding-right: 50px;
+}
+  
+.side1 h1 {
+    font-size: 60px;
+    margin-bottom: 10px;
+    color: #b09c91;
+}
+  
+.side1 button {
+    width: 200px;
+    padding: 12px 20px;
+    border-radius: 20px;
+    border-style: none;
+    color: black;
+    font-size: 17px;
+    font-weight: 600;
+}
+  
+a {
+    text-decoration: none;
+    color: black;
+}
+  
+/* Header content responsive */
+@media screen and (max-width: 980px) {
+    .side2 img {
+        width: 350px;
+    }
+  
+    .side1 h1 {
+        font-size: 40px;
+    }
+  
+    .side1 p {
+        font-size: 17px;
+    }
+  
+    .line {
+        margin-top: 80px;
+    }
+}
+  
+@media screen and (max-width: 600px) {
+    .side1 h1 {
+        font-size: 35px;
+    }
+  
+    .line {
+        flex-direction: column;
+    }
+  
+    .line .side1 {
+        padding: 30px;
+    }
+}
+  
+/* section */
+  
+section .topic a {
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+  
+.about .boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+  
+.about .boxes .box {
+    margin: 10px 20px;
+    max-width: calc(100% / 3 - 50px);
+    text-align: center;
+    border-radius: 12px;
+    padding: 20px 100px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+    cursor: default;
+    margin-bottom: 20px;
+    gap: 0;
+}
+  
+/* Contact Page  */
+  
+.contact {
+    padding: 20px;
+}
+  
+.contact .content {
+    margin: 0 auto;
+    padding: 30px 0;
+}
+  
+.content .title {
+    width: 80%;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 40px;
+}
+  
+.title {
+    margin-bottom: 30px;
+    margin-left: 140px;
+}
+  
+
+  
+.input2 {
+    margin-top: 10;
+}
+  
+.label1 {
+    font-size: 18px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-weight: bolder;
+}
+  
+ .input1 input {
+    border-radius: 13px;
+    padding: 6px;
+}
+  
+.input2 input {
+    border-color: rgb(252, 244, 244);
+    width: 400px;
+}
+  
+
+  
+.rightside1 {
+    display: flex;
+    flex-direction: column;
+    margin-left: 300px;
+}
+  
+.title1 {
+    font-size: 18px;
+    margin-top: 8px;
+    margin-bottom: 5px;
+    font-weight: bolder;
+}
+  
+.content1 {
+    width: 450px;
+    margin-top: 2px;
+    color: grey;
+}
+  
+/* Footer */
+footer {
+    background: var(--primary-color);
+    padding: 15px 0;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+  
+footer .footer span {
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--white-color);
+}
+  
+footer .footer span a {
+    font-weight: 500;
+    color: var(--white-color);
+}
+  
+footer .footer span a:hover {
+    text-decoration: underline;
+}
+
+  
+@media screen and (max-width: 600px) {
+    .side2 img {
+        width: 100%;
+    }
+  
+    section .topic a {
+        font-size: 20px;
+    }
+  
+    section .topic p {
+        font-size: 5px;
+    }
+  
+    .about .boxes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+  
+    .about .boxes .box {
+        max-width: 70%;
+    }
+}
+
+    
+
+```
+
+The code above was created by adapting the code in [How to create a Landing page using HTML CSS and JavaScript ?](https://jasonwatmore.com/post/2021/04/22/react-axios-http-put-request-examples) shown below
+
+```
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+  
+body {
+    background-color: white;
+    color: black;
+    font-family: "Fira Sans", sans-serif;
+    background-color: white;
+}
+  
+nav {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 5%;
+    background-color: #8cc099;
+}
+  
+nav .heading {
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+}
+  
+nav ul {
+    display: flex;
+    list-style: none;
+}
+  
+nav ul li {
+    padding: 8px 15px;
+    border-radius: 10px;
+    transition: 0.2s ease-in;
+}
+  
+nav ul li a {
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: none;
+    color: white;
+}
+  
+nav ul li:hover {
+    background-color: green;
+}
+  
+nav ul li a:hover {
+    color: white;
+}
+  
+nav .sideMenuButton {
+    font-size: 30px;
+    font-weight: bolder;
+    cursor: pointer;
+    display: none;
+}
+  
+/* responsive navbar css */
+@media screen and (max-width: 600px) {
+    nav .sideMenuButton {
+        display: flex;
+    }
+  
+    nav .navbar {
+        display: none;
+    }
+  
+    .sideNavigationBar {
+        display: block !important;
+    }
+}
+  
+.sideNavigationBar {
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0%;
+    background-color: green;
+    overflow-x: hidden;
+    transition: 0.3s ease-in;
+    padding-top: 60px;
+    display: none;
+}
+  
+.sideNavigationBar a {
+    padding: 8px 8px 8px 40px;
+    display: block;
+    font-size: 25px;
+    font-weight: 500;
+    color: #d1d1d1;
+    transition: 0.3s;
+    text-decoration: none;
+}
+  
+.sideNavigationBar a button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: green;
+    font-size: 16px;
+    border-style: none;
+    font-weight: 700;
+}
+  
+.sideNavigationBar a:hover {
+    color: white;
+}
+  
+.sideNavigationBar .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 20px;
+    margin-left: 50px;
+}
+  
+.line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2% 5%;
+}
+  
+.line .side1 {
+    padding-right: 50px;
+}
+  
+.side1 h1 {
+    font-size: 60px;
+    margin-bottom: 10px;
+    color: green;
+}
+  
+.side1 button {
+    width: 200px;
+    padding: 12px 20px;
+    border-radius: 20px;
+    border-style: none;
+    color: black;
+    font-size: 17px;
+    font-weight: 600;
+}
+  
+a {
+    text-decoration: none;
+    color: black;
+}
+  
+/* Header content responsive */
+@media screen and (max-width: 980px) {
+    .side2 img {
+        width: 350px;
+    }
+  
+    .side1 h1 {
+        font-size: 40px;
+    }
+  
+    .side1 p {
+        font-size: 17px;
+    }
+  
+    .line {
+        margin-top: 80px;
+    }
+}
+  
+@media screen and (max-width: 600px) {
+    .side1 h1 {
+        font-size: 35px;
+    }
+  
+    .line {
+        flex-direction: column;
+    }
+  
+    .line .side1 {
+        padding: 30px;
+    }
+}
+  
+/* section */
+  
+section .topic a {
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+  
+.about .boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+  
+.about .boxes .box {
+    margin: 10px 20px;
+    max-width: calc(100% / 3 - 50px);
+    text-align: center;
+    border-radius: 12px;
+    padding: 30px 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+    cursor: default;
+}
+  
+/* Contact Page  */
+  
+.contact {
+    padding: 20px;
+}
+  
+.contact .content {
+    margin: 0 auto;
+    padding: 30px 0;
+}
+  
+.content .title {
+    width: 80%;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 40px;
+}
+  
+.title {
+    margin-bottom: 30px;
+    margin-left: 80px;
+}
+  
+.contactMenu {
+    display: flex;
+    justify-content: space-evenly;
+}
+  
+.input2 {
+    margin-top: 10;
+}
+  
+.label1 {
+    font-size: 18px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-weight: bolder;
+}
+  
+.contactMenu .input1 input {
+    border-radius: 13px;
+    padding: 6px;
+}
+  
+.input2 input {
+    border-color: rgb(252, 244, 244);
+    width: 400px;
+}
+  
+.button {
+    margin-top: 12px;
+    margin-left: 5px;
+}
+  
+.button button {
+    width: 162px;
+    height: 35px;
+    border-radius: 12px;
+    border-color: transparent;
+}
+  
+.button button:hover {
+    background-color: #8cc099;
+}
+  
+button {
+    width: 162px;
+    height: 35px;
+    border-radius: 12px;
+    border-color: transparent;
+}
+  
+button:hover {
+    background-color: #8cc099;
+}
+  
+.rightside1 {
+    display: flex;
+    flex-direction: column;
+    margin-left: 300px;
+}
+  
+.title1 {
+    font-size: 18px;
+    margin-top: 8px;
+    margin-bottom: 5px;
+    font-weight: bolder;
+}
+  
+.content1 {
+    width: 450px;
+    margin-top: 2px;
+    color: grey;
+}
+  
+/* Footer */
+footer {
+    background: var(--primary-color);
+    padding: 15px 0;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+  
+footer .footer span {
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--white-color);
+}
+  
+footer .footer span a {
+    font-weight: 500;
+    color: var(--white-color);
+}
+  
+footer .footer span a:hover {
+    text-decoration: underline;
+}
+  
+@media screen and (max-width: 1060px) {
+    .contactMenu {
+        flex-direction: column;
+        align-items: center;
+    }
+  
+    .rightside1 {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0px;
+    }
+  
+    .content1 {
+        width: 100%;
+        margin-top: 2px;
+        color: grey;
+    }
+  
+    .side2 img {
+        width: 95%;
+        height: 90%;
+    }
+}
+  
+@media screen and (max-width: 600px) {
+    .side2 img {
+        width: 100%;
+    }
+  
+    section .topic a {
+        font-size: 20px;
+    }
+  
+    section .topic p {
+        font-size: 5px;
+    }
+  
+    .about .boxes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+  
+    .about .boxes .box {
+        max-width: 70%;
+    }
+}
 
 ```
