@@ -84,12 +84,13 @@ const reg =async (event) =>{
     event.preventDefault()
 
 
-if(Namevalidator() && EmailValidator() && passwordValidator() && cnfPasswordValidator() && phoneValidator()){
+if(Namevalidator() && EmailValidator() && phoneValidator() && passwordValidator() && cnfPasswordValidator() ){
     setFormError("")
     localStorage.setItem("name", FirstName+" "+ LastName);
 
 
     try {
+        console.log("in try block")
         const response = await fetch("https://sparkle-api.onrender.com/user/createuser", {
           method: 'POST',
           headers: {
@@ -97,17 +98,21 @@ if(Namevalidator() && EmailValidator() && passwordValidator() && cnfPasswordVali
           },
           body: JSON.stringify({ email: Email,name:FirstName+" "+LastName,phone:phone,password:password })
         });
-        if (!response.ok) {
+        console.log(response)
+        if (!response.ok || response=='') {
           throw new Error('you may be trying to create a duplicate user use different email and phone number');
+          setFormError('there is some problem or user with same email or phone number already exists');
         }
         const data = await response.json();
+        console.log(data)
        
         
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
+        setFormError('there is some problem or user with same email or phone number already exists');
       }
 
-    console.log("success register")
+
     
     
     navigate("/Profile");
@@ -168,14 +173,14 @@ const passwordValidator= (event)=>{
 
         setPasswordval(false)
         setPasswordError('password length should be atleast 8 characters, password must be alphanumeric with special characters')
-        console.log(false)
+        
         return false
         
     }
     else{
         setPasswordError('')
         setPasswordval(true)
-        console.log(true)
+        
         return true
     }
 
