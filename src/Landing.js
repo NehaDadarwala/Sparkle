@@ -4,6 +4,7 @@
  * Email: Hargun.Chhabra@dal.ca
  */
 
+// Reference code taken from geeksforgeeks: https://www.geeksforgeeks.org/how-to-create-a-landing-page-using-html-css-and-javascript/
 
 import React from 'react';
 import './Landing.css';
