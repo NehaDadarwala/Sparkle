@@ -84,7 +84,7 @@ const reg =async (event) =>{
     event.preventDefault()
 
 
-if(Namevalidator() && EmailValidator() && passwordValidator() && cnfPasswordValidator() && phoneValidator){
+if(Namevalidator() && EmailValidator() && passwordValidator() && cnfPasswordValidator() && phoneValidator()){
     setFormError("")
     localStorage.setItem("name", FirstName+" "+ LastName);
 
@@ -164,7 +164,7 @@ const EmailValidator= (event)=>{
 
 
 const passwordValidator= (event)=>{
-    if(password=="" && password.length<8 &&  /^[a-zA-Z0-9\s_.-]+$/.test(password)){
+    if( password=="" || password.length<8 ||  /^[a-zA-Z0-9\s_.-]+$/.test(password)){
 
         setPasswordval(false)
         setPasswordError('password length should be atleast 8 characters, password must be alphanumeric with special characters')
