@@ -33,6 +33,8 @@ function Profile(){
           }
           const data = await response.json();
           setUser(data);
+          localStorage.setItem('role',data.role);
+          
         } catch (error) {
         
         }

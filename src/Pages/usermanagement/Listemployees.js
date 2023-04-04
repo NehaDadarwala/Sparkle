@@ -14,6 +14,7 @@ function EmpList() {
   const navigate=useNavigate();
   const [error,setError]=useState(false);
   const [errormessage,setErrormessage]=useState('');
+  const [peoplecopy,setpeopleCopy]=useState([]);
 
   useEffect(() => {
     const fetchEmpList = async () => {
@@ -31,6 +32,7 @@ function EmpList() {
         }
         const data = await response.json();
         setPeople(data);
+        setpeopleCopy(data);
       } catch (error) {
         
         setError(true)
@@ -70,28 +72,10 @@ function EmpList() {
     localStorage.setItem("email", email)
     navigate("/empprofile")
   }
-  const apitrigger = async (event) => {
-    try {
-      const response = await fetch("http://localhost:5000/api/user/getalluser", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ authtoken: localStorage.getItem('authtoken') })
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      setPeople(data);
-    } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-    }
-  }
 
   const searchfunc = (val) => {
     if (val == '' || val == undefined || val == null) {
-      apitrigger();
+      setPeople(peoplecopy)
     } else {
       const filteredItems = people.filter((user) => user.name.toLowerCase().includes(val.toLowerCase()));
       setPeople(filteredItems);

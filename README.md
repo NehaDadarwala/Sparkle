@@ -12,7 +12,7 @@ Sparkle is an effective tool for managing and organizing the inventory, sales, a
 
 * [Neha Dadarwala](neha.dadarwala@dal.ca) - *(Full Stack Developer)*
 * [Vrutika Kakadiya](vrutika.kakadiya@dal.ca) - *(Designer and Integrator)*
-* [Hargun.Chhabra](Hargun.Chhabra@dal.ca) - *(Front End Developer)*
+* [Hargun.Chhabra](Hargun.Chhabra@dal.ca) - *(Full stack developer)*
 * [Sakshi Chaitanya Vaidya](sakshi.vaidya@dal.ca) - *(Full Stack Developer)*
 * [Dev Pratap SIngh Rajawat](dv269119@dal.ca) - *(Full Stacl Developer)*
 
@@ -24,7 +24,11 @@ To login into the system, you may use the following credentials
 
 username: group8@dal.ca
 password: Test@123
+Role: Admin
 
+username: Hargun.Chhabra@dal.ca
+password: Test@123
+Role: sales associate
 ## Built With
 
 * [React](https://reactjs.org/) - Front-end JavaScript Library
@@ -32,6 +36,7 @@ password: Test@123
 * [Material UI](https://mui.com/) - React Component Library
 * [Netlify](https://www.netlify.com/) - Cloud Application Platform
 * [Axios](https://www.npmjs.com/package/axios) - Promised-based HTTP client for JavaScript
+* [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) - Promised-based HTTP client for JavaScript
 
 **
 
@@ -470,3 +475,279 @@ swal({
 - [Stackoverflow](https://stackoverflow.com/questions/37358423/how-to-redirect-page-after-click-on-ok-button-on-sweet-alert)'s Code was used to implement an alert. 
 - [Stackoverflow](https://stackoverflow.com/questions/37358423/how-to-redirect-page-after-click-on-ok-button-on-sweet-alert)'s Code was modified by changing data according to the need for an instance the timer.
 
+### src\Pages\Refund\employeprofile.js
+
+*Lines 26 - 43, 53 - 71 and 95-106*
+
+```
+try {
+          const response = await fetch("https://sparkle-api.onrender.com/user/getuserdetail", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: localStorage.getItem('email') })
+          });
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const data = await response.json();
+          setUser(data);
+          localStorage.setItem('updateemail',localStorage.getItem('email'))
+         
+        } catch (error) {
+          
+          setError("some problem while deleting")
+        }
+    
+
+```
+```
+try {
+        const response = await fetch("https://sparkle-api.onrender.com/user/delete", {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({authtoken: localStorage.getItem('authtoken'), email: user.email })
+        });
+        if (!response.ok) {
+      
+          throw new Error('Network response was not ok');
+        }
+        const data =  response.json();
+        
+        navigate("/Profile")
+        
+      } catch (error) {
+        
+        setError(true)
+        setErrormessage('some problem with deleting user or you dont have the necessary permission try again or call support')
+      }
+
+```
+
+```
+ <Card>
+          <Card.Body>
+          <Card.Title>{user.name}</Card.Title> 
+            <Card.Subtitle>{user.email}</Card.Subtitle>
+            <Card.Text>{user.phone}</Card.Text>
+            <Card.Text>{user.role}</Card.Text>
+            <Button variant="primary" onClick={remove}>Delete</Button>
+            <Button variant="primary" onClick={updatepage}>Update</Button>
+            {error && <div style={{ color: 'red' }}>{errormessage}</div>}
+            {error && <button style={{ color: 'red' }} onClick={removeerror}>ok</button>}
+          </Card.Body>
+        </Card>
+
+```
+
+
+The code above was created by adapting the code in [Fetch Api documentation](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and code in [Bootstrap cards documentation](https://react-bootstrap.github.io/components/cards/) as shown below: 
+
+```
+// Example POST method implementation:
+async function postData(url = "", data = {}) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
+postData("https://example.com/answer", { answer: 42 }).then((data) => {
+  console.log(data); // JSON data parsed by `data.json()` call
+});
+
+```
+```
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+
+function BasicExample() {
+  return (
+    <Card style={{ width: '18rem' }}>
+      <Card.Img variant="top" src="holder.js/100px180" />
+      <Card.Body>
+        <Card.Title>Card Title</Card.Title>
+        <Card.Text>
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.
+        </Card.Text>
+        <Button variant="primary">Go somewhere</Button>
+      </Card.Body>
+    </Card>
+  );
+}
+
+export default BasicExample;
+
+```
+
+### src\Pages\Refund\Listemployee.js
+
+*Lines 20 - 41 and 97 - 101*
+
+```
+const fetchEmpList = async () => {
+      try {
+        const response = await fetch("https://sparkle-api.onrender.com/user/getalluser", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ authtoken: localStorage.getItem('authtoken') })
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+          
+        }
+        const data = await response.json();
+        setPeople(data);
+        setpeopleCopy(data);
+      } catch (error) {
+        
+        setError(true)
+        setErrormessage("you dont seem to have necessary permisiion")
+        
+      }
+    
+
+```
+
+
+```
+ <ul style={stylesul}>
+          {people.map(person => (
+            <li key={person.email} onClick={() => clickable(person.email)} style={stylesli}>{person.name}</li>
+          ))}
+        </ul>
+
+```
+
+
+The code above was created by adapting the code in [Fetch Api documentation](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and code in [How can I map through an object in ReactJS?](https://stackoverflow.com/questions/40803828/how-can-i-map-through-an-object-in-reactjs) as shown below: 
+
+```
+// Example POST method implementation:
+async function postData(url = "", data = {}) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
+postData("https://example.com/answer", { answer: 42 }).then((data) => {
+  console.log(data); // JSON data parsed by `data.json()` call
+});
+
+```
+```
+{Object.keys(subjects).map((keyName, i) => (
+    <li className="travelcompany-input" key={i}>
+        <span className="input-label">key: {i} Name: {subjects[keyName]}</span>
+    </li>
+))}
+
+```
+
+
+### src\Pages\Refund\Login.js
+
+*Lines 32 - 40*
+
+```
+const fetchEmpList = async () => {
+      try {
+        const response = await fetch("https://sparkle-api.onrender.com/user/getalluser", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ authtoken: localStorage.getItem('authtoken') })
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+          
+        }
+        const data = await response.json();
+        setPeople(data);
+        setpeopleCopy(data);
+      } catch (error) {
+        
+        setError(true)
+        setErrormessage("you dont seem to have necessary permisiion")
+        
+      }
+    
+
+```
+
+
+```
+ <ul style={stylesul}>
+          {people.map(person => (
+            <li key={person.email} onClick={() => clickable(person.email)} style={stylesli}>{person.name}</li>
+          ))}
+        </ul>
+
+```
+
+
+The code above was created by adapting the code in [Fetch Api documentation](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and code in [How can I map through an object in ReactJS?](https://stackoverflow.com/questions/40803828/how-can-i-map-through-an-object-in-reactjs) as shown below: 
+
+```
+// Example POST method implementation:
+async function postData(url = "", data = {}) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
+postData("https://example.com/answer", { answer: 42 }).then((data) => {
+  console.log(data); // JSON data parsed by `data.json()` call
+});
+
+```
+```
+{Object.keys(subjects).map((keyName, i) => (
+    <li className="travelcompany-input" key={i}>
+        <span className="input-label">key: {i} Name: {subjects[keyName]}</span>
+    </li>
+))}
+
+```

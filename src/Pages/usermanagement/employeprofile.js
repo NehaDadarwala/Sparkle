@@ -104,8 +104,7 @@ const updatepage=()=>{
             {error && <button style={{ color: 'red' }} onClick={removeerror}>ok</button>}
           </Card.Body>
         </Card>
-        {/* {error && <div style={{ color: 'red' }}>{errormessage}</div>}
-        {error && <button style={{ color: 'red' }} onClick={removeerror}>ok</button>} */}
+ 
     </div>
 
     );
