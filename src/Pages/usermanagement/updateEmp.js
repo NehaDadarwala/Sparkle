@@ -45,7 +45,7 @@ function UpdateForm() {
       
     await axios.put('https://sparkle-api.onrender.com/user/updateuser',obj).then(response => {console.log(response);navigate("/Profile");});
   }catch(error){
-    console.log(error)
+    
   }
   };
 

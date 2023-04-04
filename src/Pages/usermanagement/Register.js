@@ -73,8 +73,7 @@ if(Namevalidator() && EmailValidator() && passwordValidator() && cnfPasswordVali
           throw new Error('you may be trying to create a duplicate user use different email and phone number');
         }
         const data = await response.json();
-        // setUser(data);
-        console.log(data)
+       
         
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);

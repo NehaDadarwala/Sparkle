@@ -36,9 +36,9 @@ function EmpProfile(){
           const data = await response.json();
           setUser(data);
           localStorage.setItem('updateemail',localStorage.getItem('email'))
-          console.log(data)
+         
         } catch (error) {
-          console.error('There was a problem with the fetch operation:', error);
+          
           setError("some problem while deleting")
         }
       };
@@ -62,11 +62,11 @@ function EmpProfile(){
           throw new Error('Network response was not ok');
         }
         const data =  response.json();
-        console.log(data)
+        
         navigate("/Profile")
         
       } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+        
         setError(true)
         setErrormessage('some problem with deleting user or you dont have the necessary permission try again or call support')
       }

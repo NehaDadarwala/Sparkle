@@ -31,10 +31,6 @@ const log_in =async (event) =>{
 
 await axios.post(`https://sparkle-api.onrender.com/user/login`, { email:Email,password:password })
       .then(res => {
-        console.log(res.status)
-        
-        // console.log(res);
-        console.log(res.data.token);
         localStorage.setItem('authtoken',res.data.token);
         navigate("/Profile");
       

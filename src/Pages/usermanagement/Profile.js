@@ -34,7 +34,7 @@ function Profile(){
           const data = await response.json();
           setUser(data);
         } catch (error) {
-          console.error('There was a problem with the fetch operation:', error);
+        
         }
       };
       fetchEmpList();

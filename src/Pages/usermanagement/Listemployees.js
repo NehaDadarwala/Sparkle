@@ -32,7 +32,7 @@ function EmpList() {
         const data = await response.json();
         setPeople(data);
       } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+        
         setError(true)
         setErrormessage("you dont seem to have necessary permisiion")
         
