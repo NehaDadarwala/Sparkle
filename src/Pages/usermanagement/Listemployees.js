@@ -3,6 +3,7 @@
  * Banner No : B00899294
  * Email: Hargun.Chhabra@dal.ca
  */
+// The code was reffered from the code in [Fetch Api documentation](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and code in [How can I map through an object in ReactJS?](https://stackoverflow.com/questions/40803828/how-can-i-map-through-an-object-in-reactjs)
 
 import React, { useState, useEffect } from 'react';
 import Register from './Register';
