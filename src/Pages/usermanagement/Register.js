@@ -4,6 +4,9 @@
  * Email: Hargun.Chhabra@dal.ca
  */
 
+// All the code in this file is adaptation of the code in /component/register.js taken from my [tutorial3](https://git.cs.dal.ca/hchhabra/csci5709/-/tree/tutorial3)  and adaptation of the code in [Fetch Api documentation](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+
+
 import React, {useState,useEffect} from "react";
 
 import CustomButton from '../../Components/CustomButton';
