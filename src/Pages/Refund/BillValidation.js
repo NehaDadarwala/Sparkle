@@ -1,6 +1,6 @@
 // Neha Dadarwala - neha.dadarwala@dal.ca
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -44,9 +44,17 @@ const BillValidation = () => {
       });
     } catch (error) {
       Swal.fire('Cannot find the bill number')
-      setFormValues({billnumber:""})
+      setFormValues({ billnumber: "" })
     }
   };
+
+  useEffect(() => {
+    let role = localStorage.getItem('role')
+    if (role !== 'admin' && role !== 'sales associate') {
+      navigate('/Login')
+    }
+  });
+
 
 
   return (

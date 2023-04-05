@@ -38,11 +38,26 @@ const generateBillNumber = () => {
 
 const RefundBillDetails = () => {
     const location = useLocation();
-    const selectedRows = location.state.selectedRows;
+    let selectedRows = []
+
     const Swal = require('sweetalert2')
 
     const [rows, setRows] = useState([]);
     const [paymentMode, setPaymentMode] = useState('Credit Card');
+
+    const navigate = useNavigate();
+
+    if(location.state){
+        selectedRows = location.state.selectedRows;
+    }
+
+    useEffect(() => {
+        let role = localStorage.getItem('role')
+        if (role !== 'admin' && role !== 'sales associate') {
+          navigate('/Login')
+        }
+    });
+
 
     const insertRefundInvoice = async (data) => {
         console.log("DATA 1:: ", data);
@@ -92,8 +107,6 @@ const RefundBillDetails = () => {
     const handleChange = (event) => {
         setPaymentMode(event.target.value);
     };
-
-    const navigate = useNavigate();
 
     const generateInvoice = async () => {
         if (paymentMode === 'Credit Card' || paymentMode === 'Debit Card') {

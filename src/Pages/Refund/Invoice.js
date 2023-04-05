@@ -16,19 +16,37 @@ const Invoice = () => {
     const [total, setTotal] = useState(0);
     const [paymentDetails, setPaymentDetails] = useState('Credit Card');
 
+
+    let id
+    let customerName
+    if(location.state){
+        id = location.state.data._id ?? " "
+        customerName = location.state.data.customerName ?? " "    
+    }
+
+
     const logout = () => {
         console.log("logout clicked")
         navigate('/logout');
     };
 
     useEffect(() => {
-        console.log("INPUT :: ", location.state.data)
-        if (location.state.data.products.length > 2) {
-            setTax(Math.round(location.state.data.products.slice(-2)[0].price * 100) / 100)
-            setTotal(Math.round(location.state.data.products.slice(-1)[0].price * 100) / 100)
+        let role = localStorage.getItem('role')
+        if (role !== 'admin' && role !== 'sales associate') {
+            navigate('/Login')
         }
-        setPaymentDetails(location.state.data.paymentDetails);
-        setRows(location.state.data.products);
+    }, [navigate]);
+
+
+    useEffect(() => {
+        if(location.state){
+            if (location.state.data.products.length > 2) {
+                setTax(Math.round(location.state.data.products.slice(-2)[0].price * 100) / 100)
+                setTotal(Math.round(location.state.data.products.slice(-1)[0].price * 100) / 100)
+            }
+            setPaymentDetails(location.state.data.paymentDetails);
+            setRows(location.state.data.products);    
+        }
     }, [location.state]);
 
     return (
@@ -39,7 +57,7 @@ const Invoice = () => {
                     <div className="col-md-8">
                         <div className="card">
                             <div className="d-flex flex-row p-2">
-                                <div className="d-flex flex-column"> <span className="font-weight-bold">Tax Invoice</span> <small>{location.state.data._id}</small> </div>
+                                <div className="d-flex flex-column"> <span className="font-weight-bold">Tax Invoice</span> <small>{id}</small> </div>
 
                             </div>
 
@@ -52,7 +70,7 @@ const Invoice = () => {
                                             <td>From</td>
                                         </tr>
                                         <tr className="content">
-                                            <td className="font-weight-bold">{location.state.data.customerName}</td>
+                                            <td className="font-weight-bold">{customerName}</td>
                                             <td className="font-weight-bold">Sparkle <br /> Attn: Suspendisse sapien nunc.<br /> Canada</td>
                                         </tr>
                                     </tbody>

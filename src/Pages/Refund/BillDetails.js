@@ -2,7 +2,7 @@
 
 import { TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import CustomButton from '../../Components/CustomButton';
 
@@ -23,15 +23,33 @@ const columns = [
 ];
 
 const BillDetails = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let role = localStorage.getItem('role')
+    if (role !== 'admin' && role !== 'sales associate') {
+      navigate('/Login')
+    }
+  },[navigate]);
+  
+
+
   const location = useLocation();
-  const bill = location.state.bill
-  const billnumber = bill._id;
-  const rows = bill.products
+
+  let bill = ""
+  let billnumber = ""
+  let rows = []
+  
+  if(location.state){
+    bill = location.state.bill
+    billnumber = bill._id;
+    rows = bill.products  
+  }
   const Swal = require('sweetalert2')
 
   const [selectedRows, setSelectedRows] = useState([]);
 
-  const navigate = useNavigate();
+ 
   const getRefundProducts = () => {
     if (selectedRows.length === 0) {
       Swal.fire('Please select Products to refund')
