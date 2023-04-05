@@ -4,7 +4,7 @@
  * Email: Hargun.Chhabra@dal.ca
  */
 
-
+// The reference for code was taken from the code in [Fetch Api documentation](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and code in [Bootstrap cards documentation](https://react-bootstrap.github.io/components/cards/)
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState,useEffect } from 'react';
