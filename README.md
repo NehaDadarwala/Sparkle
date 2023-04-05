@@ -404,7 +404,7 @@ swal({
 - [Stackoverflow](https://stackoverflow.com/questions/37358423/how-to-redirect-page-after-click-on-ok-button-on-sweet-alert)'s Code was used to implement an alert. 
 - [Stackoverflow](https://stackoverflow.com/questions/37358423/how-to-redirect-page-after-click-on-ok-button-on-sweet-alert)'s Code was modified by changing data according to the need for an instance the timer.
 
-### src\Pages\Refund\employeprofile.js
+### src\Pages\usermanagement\employeprofile.js
 
 *Lines 26 - 43, 53 - 71 and 95-106*
 
@@ -524,7 +524,7 @@ export default BasicExample;
 
 ```
 
-### src\Pages\Refund\Listemployee.js
+### src\Pages\usermanagement\Listemployee.js
 
 *Lines 20 - 41 and 97 - 101*
 
@@ -603,7 +603,7 @@ postData("https://example.com/answer", { answer: 42 }).then((data) => {
 ```
 
 
-### src\Pages\Refund\Login.js
+### src\Pages\usermanagement\Login.js
 
 *Lines 32 - 40*
 
@@ -645,7 +645,7 @@ componentDidMount() {
    All the code in this file is adaptation of the code in /component/register.js taken from my [tutorial3](https://git.cs.dal.ca/hchhabra/csci5709/-/tree/tutorial3)  and adaptation of the code in [Fetch Api documentation](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
 ```
 
-### src\Pages\Refund\Profile.js
+### src\Pages\usermanagement\Profile.js
 
 *Lines 22 - 41 and 58-65*
 
@@ -746,7 +746,7 @@ export default BasicExample;
 
 ```
 
-### src\Pages\Refund\updateEmp.js
+### src\Pages\usermanagement\updateEmp.js
 
 *Lines 46 - 47*
 
@@ -774,7 +774,7 @@ useEffect(() => {
 
 ```
 
-### src\Pages\Refund\updateEmp.js
+### src\Pages\usermanagement\updateEmp.js
 
 *Lines 15 - 84*
 
@@ -852,7 +852,7 @@ useEffect(() => {
 
 ```
 
-The code above was created by adapting the code in [How to create a Landing page using HTML CSS and JavaScript ?](https://jasonwatmore.com/post/2021/04/22/react-axios-http-put-request-examples). landing page is one necessary partof the website so i reffered to the site in order to get a template as creating whole landing page from scratch will take a lot of time. shown below
+The code above was created by adapting the code in [How to create a Landing page using HTML CSS and JavaScript ?](https://www.geeksforgeeks.org/how-to-create-a-landing-page-using-html-css-and-javascript/). landing page is one necessary partof the website so i reffered to the site in order to get a template as creating whole landing page from scratch will take a lot of time. shown below
 
 ```
 <!DOCTYPE html>
@@ -1384,7 +1384,7 @@ footer .footer span a:hover {
 
 ```
 
-The code above was created by adapting the code in [How to create a Landing page using HTML CSS and JavaScript ?](https://jasonwatmore.com/post/2021/04/22/react-axios-http-put-request-examples) again this is the css for the landing page html mentioned above the whole landing page will take lot of time to create from scratch shown below
+The code above was created by adapting the code in [How to create a Landing page using HTML CSS and JavaScript ?](https://www.geeksforgeeks.org/how-to-create-a-landing-page-using-html-css-and-javascript/) again this is the css for the landing page html mentioned above the whole landing page will take lot of time to create from scratch shown below
 
 ```
 * {
