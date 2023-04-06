@@ -1,11 +1,15 @@
+/**
+ * Author : Dev Prtap Singh Rajawat
+ * Banner No : B00922348
+ * Email: dv269119@dal.ca
+ */
 import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {useNavigate} from "react-router-dom";
+import Container from '@mui/material/Container';
 
 
 
@@ -27,12 +31,12 @@ const SearchBox = () => {
 
     const validate = (values) =>{
         const errors = {};
-        const regex = /^[0-9]{4,8}$/i;
+        const regex = /^[a-z ]*[A-Z ]*$/i;
         if(!values){
-            errors.msg = "Jewelry id is required !!"
+            errors.msg = "Input is required !!"
         }
         else if(!regex.test(values)){
-            errors.msg = "jewelry id should be numeric and 4-8 digits";
+            errors.msg = "jewelry name should only have characters";
         }
         return errors;
     };
@@ -41,31 +45,24 @@ const SearchBox = () => {
         console.log(searcherrors);
         if(Object.keys(searcherrors).length === 0 && isSubmit){
             console.log(searchInput);
-            navigate( '/ProductDetails',{ state: searchInput});
+            navigate( '/ProductListing',{ state: searchInput});
         }// eslint-disable-next-line react-hooks/exhaustive-deps
     },[searcherrors]);
 
   return (
-    <div>
+    <Container maxWidth='md'>
     <Paper
-      sx={{ display: 'flex', alignItems: 'center', width: '60%', height: 70, marginLeft:'20%', marginTop:13 }}
+      sx={{ display: 'flex', alignItems: 'center', height: 70, justifyContent: 'center', marginTop:13 }}
     >
-    <form onSubmit={handleSubmit} style={{width:'100%'}}>
       <InputBase
-        style={{width:'60%'}}
-        placeholder="Enter Product Id#" onChange={handleChange}
+        placeholder="Enter Product Name..." onChange={handleChange}
       />
-      <IconButton type="button" sx={{ width: '5%' }} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-        <Button variant="contained" type="submit" style={{backgroundColor: '#5c6869', borderColor: 'green'}}>Search</Button>
-        </form>
+        <Button variant="contained" type="submit" style={{backgroundColor: '#5c6869', borderColor: 'green'}} onClick={handleSubmit}>Search</Button>
     </Paper>
     <Typography variant="h5" gutterBottom sx={{ display: 'flex', alignItems: 'center', width: '50%', marginLeft:'25%', marginTop:2, color:'purple' }}>
         {searcherrors.msg}
       </Typography>
-    </div>
-    
+    </Container>
   )
 }
 

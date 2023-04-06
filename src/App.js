@@ -19,14 +19,15 @@ import RefundBillDetails from './Pages/Refund/RefundBillDetails';
 import ModifyStock from './Pages/Inventory/ModifyStock';
 import SearchPage from './Pages/Orders/InStore/SearchPage';
 import ProductDetails from './Pages/Orders/InStore/ProductDetails';
-import CustomerDetails from './Pages/Orders/InStore/CustomerDetails';
 import CheckoutPage from './Pages/Orders/InStore/CheckoutPage';
-import Review from './Pages/Orders/InStore/Review';
 import Invoice from './Pages/Refund/Invoice';
 import RepairForm from './Pages/Repair/RepairForm';
 import RepairList from './Pages/Repair/RepairList';
 import ModifyRepair from './Pages/Repair/ModifyRepair';
 import Track from './Pages/Track/TrackRepair';
+import {CartProvider} from 'react-use-cart';
+import ProductListing from './Pages/Orders/InStore/ProductListing';
+import CartPage from './Pages/Orders/InStore/CartPage';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
   return (
     <div>
       {showNavbar && showNavbar1 && <Navbar />}
+      <CartProvider>
       <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/Login" element={<Login />} />
@@ -52,17 +54,19 @@ function App() {
         <Route path="/invoice" element={<Invoice />} replace={true} />
         <Route path="/viewStock" element={<ViewStock/>} />
         <Route path="/modifyStock/:isFromViewStock" element={<ModifyStock /> }/>
-   
+        
+        <Route path="CartPage" element={<CartPage/>} />
         <Route path="/SearchPage" element={<SearchPage/>} />
         <Route path="/ProductDetails" element={<ProductDetails/>} />
-        <Route path="/CustomerDetails" element={<CustomerDetails/>} />
+        <Route path="ProductListing" element={<ProductListing/>} />
         <Route path="/CheckoutPage" element={<CheckoutPage/>} />
-        <Route path="/Review" element={<Review/>} />
+
         <Route path="/createRepair" element={<RepairForm/>} />
         <Route path="/view" element={<RepairList/>}/>
         <Route path="/modifyRepair" element={<ModifyRepair/>}/>
         <Route path="/track" element={<Track/>}/>
       </Routes>
+      </CartProvider>
     </div>
   );
 }
