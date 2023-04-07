@@ -33,7 +33,7 @@ const SearchPage = () => {
               <CardMedia
                 component="img"
                 height="200"
-                image={require('C:/Users/Anamika/Sparkle/src/bracelet2.jpg')}
+                image={require('../../../bracelet2.jpg')}
                 alt='bracelet'
               />
               <CardContent >
@@ -53,7 +53,7 @@ const SearchPage = () => {
               <CardMedia
                 component="img"
                 height="200"
-                image={require('C:/Users/Anamika/Sparkle/src/necklace-img.png')}
+                image={require("../../../necklace-img.png")}
                 alt='necklace'
               />
               <CardContent >
@@ -73,7 +73,7 @@ const SearchPage = () => {
               <CardMedia
                 component="img"
                 height="200"
-                image={require('C:/Users/Anamika/Sparkle/src/ring3.png')}
+                image={require('../../../ring3.png')}
                 alt='diamond-ring'
               />
               <CardContent >
@@ -93,7 +93,7 @@ const SearchPage = () => {
               <CardMedia
                 component="img"
                 height="200"
-                image={require('C:/Users/Anamika/Sparkle/src/earrings2.png')}
+                image={require('../../../earrings2.png')}
                 alt='ear-rings'
               />
               <CardContent >
