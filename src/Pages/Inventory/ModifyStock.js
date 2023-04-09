@@ -338,10 +338,10 @@ function ModifyStock() {
                                 //required
                                 size="small"
                                 value={formValues._id}
+                                inputProps ={{style : {textAlign : 'left'}}}
                             />
                         )}
-                        InputLabelProps={{ shrink: true }}
-
+                        InputLabelProps={{ shrink: true }}      
                     />
                 </Grid>
                 <Grid item style={
@@ -376,6 +376,7 @@ function ModifyStock() {
                         helperText={errors.product_name?.message}
                         required
                         InputLabelProps={{ shrink: true }}
+                        inputProps ={{style : {textAlign : 'left'}}}
                     //variant="outlined"
                     />
                 </Grid>
@@ -420,6 +421,7 @@ function ModifyStock() {
                                 error={Boolean(errors.category_id)}
                                 helperText={errors.category_id?.message}
                                 InputLabelProps={{ shrink: true }}
+                                inputProps ={{style : {textAlign : 'left'}}}
                             //defaultValue={category.find(c => c._id === formValues.category_id)}
                             />
                         )}
@@ -461,6 +463,7 @@ function ModifyStock() {
                         helperText={errors.qty?.message}
                         required
                         InputLabelProps={{ shrink: true }}
+                        inputProps ={{style : {textAlign : 'left'}}}
                     />
                     <TextField
                         type="number"
@@ -491,6 +494,7 @@ function ModifyStock() {
                         helperText={errors.price?.message}
                         required
                         InputLabelProps={{ shrink: true }}
+                        inputProps ={{style : {textAlign : 'left'}}}
                     />
                 </Grid>
                 <Grid item style={
@@ -524,6 +528,7 @@ function ModifyStock() {
                         helperText={errors.product_description?.message}
                         required
                         InputLabelProps={{ shrink: true }}
+                        inputProps ={{style : {textAlign : 'left'}}}
                     />
                 </Grid>
                 <Grid item style={
@@ -555,6 +560,7 @@ function ModifyStock() {
                         fullWidth
                         required
                         InputLabelProps={{ shrink: true }}
+                        inputProps ={{style : {textAlign : 'left'}}}
                     />
                     <p>Selecred Image: {formValues.image_name}</p>
                 </Grid>
