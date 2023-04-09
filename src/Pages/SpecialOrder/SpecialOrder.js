@@ -50,13 +50,13 @@ const SpecialOrder = () => {
         };
 
         try {
-          var response = await axios(config);
-          console.log("Success", response)
-          setFormValues(defaultValues)
-          setFile(null)
+            var response = await axios(config);
+            console.log("Success", response)
+            setFormValues(defaultValues)
+            setFile(null)
         } catch (error) {
-          setFormValues(defaultValues)
-          setFile(null)
+            setFormValues(defaultValues)
+            setFile(null)
         }
     };
 
@@ -70,16 +70,15 @@ const SpecialOrder = () => {
     return (
         <div style={{ marginTop: '5%' }}>
             <form onSubmit={handleSubmit(submitOrder)}>
-                <Grid container  alignItems="center" direction="column"  sx={{ borderColor: 'black', }}>
+                <Grid container alignItems="center" direction="column" sx={{ borderColor: 'black', }}>
                     <Grid item>
                         <TextField
-                            label="Customer Name"
                             type="text"
                             value={formValues.name}
                             autoFocus
                             variant="outlined"
                             style={{ width: 250 }}
-                            inputProps={{ style: {textAlign: 'left'} }}
+                            inputProps={{ style: { textAlign: 'left' } }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
                             {...register("name", {
                                 onChange: (e) => { handleInputChange(e) },
@@ -89,18 +88,18 @@ const SpecialOrder = () => {
                                     message: "Customer Name cannot have numbers or special characters"
                                 }
                             })}
+                            label={formValues.name ? " " : "Customer Name"}
                             error={Boolean(errors.name)}
                             helperText={errors.name?.message}
                         />
                     </Grid>
                     <Grid item>
                         <TextField
-                            label="Customer Phone number"
                             type="text"
                             variant="outlined"
                             value={formValues.phone}
-                            style={{ width: 250, marginTop:'10%' }}
-                            inputProps={{ style: {textAlign: 'left'} }}
+                            style={{ width: 250, marginTop: '10%' }}
+                            inputProps={{ style: { textAlign: 'left' } }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
                             {...register("phone", {
                                 onChange: (e) => { handleInputChange(e) },
@@ -110,18 +109,19 @@ const SpecialOrder = () => {
                                     message: "Should be numbers of minimum length 10"
                                 }
                             })}
+                            label={formValues.phone ? " " : "Customer Phone number"}
                             error={Boolean(errors.phone)}
                             helperText={errors.phone?.message}
                         />
                     </Grid>
                     <Grid item>
                         <TextField
-                            label="Customer Address"
+                            label={formValues.address ? " " : "Customer Address"}
                             type="text"
                             variant="outlined"
                             value={formValues.address}
-                            style={{ width: 250, marginTop:'10%' }}
-                            inputProps={{ style: {textAlign: 'left'} }}
+                            style={{ width: 250, marginTop: '10%' }}
+                            inputProps={{ style: { textAlign: 'left' } }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
                             {...register("address", {
                                 onChange: (e) => { handleInputChange(e) },
@@ -133,12 +133,12 @@ const SpecialOrder = () => {
                     </Grid>
                     <Grid item>
                         <TextField
-                            label="Estimated Cost"
+                            label={formValues.estimatedCost ? " " : "Estimated Cost"}
                             type="text"
                             variant="outlined"
                             value={formValues.estimatedCost}
-                            style={{ width: 250, marginTop:'10%' }}
-                            inputProps={{ style: {textAlign: 'left'} }}
+                            style={{ width: 250, marginTop: '10%' }}
+                            inputProps={{ style: { textAlign: 'left' } }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
                             {...register("estimatedCost", {
                                 onChange: (e) => { handleInputChange(e) },
@@ -153,7 +153,7 @@ const SpecialOrder = () => {
                             type="file"
                             variant="outlined"
                             value={formValues.image}
-                            style={{ width: 250, marginTop:'10%'}}
+                            style={{ width: 250, margin: "20px" }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
                             {...register("image", {
                                 // onChange: (e) => { handleInputChange(e) },
