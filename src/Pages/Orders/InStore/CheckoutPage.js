@@ -73,7 +73,7 @@ const handleSubmit= (event)=>{
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <TextField
+          <TextField sx={{textAlign : 'left'}}
             required
             id="firstName"
             name="firstName"
@@ -87,7 +87,7 @@ const handleSubmit= (event)=>{
           {errors.firstName && <p className='error'>{errors.firstName}</p>}
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          <TextField sx={{textAlign : 'left'}}
             required
             id="lastName"
             name="lastName"
@@ -101,7 +101,7 @@ const handleSubmit= (event)=>{
           {errors.lastName && <p className='error'>{errors.lastName}</p>}
         </Grid>
         <Grid item xs={12}>
-          <TextField
+          <TextField sx={{textAlign : 'left'}}
             id="email"
             name="email"
             label="Email"
@@ -114,7 +114,7 @@ const handleSubmit= (event)=>{
           {errors.email && <p className='error'>{errors.email}</p>}
         </Grid>
         <Grid item xs={12}>
-          <TextField
+          <TextField sx={{textAlign : 'left'}}
             required
             id="address"
             name="address"
@@ -128,7 +128,7 @@ const handleSubmit= (event)=>{
           {errors.address && <p className='error'>{errors.address}</p>}
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          <TextField sx={{textAlign : 'left'}}
             required
             id="city"
             name="city"
@@ -142,7 +142,7 @@ const handleSubmit= (event)=>{
           {errors.city && <p className='error'>{errors.city}</p>}
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          <TextField sx={{textAlign : 'left'}}
             required
             id="contact"
             name="contact"
@@ -156,7 +156,7 @@ const handleSubmit= (event)=>{
           {errors.contact && <p className='error'>{errors.contact}</p>}
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          <TextField sx={{textAlign : 'left'}}
             required
             id="zip"
             name="zip"
