@@ -75,7 +75,7 @@ const SpecialOrder = () => {
                         <TextField
                             label="Customer Name"
                             type="text"
-                            id="outlined-basic"
+                            variant="outlined-basic"
                             value={formValues.name}
                             autoFocus
                             style={{ width: 250 }}
@@ -96,7 +96,7 @@ const SpecialOrder = () => {
                         <TextField
                             label="Customer Phone number"
                             type="text"
-                            id="outlined-basic"
+                            variant="outlined-basic"
                             value={formValues.phone}
                             style={{ width: 250 }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
@@ -116,7 +116,7 @@ const SpecialOrder = () => {
                         <TextField
                             label="Customer Address"
                             type="text"
-                            id="outlined-basic"
+                            variant="outlined-basic"
                             value={formValues.address}
                             style={{ width: 250 }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
@@ -132,7 +132,7 @@ const SpecialOrder = () => {
                         <TextField
                             label="Estimated Cost"
                             type="text"
-                            id="outlined-basic"
+                            variant="outlined-basic"
                             value={formValues.estimatedCost}
                             style={{ width: 250 }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
@@ -148,7 +148,7 @@ const SpecialOrder = () => {
                         <TextField
                             type="file"
                             value={formValues.image}
-                            id="outlined-basic"
+                            variant="outlined-basic"
                             style={{ width: 250, margin: "20px" }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
                             {...register("image", {
