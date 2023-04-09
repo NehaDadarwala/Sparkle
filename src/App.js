@@ -28,6 +28,9 @@ import Track from './Pages/Track/TrackRepair';
 import {CartProvider} from 'react-use-cart';
 import ProductListing from './Pages/Orders/InStore/ProductListing';
 import CartPage from './Pages/Orders/InStore/CartPage';
+import SpecialOrder from './Pages/SpecialOrder/SpecialOrder';
+import SpecialOrderList from './Pages/Track/TrackSpecialOrder';
+import SalesReport from './Pages/Sales Report/SalesReport';
 
 
 function App() {
@@ -51,6 +54,9 @@ function App() {
         <Route path="/refund" element={<BillValidation/>} />
         <Route path="/billdetails" element={<BillDetails/>} />
         <Route path="/refundBillDetails" element={<RefundBillDetails/>} />
+        <Route path="specialOrder" element={<SpecialOrder/>}/>
+        <Route path="/salesReport" element={<SalesReport/>}/>
+
         <Route path="/invoice" element={<Invoice />} replace={true} />
         <Route path="/viewStock" element={<ViewStock/>} />
         <Route path="/modifyStock/:isFromViewStock" element={<ModifyStock /> }/>
@@ -64,7 +70,9 @@ function App() {
         <Route path="/createRepair" element={<RepairForm/>} />
         <Route path="/view" element={<RepairList/>}/>
         <Route path="/modifyRepair" element={<ModifyRepair/>}/>
-        <Route path="/track" element={<Track/>}/>
+        <Route path="/trackRepair" element={<Track/>}/>
+        <Route path="/trackSpecialOrders" element={<SpecialOrderList/>}/>
+        
       </Routes>
       </CartProvider>
     </div>

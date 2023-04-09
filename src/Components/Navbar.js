@@ -21,14 +21,14 @@ function CollapsibleExample() {
           <Nav className="me-auto">
             <NavDropdown title="Orders" id="collasible-nav-dropdown">
               <NavDropdown.Item href="/SearchPage">In store purchase</NavDropdown.Item>
-              <NavDropdown.Item href="#special">Special Order</NavDropdown.Item>
+              <NavDropdown.Item href="/specialOrder">Special Order</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/refund">Refund</Nav.Link>
             <Nav.Link href="/createRepair">Repair</Nav.Link>
             
             <NavDropdown title="Track" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="/track">Repair</NavDropdown.Item>
-              <NavDropdown.Item href="/track" >Special Order</NavDropdown.Item>
+              <NavDropdown.Item href="/trackRepair">Repair</NavDropdown.Item>
+              <NavDropdown.Item href="/trackSpecialOrders" >Special Order</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Inventory" id="collasible-nav-dropdown">
               <NavDropdown.Item href="/viewStock">View Stock</NavDropdown.Item>
@@ -41,6 +41,8 @@ function CollapsibleExample() {
               
               {/* <NavDropdown.Divider /> */}
             </NavDropdown>
+            <Nav.Link href="/salesReport">Sales Report</Nav.Link>
+
           </Nav>
         </Navbar.Collapse>
       </Container>
