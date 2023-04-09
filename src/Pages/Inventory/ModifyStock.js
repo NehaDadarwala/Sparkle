@@ -338,7 +338,6 @@ function ModifyStock() {
                                 //required
                                 size="small"
                                 value={formValues._id}
-                                inputProps ={{style : {textAlign : 'left'}}}
                             />
                         )}
                         InputLabelProps={{ shrink: true }}      
@@ -421,7 +420,6 @@ function ModifyStock() {
                                 error={Boolean(errors.category_id)}
                                 helperText={errors.category_id?.message}
                                 InputLabelProps={{ shrink: true }}
-                                inputProps ={{style : {textAlign : 'left'}}}
                             //defaultValue={category.find(c => c._id === formValues.category_id)}
                             />
                         )}
