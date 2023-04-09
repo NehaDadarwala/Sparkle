@@ -562,7 +562,7 @@ function ModifyStock() {
                         InputLabelProps={{ shrink: true }}
                         inputProps ={{style : {textAlign : 'left'}}}
                     />
-                    <p>Selecred Image: {formValues.image_name}</p>
+                    <p>Selected Image: {formValues.image_name}</p>
                 </Grid>
                 <Grid item>
                     <Button style={{
