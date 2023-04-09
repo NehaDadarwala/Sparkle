@@ -70,15 +70,16 @@ const SpecialOrder = () => {
     return (
         <div style={{ marginTop: '5%' }}>
             <form onSubmit={handleSubmit(submitOrder)}>
-                <Grid container alignItems="center" direction="column" sx={{ borderColor: 'black', }}>
+                <Grid container  alignItems="center" direction="column"  sx={{ borderColor: 'black', }}>
                     <Grid item>
                         <TextField
                             label="Customer Name"
                             type="text"
-                            variant="outlined-basic"
                             value={formValues.name}
                             autoFocus
+                            variant="outlined"
                             style={{ width: 250 }}
+                            inputProps={{ style: {textAlign: 'left'} }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
                             {...register("name", {
                                 onChange: (e) => { handleInputChange(e) },
@@ -96,9 +97,10 @@ const SpecialOrder = () => {
                         <TextField
                             label="Customer Phone number"
                             type="text"
-                            variant="outlined-basic"
+                            variant="outlined"
                             value={formValues.phone}
-                            style={{ width: 250 }}
+                            style={{ width: 250, marginTop:'10%' }}
+                            inputProps={{ style: {textAlign: 'left'} }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
                             {...register("phone", {
                                 onChange: (e) => { handleInputChange(e) },
@@ -116,9 +118,10 @@ const SpecialOrder = () => {
                         <TextField
                             label="Customer Address"
                             type="text"
-                            variant="outlined-basic"
+                            variant="outlined"
                             value={formValues.address}
-                            style={{ width: 250 }}
+                            style={{ width: 250, marginTop:'10%' }}
+                            inputProps={{ style: {textAlign: 'left'} }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
                             {...register("address", {
                                 onChange: (e) => { handleInputChange(e) },
@@ -132,9 +135,10 @@ const SpecialOrder = () => {
                         <TextField
                             label="Estimated Cost"
                             type="text"
-                            variant="outlined-basic"
+                            variant="outlined"
                             value={formValues.estimatedCost}
-                            style={{ width: 250 }}
+                            style={{ width: 250, marginTop:'10%' }}
+                            inputProps={{ style: {textAlign: 'left'} }}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
                             {...register("estimatedCost", {
                                 onChange: (e) => { handleInputChange(e) },
@@ -147,9 +151,9 @@ const SpecialOrder = () => {
                     <Grid item>
                         <TextField
                             type="file"
+                            variant="outlined"
                             value={formValues.image}
-                            variant="outlined-basic"
-                            style={{ width: 250, margin: "20px" }}
+                            style={{ width: 250, marginTop:'10%'}}
                             InputLabelProps={{ style: { color: '#5c6869' } }}
                             {...register("image", {
                                 // onChange: (e) => { handleInputChange(e) },
