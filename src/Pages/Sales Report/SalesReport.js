@@ -1,5 +1,3 @@
-// Neha Dadarwala - neha.dadarwala@dal.ca
-
 import { DataGrid } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -48,25 +46,25 @@ const SalesReport = () => {
         {
             field: '_id',
             headerName: 'Invoice ID',
-            width: '150',
+            width: '200',
             headerAlign: "left",
         },
         {
             field: 'customerName',
             headerName: 'Customer Name',
-            width: '190',
+            width: '220',
             headerAlign: "left",
         },
         {
             field: 'orderDate',
             headerName: 'Order Date',
-            width: '190',
+            width: '220',
             headerAlign: "left",
         },
         {
             field: 'totalPrice',
             headerName: 'Total Price',
-            width: '150',
+            width: '200',
             headerAlign: "left",
         },
     ];
@@ -112,7 +110,7 @@ const SalesReport = () => {
                     </Button>
                 </form>
             </div>
-            <div style={{ height: 400, width: '80%', margin: 'auto', marginTop: '3%' }}>
+            <div style={{ height: 400, width: '60%', margin: 'auto', marginTop: '3%' }}>
                 <DataGrid
                     GridLinesVisibility="None"
                     rows={filteredRows}
