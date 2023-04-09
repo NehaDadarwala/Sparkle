@@ -8,10 +8,19 @@ import React from 'react'
 import StockCardView from '../../Components/StockCardView'
 import { useEffect, useState } from 'react'
 import axiosApi from '../../Common/AxiosApi';
+import { useNavigate } from 'react-router-dom';
 
 function ViewStock() {
 
   const [stock, setStock] = useState([]);
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    let role = localStorage.getItem('role')
+    if (role !== 'admin' && role !== 'sales associate') {
+      navigate('/Login')
+    }
+});
 
     useEffect(() => {
 
