@@ -66,16 +66,22 @@ useEffect(() => {
 const removeerror=()=>{
     setError(false)
     setErrormessage('')
-    navigate('/Login')
+    if( localStorage.getItem('role')=='sales associate'){
+        navigate('/Profile')
+    }
+    else{
+        navigate('/Login')
+    }
+    
   }
 
   const usercheck=()=>{
-    if(localStorage.getItem('role')=='admin' || localStorage.getItem('role')=='sales associate'){
+    if(localStorage.getItem('role')=='admin' ){
         setError(false)
         setErrormessage('')
     }else{
         setError(true)
-        setErrormessage('you dont seemed to be properly logged in please try again')
+        setErrormessage('you dont seemed to be properly logged in or dont have necessary please try again')
         
     }
   }
