@@ -20,6 +20,7 @@ import { useParams } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
 
 function ModifyStock() {
+
     const location = useLocation();
     const [formValues, setFormValues] = useState([]);
     const [refNumber, setRefNumber] = useState([]);
@@ -28,6 +29,7 @@ function ModifyStock() {
     const [fileSelected, setFileSelected] = useState(false);
     
     const { isFromViewStock } = useParams();
+    const navigate = useNavigate();
 
     const defaultValues = {
         _id: location.state !== null ? location.state._id : "",
@@ -40,6 +42,13 @@ function ModifyStock() {
         image: location.state !== null ? location.state.image : "",
         image_name :location.state !== null ? location.state.image_name : "",
     };
+
+    useEffect(() => {
+        let role = localStorage.getItem('role')
+        if (role !== 'admin' && role !== 'sales associate') {
+          navigate('/Login')
+        }
+    });
 
     //const isViewStock = new URLSearchParams(location.search).get('viewStock') === 'true';
 
@@ -156,7 +165,7 @@ function ModifyStock() {
         //console.log(formValues)
     }
 
-    const navigate = useNavigate();
+   
 
     const onClickAdd = async () => {
         handleSubmit(async () => {
