@@ -1,5 +1,5 @@
 // Neha Dadarwala - neha.dadarwala@dal.ca
-// Vrutika Kakadiya - 
+// Vrutika Kakadiya - vrutika.kakadiya@dal.ca
 
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
