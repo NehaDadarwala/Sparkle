@@ -31,7 +31,6 @@ const SpecialOrder = () => {
 
     const navigate = useNavigate();
     const submitOrder = async () => {
-        const fs = require('fs').promises;
         let data = new FormData();
         data.append('name', formValues.name);
         data.append('phone', formValues.phone);
