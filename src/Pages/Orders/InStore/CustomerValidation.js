@@ -12,7 +12,7 @@ const CustomerValidation = (values) => {
         errors.lastName="Only Letters Allowed !";
     }
     if(!values.address){
-        errors.address="Last Name is required !";
+        errors.address="Address is required !";
     }else if(!/^[a-z ]*[A-Z ]*$/i.test(values.address)){
         errors.address="Only Letters Allowed !";
     }
