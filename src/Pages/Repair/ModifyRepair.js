@@ -54,7 +54,7 @@ const ModifyRepair = () => {
           showConfirmButton: false,
           timer: 1500
         }).then(function () {
-          window.location.href = "/track";
+          window.location.href = "/trackRepair";
         });
       })
       .catch((error) => {
