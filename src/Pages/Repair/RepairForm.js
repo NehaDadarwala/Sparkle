@@ -8,8 +8,6 @@ import CustomButton from '../../Components/CustomButton';
 import React, { useState, useRef } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import axiosApi from '../../Common/AxiosApi';
-
 
 const RepairForm = () => {
   const [phonenum, setPhone] = useState('');
@@ -47,7 +45,7 @@ const RepairForm = () => {
       });
       return;
     }
-  
+
     let jsonObj = {
       phonenum: phonenum,
       bagnum: bagnum,
@@ -151,9 +149,7 @@ const RepairForm = () => {
                 error={nameError}
                 onChange={handleNameChange}
                 helperText={nameError ? 'This field is required' : ''}
-                ref={inputRef}
-                style={{ textAlign: 'left' }}
-                onFocus={handleFocus}
+                inputProps={{ style: { textAlign: 'left' } }}
               />
 
               <TextField
@@ -165,6 +161,7 @@ const RepairForm = () => {
                 onChange={handleDescChange}
                 helperText={descError ? 'This field is required' : ''}
                 style={{ textAlign: 'left' }}
+                inputProps={{ style: { textAlign: 'left' } }}
               />
 
             </Grid>
@@ -187,6 +184,7 @@ const RepairForm = () => {
                 onChange={handleStatusChange}
                 helperText={statusError ? 'This field is required' : ''}
                 style={{ textAlign: 'left' }}
+                inputProps={{ style: { textAlign: 'left' } }}
               />
             </Grid>
             <Grid>
@@ -198,6 +196,7 @@ const RepairForm = () => {
                 error={instructionError}
                 onChange={handleInstructionChange}
                 helperText={instructionError ? 'This field is required' : ''}
+                inputProps={{ style: { textAlign: 'left' } }}
 
               />
             </Grid>
