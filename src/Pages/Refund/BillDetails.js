@@ -30,26 +30,43 @@ const BillDetails = () => {
     if (role !== 'admin' && role !== 'sales associate') {
       navigate('/Login')
     }
-  },[navigate]);
-  
+  }, [navigate]);
+
 
 
   const location = useLocation();
 
   let bill = ""
   let billnumber = ""
-  let rows = []
-  
-  if(location.state){
-    bill = location.state.bill
-    billnumber = bill._id;
-    rows = bill.products  
-  }
-  const Swal = require('sweetalert2')
 
+  const Swal = require('sweetalert2')
   const [selectedRows, setSelectedRows] = useState([]);
 
- 
+  let rows = []
+
+  if (location.state) {
+    bill = location.state.bill
+    billnumber = bill.orderId;
+    rows = bill.orderDetails;
+
+    let tempRows = []
+    for (let index = 0; index < bill.orderDetails.length; index++) {
+      const element = bill.orderDetails[index];
+      console.log("element: ", element)
+      let product = {
+        _id: element._id,
+        productName: element.product_name,
+        price: element.price,
+      };
+
+      for (let index1 = 0; index1 < element.qty; index1++) {
+        tempRows.push(product);
+      }
+    }
+    rows = tempRows;
+    console.log("products", rows)
+  }
+
   const getRefundProducts = () => {
     if (selectedRows.length === 0) {
       Swal.fire('Please select Products to refund')
@@ -62,6 +79,11 @@ const BillDetails = () => {
       });
     }
   };
+
+  const handleGetRowId = (e) => {
+    console.log("e._id", e)
+    return e._id
+  }
 
 
   return (
@@ -87,12 +109,12 @@ const BillDetails = () => {
       />
       <DataGrid
         GridLinesVisibility="None"
+        getRowId={handleGetRowId}
         rows={rows} // from the database call
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
-        getRowId={(row) => row._id}
         sx={{
           "& .MuiDataGrid-columnHeaders": {
             borderRadius: '20px 20px 0px 0px',

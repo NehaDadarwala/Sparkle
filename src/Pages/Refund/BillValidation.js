@@ -37,9 +37,10 @@ const BillValidation = () => {
 
     try {
       var response = await axios(config);
+      // console.log("response.data", response.data['0'])
       navigate('/billdetails', {
         state: {
-          bill: response.data,
+          bill: response.data['0'],
         }
       });
     } catch (error) {
