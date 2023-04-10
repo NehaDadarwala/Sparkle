@@ -47,14 +47,14 @@ const RefundBillDetails = () => {
 
     const navigate = useNavigate();
 
-    if(location.state){
+    if (location.state) {
         selectedRows = location.state.selectedRows;
     }
 
     useEffect(() => {
         let role = localStorage.getItem('role')
         if (role !== 'admin' && role !== 'sales associate') {
-          navigate('/Login')
+            navigate('/Login')
         }
     });
 
@@ -118,10 +118,16 @@ const RefundBillDetails = () => {
                 focusConfirm: false,
                 preConfirm: () => {
                     if (document.getElementById('swal-input1').value !== '' || document.getElementById('swal-input1').value !== '') {
-                        return [
-                            document.getElementById('swal-input1').value,
-                            document.getElementById('swal-input2').value
-                        ]
+                        let cardNumber =document.getElementById('swal-input2').value;
+                        cardNumber = cardNumber.replace(/\s+/g, '');
+                        if(cardNumber.length == 12){
+                            return [
+                                document.getElementById('swal-input1').value,
+                                document.getElementById('swal-input2').value
+                            ]
+                        }else{
+                            Swal.showValidationMessage('Invalid Card number. Length is 12.')
+                        }
                     } else {
                         Swal.showValidationMessage('Input Fields Missing')
                     }
