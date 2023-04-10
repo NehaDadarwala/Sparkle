@@ -15,6 +15,8 @@ import { useState } from 'react';
 import { useCart } from 'react-use-cart';
 import CustomerValidation from './CustomerValidation';
 import { useEffect } from 'react';
+import axios from 'axios';
+
 
 
 const CheckoutPage = () => {
@@ -23,6 +25,7 @@ const CheckoutPage = () => {
 
   const {isEmpty,
       items,
+      cartTotal,
       emptyCart,
   } =useCart();
   const [values,setValues] = useState({
@@ -41,6 +44,37 @@ const CheckoutPage = () => {
  const backToCart=()=>{
   navigate('/Cartpage');
  }
+ const insertOrder = async (data) => {
+  console.log("DATA 1:: ", data);
+  let dbJson = JSON.parse(JSON.stringify(data));
+  console.log("Dbjson", dbJson)
+  let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:3000/order/addOrder',
+      withCredentials: false,
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      data: dbJson
+  };
+  try {
+      var response = await axios(config);
+      console.log("DATA 2 :: ", data);
+      console.log(JSON.stringify(response.data));
+      navigate('/SearchPage', {
+          replace: true,
+          state: {
+              data: data
+          }
+      });
+  } catch (error) {
+      console.log("ERROR!!!")
+      console.log(JSON.stringify(error.message));
+  }
+}
+
+
  useEffect(()=>{
   setErrors(CustomerValidation(values))
  },[values]);
@@ -56,6 +90,20 @@ const handleSubmit= (event)=>{
   navigate('/searchPage');
   console.log(values);
   console.log(items);  
+  let customerName=values.firstName;
+  let today = new Date(),
+            date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            let min = 1;
+            let max = 100;
+            var rand =  min + (Math.random() * (max-min));
+  let orderId=("Order"+rand);
+  let orderDate=date;
+  let totalPrice=cartTotal;
+  let orderDetails = items;
+  let customerDetails = values;
+  let data={orderId,orderDate,customerName,totalPrice,customerDetails,orderDetails}
+  insertOrder(data);
+  
   }
  }
 
