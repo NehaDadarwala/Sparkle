@@ -50,7 +50,6 @@ const SpecialOrder = () => {
 
         try {
             var response = await axios(config);
-            console.log("Success", response)
             setFormValues(defaultValues)
             setFile(null)
         } catch (error) {

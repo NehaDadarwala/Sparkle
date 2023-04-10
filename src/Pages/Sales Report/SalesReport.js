@@ -10,6 +10,7 @@ const SalesReport = () => {
     const [filteredRows, setFilteredRows] = useState([]);
     const [sDate, setSDate] = useState("");
     const [eDate, setEDate] = useState("");
+    const [loading, setLoading] = useState(true)
 
 
     useEffect(() => {
@@ -30,6 +31,7 @@ const SalesReport = () => {
                         totalPrice: item.totalPrice,
                     };
                 });
+                setLoading(false);
                 setRows(formattedData);
                 setFilteredRows(formattedData);
             })
@@ -118,6 +120,7 @@ const SalesReport = () => {
                     getRowId={handleGetRowId}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
+                    loading={loading}
                     sx={{
                         "& .MuiDataGrid-columnHeaders": {
                             borderRadius: '20px 20px 0px 0px',

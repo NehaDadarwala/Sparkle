@@ -10,7 +10,8 @@ import axios from 'axios';
 const RepairList = () => {
 
     const [rows, setRows] = useState([]);
-    
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         let config = {
             method: 'get',
@@ -31,6 +32,7 @@ const RepairList = () => {
                         bag: item.bag
                     };
                 });
+                setLoading(false);
                 setRows(formattedData);
             })
             .catch((error) => {
@@ -113,6 +115,7 @@ const RepairList = () => {
                 getRowId={handleGetRowId}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
+                loading={loading}
                 sx={{
                     "& .MuiDataGrid-columnHeaders": {
                         borderRadius: '20px 20px 0px 0px',
