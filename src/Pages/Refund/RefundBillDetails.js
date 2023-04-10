@@ -60,13 +60,14 @@ const RefundBillDetails = () => {
 
 
     const insertRefundInvoice = async (data) => {
-        console.log("DATA 1:: ", data);
+        // console.log("DATA 1:: ", data);
         let dbJson = JSON.parse(JSON.stringify(data));
         dbJson.products = selectedRows
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
             url: 'https://sparkle-api.onrender.com/refund/newRefund',
+            // url: 'http://localhost:3000/refund/newRefund',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -74,7 +75,7 @@ const RefundBillDetails = () => {
         };
         try {
             var response = await axios(config);
-            console.log("DATA 2 :: ", data);
+            // console.log("DATA 2 :: ", data);
             console.log(JSON.stringify(response.data));
             navigate('/invoice', {
                 replace: true,
@@ -83,8 +84,7 @@ const RefundBillDetails = () => {
                 }
             });
         } catch (error) {
-            console.log("ERROR!!!")
-            console.log(JSON.stringify(error.message));
+            Swal.fire("Error Occurred");
         }
     }
 
@@ -96,7 +96,7 @@ const RefundBillDetails = () => {
         });
         let tax = totalRefundAmount * 0.05;
         totalRefundAmount = totalRefundAmount + tax;
-        setRows([...selectedRows, { _id: 10220, productName: 'GST (5%) ', price: tax }, { _id: 10110, productName: 'Total', price: totalRefundAmount }]);
+        setRows([...selectedRows, { row_id: 10220, productName: 'GST (5%) ', price: tax }, { row_id: 10110, productName: 'Total', price: totalRefundAmount }]);
     }, [selectedRows]);
 
     useEffect(() => {
@@ -185,7 +185,7 @@ const RefundBillDetails = () => {
                 columns={columns}
                 isRowHoverEnabled={true}
                 hideFooterPagination
-                getRowId={(row) => row._id}
+                getRowId={(row) => row.row_id}
                 hideFooterSelectedRowCount
                 sx={{
                     "& .MuiDataGrid-columnHeaders": {

@@ -47,12 +47,10 @@ const BillDetails = () => {
   if (location.state) {
     bill = location.state.bill
     billnumber = bill.orderId;
-    rows = bill.orderDetails;
 
     let tempRows = []
     for (let index = 0; index < bill.orderDetails.length; index++) {
       const element = bill.orderDetails[index];
-      console.log("element: ", element)
       let product = {
         _id: element._id,
         productName: element.product_name,
@@ -60,11 +58,12 @@ const BillDetails = () => {
       };
 
       for (let index1 = 0; index1 < element.qty; index1++) {
-        tempRows.push(product);
+        let prod = {...product};
+        prod.row_id = index+index1;
+        tempRows.push(prod);
       }
     }
     rows = tempRows;
-    console.log("products", rows)
   }
 
   const getRefundProducts = () => {
@@ -81,9 +80,8 @@ const BillDetails = () => {
   };
 
   const handleGetRowId = (e) => {
-    console.log("e._id", e)
-    return e._id
-  }
+    return e.row_id
+  } 
 
 
   return (
@@ -110,7 +108,7 @@ const BillDetails = () => {
       <DataGrid
         GridLinesVisibility="None"
         getRowId={handleGetRowId}
-        rows={rows} // from the database call
+        rows={rows} 
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
@@ -128,7 +126,7 @@ const BillDetails = () => {
         onSelectionModelChange={(ids) => {
           const selectedIDs = new Set(ids);
           const selectedRows = rows.filter((row) =>
-            selectedIDs.has(row._id),
+            selectedIDs.has(row.row_id),
           );
           setSelectedRows(selectedRows);
         }}
