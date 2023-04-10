@@ -1,3 +1,5 @@
+// Neha Dadarwala - neha.dadarwala@dal.ca
+
 import { DataGrid } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
