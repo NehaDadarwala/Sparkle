@@ -77,7 +77,7 @@ const Invoice = () => {
                                 </table>
                             </div>
                             <hr />
-                            <div className="products p-2">
+                            <div className="table-responsive p-2">
                                 <table className="table table-borderless">
                                     <tbody>
                                         <tr className="add">
@@ -96,7 +96,7 @@ const Invoice = () => {
                                 </table>
                             </div>
                             <hr />
-                            <div className="products p-2">
+                            <div className="table-responsive p-2">
                                 <table className="table table-borderless">
                                     <tbody>
                                         <tr className="add">

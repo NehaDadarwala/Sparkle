@@ -206,7 +206,7 @@ const RefundBillDetails = () => {
                 }}
             />
             <div>
-                <FormControl variant="filled" style={{ width: 300, marginTop: '3%' }}>
+                <FormControl variant="filled" style={{ width: '20%', marginTop: '3%' }}>
                     <InputLabel id="demo-simple-select-label"
                         style={{ color: '#bab79d', verticalAlign: 'middle', marginTop: 0 }}>Payment Mode</InputLabel>
                     <Select
