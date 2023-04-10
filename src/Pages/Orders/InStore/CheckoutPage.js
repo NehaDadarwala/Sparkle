@@ -51,7 +51,7 @@ const CheckoutPage = () => {
   let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:3000/order/addOrder',
+      url: 'https://sparkle-api.onrender.com/order/addOrder',
       withCredentials: false,
       headers: {
         'Content-Type' : 'application/json'
