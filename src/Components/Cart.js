@@ -73,11 +73,11 @@ const Cart = () => {
                   <IconButton onClick={() => updateItemQuantity(item.id,item.quantity-1)}>
                       <RemoveCircle />
                     </IconButton>
-                    {item.quantity}
+                    {item.qty=item.quantity}
                     <IconButton onClick={() => updateItemQuantity(item.id,item.quantity+1)}>
                       <AddCircle />
                     </IconButton>
-                    {item.qty=item.quantity}
+                    
                   </TableCell>
                 
                 <TableCell>

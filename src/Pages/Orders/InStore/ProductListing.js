@@ -8,10 +8,12 @@ import axiosApi from '../../../Common/AxiosApi';
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import Productlist from '../../../Components/ProductList';
+import { CircularProgress } from '@material-ui/core';
 const ProductListing = () => {
 
   const [stock, setStock] = useState([]);
   const location = useLocation();
+  const [locading, setLoading] = useState(true);
     useEffect(() => {
 
         const stockUrl = "/inventory/viewStock"
@@ -28,6 +30,7 @@ const ProductListing = () => {
                     setStock(stock);
                     return(<></>)
                 });
+                setLoading(false);
             });
         console.log(stock);
         console.log(location.state);
@@ -36,7 +39,9 @@ const ProductListing = () => {
     );
   return (
     <div>
-        <Productlist stock = {stock} searchinput = {location.state}/>
+       { locading ? <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <CircularProgress size={80} style={{ color: '#4caf50' }} />
+        Loading ... </div> : <Productlist stock = {stock} searchinput = {location.state}/> }
     </div>
   )
 }
