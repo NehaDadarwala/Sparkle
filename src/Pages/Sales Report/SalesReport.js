@@ -10,8 +10,8 @@ const SalesReport = () => {
 
     const [rows, setRows] = useState([]);
     const [filteredRows, setFilteredRows] = useState([]);
-    const [sDate, setSDate] = useState("");
-    const [eDate, setEDate] = useState("");
+    const [sDate, setSDate] = useState(null);
+    const [eDate, setEDate] = useState(null);
     const [loading, setLoading] = useState(true)
 
 
@@ -75,15 +75,33 @@ const SalesReport = () => {
 
     const getReport = async (event) => {
         event.preventDefault();
-        const dateStart = new Date(`${sDate}T00:00:00`);
-        const dateEnd = new Date(`${eDate}T00:00:00`);
 
-        setFilteredRows(
-            rows.filter(row => {
-                const orderDate = new Date(row.orderDate);
-                return orderDate >= dateStart && orderDate <= dateEnd
-            })
-        )
+        if(sDate !== null && eDate !== null){
+            const dateStart = new Date(`${sDate}T00:00:00`);
+            const dateEnd = new Date(`${eDate}T00:00:00`);    
+            setFilteredRows(
+                rows.filter(row => {
+                    const orderDate = new Date(row.orderDate);
+                    return orderDate >= dateStart && orderDate <= dateEnd
+                })
+            )    
+        }else if(sDate !== null){
+            const dateStart = new Date(`${sDate}T00:00:00`);
+            setFilteredRows(
+                rows.filter(row => {
+                    const orderDate = new Date(row.orderDate);
+                    return orderDate >= dateStart
+                })
+            )    
+        }else if(eDate !== null){
+            const dateEnd = new Date(`${eDate}T00:00:00`);
+            setFilteredRows(
+                rows.filter(row => {
+                    const orderDate = new Date(row.orderDate);
+                    return orderDate <= dateEnd
+                })
+            )    
+        }
     }
 
     return (
