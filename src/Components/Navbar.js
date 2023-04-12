@@ -13,7 +13,7 @@ function CollapsibleExample() {
 
 
   return (
-    <Navbar collapseOnSelect expand="lg" className="color-nav" variant="light">
+    <Navbar collapseOnSelect expand="lg" className="color-nav" variant="light" style={{position: "sticky"}} >
       <Container >
         <Navbar.Brand href="/Profile">Sparkle</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

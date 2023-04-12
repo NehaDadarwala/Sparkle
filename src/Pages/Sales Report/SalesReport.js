@@ -19,7 +19,7 @@ const SalesReport = () => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'https://sparkle-api.onrender.com/inventory/getOrders',
+            url: 'https://sparkle-api.onrender.com/sales/getOrders',
             headers: {}
         };
         axios.request(config)
